@@ -4,7 +4,7 @@ import { ThemeProvider } from "@rmwc/theme";
 import { Button } from "@rmwc/button";
 import SmoothCollapse from "react-smooth-collapse";
 import { IntroExpandedContext } from "../Context/IntroExpandedContext";
-import AddNodeButton from "/Users/kefanli/Desktop/GraphicalCSTs/graphicalcs/src/BFS/AddNodeButton"
+import AddNodeButton from "./AddNodeButton"
 
 import '@rmwc/theme/styles';
 import '@rmwc/fab/styles';

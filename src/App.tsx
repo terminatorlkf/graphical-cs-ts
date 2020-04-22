@@ -6,6 +6,7 @@ import BeamSearch from "./BeamSearch/BeamSearch"
 import IterativeDeepening from "./IterativeDeepening/IterativeDeepening"
 import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
+import { CurrentPageContext } from './Context/CurrentPageContext';
 import NavigationBar from "./NavigationBar/NavigationBar"
 
 import './App.css';
@@ -13,6 +14,7 @@ import './App.css';
 function App() {
 
   const [pagesExpanded, setPagesExpanded] = useState([true, true, true, true, true]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const setExpanded = useCallback((index: number) => {
     setPagesExpanded(prevState => {
@@ -21,40 +23,50 @@ function App() {
     })
   }, [])
 
+  const setPage = useCallback((pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  }, [])
+
   return (
     <React.Fragment>
       <IntroExpandedContext.Provider
         value={{
-          pagesExpanded: pagesExpanded,
-          setExpanded: setExpanded
+          pagesExpanded,
+          setExpanded
         }}>
-        <Router>
-          <NavigationBar />
+        <CurrentPageContext.Provider
+          value={{
+            currentPage,
+            setCurrentPage: setPage
+          }}>
+          <Router>
+            <NavigationBar />
 
-          <Switch>
-            <Route path="/bfs">
-              <BFS />
-            </Route>
+            <Switch>
+              <Route path="/bfs">
+                <BFS />
+              </Route>
 
-            <Route path="/dfs">
-              <DFS />
-            </Route>
+              <Route path="/dfs">
+                <DFS />
+              </Route>
 
-            <Route path="/a-star">
-              <AStar />
-            </Route>
+              <Route path="/a-star">
+                <AStar />
+              </Route>
 
-            <Route path="/beam-search">
-              <BeamSearch />
-            </Route>
+              <Route path="/beam-search">
+                <BeamSearch />
+              </Route>
 
-            <Route Path="/iterative-deepening">
-              <IterativeDeepening />
-            </Route>
+              <Route Path="/iterative-deepening">
+                <IterativeDeepening />
+              </Route>
 
-            <Redirect to="/bfs" />
-          </Switch>
-        </Router>
+              <Redirect to="/bfs" />
+            </Switch>
+          </Router>
+        </CurrentPageContext.Provider>
       </IntroExpandedContext.Provider>
     </React.Fragment>
   );

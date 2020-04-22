@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-export interface IntroExpandedInterface{
+export interface IntroExpandedInterface {
     pagesExpanded: boolean[],
     setExpanded: (index: number) => void
 };
