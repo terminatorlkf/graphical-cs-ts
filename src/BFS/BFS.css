@@ -1,0 +1,40 @@
+div {
+    /* text-align: center; */
+}
+
+p {
+ padding-left: 10rem;
+ padding-right: 10rem;    
+}
+
+.intro-section {
+    color: white;
+    margin-top: -25px;
+    margin-left: -10px;
+    margin-right: -10px;
+    
+    padding-top: 60px;
+    padding-bottom: 40px;
+
+    background-color: rgba(38,38,38,1);
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.intro-section-content {
+    text-align: center;
+}
+
+
+.intro-section-content-title {
+    height: fit-content;
+    transition: height 0.8s ease-in;
+}
+
+.intro-section-collapsed {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    text-align: left;
+    position: sticky;
+}
