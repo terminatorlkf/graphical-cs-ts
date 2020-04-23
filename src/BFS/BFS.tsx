@@ -95,10 +95,10 @@ const BFS: FunctionComponent = () => {
                     {nodeListState.map((value, index) => {
                         return (
                             <Elevation className="operation-node" z={3} key={index}><p>{value}</p></Elevation>
+
                         )
                     })}
                 </div>
-
 
                 <div className="add-node-button">
                     <AddNodeButton onClick={addNodeHandler} />

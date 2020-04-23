@@ -38,12 +38,17 @@ p {
 }
 
 .operation-node-section {
-    display:grid;
-    grid-template-column:20;
+    justify-content:center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    padding-left: 15rem;
+    padding-right: 15rem;
+    display:flex;
 }
 
 .operation-node {
-    margin-right: 0;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
     text-align: center;
     height: 4rem;
     width:4rem;
