@@ -17,26 +17,17 @@ function App() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const setExpanded = (index: number) => {
-    setPagesExpanded(prevState => {
-      prevState[index] = !prevState[index];
-      return prevState;
-    })
-  }
 
-  // const setExpanded = useEffect((index: number) => {
-  //   setPagesExpanded(prevState => {
-  //     prevState[index] = !prevState[index];
-  //     return prevState;
-  //   })
-  // }, [])
+    const newExpandedState = [...pagesExpanded];
+    let newExpandedValue = !newExpandedState[index];
+    newExpandedState[index] = newExpandedValue;
+
+    setPagesExpanded(newExpandedState);
+  }
 
   const setPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   }
-
-  // const setPage = useCallback((pageNumber: number) => {
-  //   setCurrentPage(pageNumber);
-  // }, [])
 
   return (
     <React.Fragment>

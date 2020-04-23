@@ -66,21 +66,19 @@ const BFS: FunctionComponent = () => {
     }
 
     const mouseOverNodeHandler = (index: number) => {
-        setNodeListState((prevState: nodeListStateInterface[]) => {
-            console.log("the previous elevation is: " + nodeListState[index].elevation);
-            prevState[index].elevation = 5;
-            return prevState;
-        });
-        console.log("the new elevation is: " + nodeListState[index].elevation);
+        const newNodeState = [...nodeListState];
+        let newNode = { ...newNodeState[index] };
+        newNode.elevation = 8;
+        newNodeState[index] = newNode;
+        setNodeListState(newNodeState);
     }
 
     const mouseOutHandler = (index: number) => {
-        setNodeListState((prevState: nodeListStateInterface[]) => {
-            console.log("the previous elevation is: " + prevState[index].elevation);
-            prevState[index].elevation = 3;
-            console.log("the new elevation is: " + prevState[index].elevation);
-            return prevState;
-        });
+        const newNodeState = [...nodeListState];
+        let newNode = { ...newNodeState[index] };
+        newNode.elevation = 3;
+        newNodeState[index] = newNode;
+        setNodeListState(newNodeState);
     }
 
     return (
@@ -117,14 +115,12 @@ const BFS: FunctionComponent = () => {
             </div>
 
             <div className="operation-section">
-
                 <div className="operation-node-section">
                     {nodeListState.map((node, index) => {
                         return (
                             <Elevation
                                 className={`operation-node${nodeListState[index].className}`}
-                                z={nodeListState[index].elevation}
-                                key={index}
+                                z={node.elevation}
                                 transition
                                 onMouseEnter={() => mouseOverNodeHandler(index)}
                                 onMouseLeave={() => mouseOutHandler(index)}
