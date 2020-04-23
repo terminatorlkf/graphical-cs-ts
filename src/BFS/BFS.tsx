@@ -27,8 +27,6 @@ interface nodeListStateInterface {
 const BFS: FunctionComponent = () => {
     const IntroExpanded = useContext(IntroExpandedContext);
 
-    // const [isOpenedGlobal, setIsOpenedGlobal] = IntroExpanded && IntroExpanded;
-
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
     const setIsOpenedGlobal = IntroExpanded && IntroExpanded.setExpanded;
 
@@ -68,7 +66,7 @@ const BFS: FunctionComponent = () => {
     const mouseOverNodeHandler = (index: number) => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
-        newNode.elevation = 8;
+        newNode.elevation = 20;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
     }
@@ -122,8 +120,8 @@ const BFS: FunctionComponent = () => {
                                 className={`operation-node${nodeListState[index].className}`}
                                 z={node.elevation}
                                 transition
-                                onMouseEnter={() => mouseOverNodeHandler(index)}
-                                onMouseLeave={() => mouseOutHandler(index)}
+                                onMouseOver={() => mouseOverNodeHandler(index)}
+                                onMouseOut={() => mouseOutHandler(index)}
                             >
                                 <p>{node.value}</p>
                             </Elevation>
