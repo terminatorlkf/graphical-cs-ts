@@ -80,7 +80,7 @@ const BFS: FunctionComponent = () => {
     }
 
     return (
-        <div style={{ width: "101%" }}>
+        <div>
             <div className={"intro-section" + collapsedTitleState}>
                 <div className="intro-section-content">
                     <div className={"intro-section-content-title" + collapsedTitleState}>

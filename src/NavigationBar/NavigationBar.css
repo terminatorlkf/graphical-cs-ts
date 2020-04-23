@@ -13,8 +13,6 @@
 
     overflow: hidden;
     z-index: 9999 !important;
-
-    width:102%
 }
 
 br {
@@ -27,6 +25,7 @@ br {
     padding-top: 15px;
     color: white;
     padding-left: 40px;
+    transition: 0.2s ease-in-out;
 }
 
 .title-secondary {
@@ -36,6 +35,7 @@ br {
     color: white;
     padding-left: 40px;
     color: gray;
+    transition: 0.4s ease-in-out;
 }
 
 .navigation-component {
