@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import BFS from './BFS/BFS'
 import DFS from "./DFS/DFS"
 import AStar from "./AStar/AStar"
@@ -16,16 +16,27 @@ function App() {
   const [pagesExpanded, setPagesExpanded] = useState([true, true, true, true, true]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const setExpanded = useCallback((index: number) => {
+  const setExpanded = (index: number) => {
     setPagesExpanded(prevState => {
       prevState[index] = !prevState[index];
       return prevState;
     })
-  }, [])
+  }
 
-  const setPage = useCallback((pageNumber: number) => {
+  // const setExpanded = useEffect((index: number) => {
+  //   setPagesExpanded(prevState => {
+  //     prevState[index] = !prevState[index];
+  //     return prevState;
+  //   })
+  // }, [])
+
+  const setPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-  }, [])
+  }
+
+  // const setPage = useCallback((pageNumber: number) => {
+  //   setCurrentPage(pageNumber);
+  // }, [])
 
   return (
     <React.Fragment>

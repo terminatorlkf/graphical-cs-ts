@@ -33,6 +33,25 @@ p {
 .intro-section-collapsed {
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 20px;
+    padding-left: 21px;
     text-align: left;
+}
+
+.operation-node-section {
+    display:grid;
+    grid-template-column:20;
+}
+
+.operation-node {
+    margin-right: 0;
+    text-align: center;
+    height: 4rem;
+    width:4rem;
+    border-radius:50%;
+}
+
+.operation-node p {
+    padding-top: 0.3rem;
+    padding-left: 0;
+    padding-right:0;
 }

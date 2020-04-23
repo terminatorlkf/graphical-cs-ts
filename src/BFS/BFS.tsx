@@ -1,5 +1,6 @@
-import React, {FunctionComponent, useState, useContext } from "react";
+import React, { FunctionComponent, useState, useContext } from "react";
 import { Fab } from "@rmwc/fab";
+import { Elevation } from "@rmwc/elevation";
 import { ThemeProvider } from "@rmwc/theme";
 import { Button } from "@rmwc/button";
 import SmoothCollapse from "react-smooth-collapse";
@@ -11,14 +12,17 @@ import '@rmwc/fab/styles';
 import '@rmwc/icon/styles';
 import '@rmwc/tooltip/styles';
 import '@rmwc/button/styles';
+import '@rmwc/elevation/styles';
 import './BFS.css'
 
 const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-const BFS:FunctionComponent = () => {
+const BFS: FunctionComponent = () => {
     const IntroExpanded = useContext(IntroExpandedContext);
+
+    // const [isOpenedGlobal, setIsOpenedGlobal] = IntroExpanded && IntroExpanded;
 
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
     const setIsOpenedGlobal = IntroExpanded && IntroExpanded.setExpanded;
@@ -28,11 +32,11 @@ const BFS:FunctionComponent = () => {
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
 
     const collapseHandler = () => {
+        setIsOpenedGlobal && setIsOpenedGlobal(0);
+
         setIsOpened((prevState: boolean) => {
             return !prevState;
         });
-
-        setIsOpenedGlobal && setIsOpenedGlobal(0);
 
         if (isOpened) {
             setTimeout(() => {
@@ -53,12 +57,13 @@ const BFS:FunctionComponent = () => {
     }
 
     return (
-        <div>
+        <div style={{ width: "101%" }}>
             <div className={"intro-section" + collapsedTitleState}>
                 <div className="intro-section-content">
                     <div className={"intro-section-content-title" + collapsedTitleState}>
                         <h1>Breadth-First Search</h1>
                     </div>
+
 
                     <SmoothCollapse expanded={isOpened}>
                         <div className="description">
@@ -86,9 +91,14 @@ const BFS:FunctionComponent = () => {
 
             <div className="operation-section">
 
-                {nodeListState.map((value) => {
-                    return <Fab label={value}/>
-                })}
+                <div className="operation-node-section">
+                    {nodeListState.map((value, index) => {
+                        return (
+                            <Elevation className="operation-node" z={3} key={index}><p>{value}</p></Elevation>
+                        )
+                    })}
+                </div>
+
 
                 <div className="add-node-button">
                     <AddNodeButton onClick={addNodeHandler} />

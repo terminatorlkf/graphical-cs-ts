@@ -12,15 +12,20 @@ interface NavigationBarProps {
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
 
+    const [state, setState] = useState(0);
+
     const IntroExpanded = useContext(IntroExpandedContext);
+    const titleClass = !IntroExpanded?.pagesExpanded[0] ? "title-secondary" : "title";
+    console.log(titleClass);
 
     return (
         <React.Fragment>
-            <nav className={`navbar ${className && className}`}>
-                <div className={!IntroExpanded?.pagesExpanded[0] ? "title-secondary" : "title"}>
+            <nav className='navbar'>
+                <div className={titleClass}>
                     <h1>GRAPHICAL CS</h1>
                 </div>
 
+            {/* <button onClick={()=> {setState(Math.random())}}>force re-render</button> */}
                 <div className="navigation-component">
                     <NavLinkList className="nav-items" />
                 </div>

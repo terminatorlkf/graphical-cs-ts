@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export interface IntroExpandedInterface {
     pagesExpanded: boolean[],

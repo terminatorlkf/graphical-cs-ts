@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@rmwc/button": "^6.0.14",
+    "@rmwc/elevation": "^6.1.0",
     "@rmwc/fab": "^6.0.14",
     "@rmwc/icon": "^6.0.14",
     "@rmwc/ripple": "^6.0.14",
