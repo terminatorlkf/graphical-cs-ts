@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import BFS from './BFS/BFS'
 import DFS from "./DFS/DFS"
 import AStar from "./AStar/AStar"

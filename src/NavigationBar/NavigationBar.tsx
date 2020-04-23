@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { IntroExpandedContext } from "../Context/IntroExpandedContext"
 import NavLinkList from "./NavLinkList/NavLinkList";
 

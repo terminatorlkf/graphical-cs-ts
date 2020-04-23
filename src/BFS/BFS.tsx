@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState, useContext } from "react";
-import { Fab } from "@rmwc/fab";
 import { Elevation } from "@rmwc/elevation";
 import { ThemeProvider } from "@rmwc/theme";
 import { Button } from "@rmwc/button";
@@ -19,6 +18,12 @@ const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+interface nodeListStateInterface {
+    value: number,
+    elevation: number,
+    className: string,
+}
+
 const BFS: FunctionComponent = () => {
     const IntroExpanded = useContext(IntroExpandedContext);
 
@@ -27,7 +32,7 @@ const BFS: FunctionComponent = () => {
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
     const setIsOpenedGlobal = IntroExpanded && IntroExpanded.setExpanded;
 
-    const [nodeListState, setNodeListState] = useState<number[]>([]);
+    const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>([]);
     const [isOpened, setIsOpened] = useState(isOpenedGlobal ? true : false);
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
 
@@ -52,7 +57,29 @@ const BFS: FunctionComponent = () => {
 
     const addNodeHandler = () => {
         setNodeListState(prevState => {
-            return [...prevState, getRandomInt(100)]
+            return [...prevState, {
+                value: getRandomInt(100),
+                elevation: 3,
+                className: ""
+            }]
+        });
+    }
+
+    const mouseOverNodeHandler = (index: number) => {
+        setNodeListState((prevState: nodeListStateInterface[]) => {
+            console.log("the previous elevation is: " + nodeListState[index].elevation);
+            prevState[index].elevation = 5;
+            return prevState;
+        });
+        console.log("the new elevation is: " + nodeListState[index].elevation);
+    }
+
+    const mouseOutHandler = (index: number) => {
+        setNodeListState((prevState: nodeListStateInterface[]) => {
+            console.log("the previous elevation is: " + prevState[index].elevation);
+            prevState[index].elevation = 3;
+            console.log("the new elevation is: " + prevState[index].elevation);
+            return prevState;
         });
     }
 
@@ -92,10 +119,18 @@ const BFS: FunctionComponent = () => {
             <div className="operation-section">
 
                 <div className="operation-node-section">
-                    {nodeListState.map((value, index) => {
+                    {nodeListState.map((node, index) => {
                         return (
-                            <Elevation className="operation-node" z={3} key={index}><p>{value}</p></Elevation>
-
+                            <Elevation
+                                className={`operation-node${nodeListState[index].className}`}
+                                z={nodeListState[index].elevation}
+                                key={index}
+                                transition
+                                onMouseEnter={() => mouseOverNodeHandler(index)}
+                                onMouseLeave={() => mouseOutHandler(index)}
+                            >
+                                <p>{node.value}</p>
+                            </Elevation>
                         )
                     })}
                 </div>
