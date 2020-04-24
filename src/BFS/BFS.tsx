@@ -33,6 +33,7 @@ const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>([]);
     const [isOpened, setIsOpened] = useState(isOpenedGlobal ? true : false);
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
+    const [expandButtonIsMounted, setExpandButtonIsMounted] = useState(false);
 
     const collapseHandler = () => {
         setIsOpenedGlobal && setIsOpenedGlobal(0);
@@ -44,13 +45,14 @@ const BFS: FunctionComponent = () => {
         if (isOpened) {
             setTimeout(() => {
                 setCollapsedTitleState(" intro-section-collapsed");
+                setExpandButtonIsMounted(true);
             }, 150);
         } else {
+            setExpandButtonIsMounted(false);
             setTimeout(() => {
                 setCollapsedTitleState("");
             }, 20);
         }
-
     }
 
     const addNodeHandler = () => {
@@ -79,6 +81,14 @@ const BFS: FunctionComponent = () => {
         setNodeListState(newNodeState);
     }
 
+    const nodeClickHandler = (index: number) => {
+        const newNodeState = [...nodeListState];
+        let newNode = { ...newNodeState[index] };
+        newNode.className = newNode.className === " operation-node-clicked" ? "" : " operation-node-clicked";
+        newNodeState[index] = newNode;
+        setNodeListState(newNodeState);
+    }
+
     return (
         <div>
             <div className={"intro-section" + collapsedTitleState}>
@@ -98,18 +108,32 @@ const BFS: FunctionComponent = () => {
 
                             <p>--Wikipedia</p>
                         </div>
+
+                        {isOpened &&
+                            <div className='collapse-button'>
+                                <ThemeProvider
+                                    options={{
+                                        primary: 'white'
+                                    }} >
+                                    <Button onClick={collapseHandler} label="collapse" unelevated />
+                                </ThemeProvider>
+                            </div>
+                        }
                     </SmoothCollapse>
 
                 </div>
-            </div>
 
-            <div className="collapse-button">
-                <ThemeProvider
-                    options={{
-                        primary: 'black'
-                    }} >
-                    <Button onClick={collapseHandler} label={isOpened ? "collapse" : "expand"} outlined />
-                </ThemeProvider>
+                {expandButtonIsMounted &&
+                    <div className='expand-button'>
+                        <ThemeProvider
+                            options={{
+                                primary: 'white'
+                            }} >
+                            <Button onClick={collapseHandler} label="expand" dense />
+                        </ThemeProvider>
+                    </div>
+                }
+
             </div>
 
             <div className="operation-section">
@@ -122,11 +146,16 @@ const BFS: FunctionComponent = () => {
                                 transition
                                 onMouseOver={() => mouseOverNodeHandler(index)}
                                 onMouseOut={() => mouseOutHandler(index)}
+                                onClick={() => nodeClickHandler(index)}
                             >
                                 <p>{node.value}</p>
                             </Elevation>
                         )
                     })}
+                </div>
+
+                <div className="search-status-stack-section">
+                    <h1>Priority Queue</h1>
                 </div>
 
                 <div className="add-node-button">
