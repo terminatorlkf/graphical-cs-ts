@@ -33,7 +33,7 @@ const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>([]);
     const [isOpened, setIsOpened] = useState(isOpenedGlobal ? true : false);
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
-    const [expandButtonIsMounted, setExpandButtonIsMounted] = useState(false);
+    const [expandButtonIsMounted, setExpandButtonIsMounted] = useState(isOpenedGlobal ? false : true);
 
     const collapseHandler = () => {
         setIsOpenedGlobal && setIsOpenedGlobal(0);
