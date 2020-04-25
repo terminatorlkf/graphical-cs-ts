@@ -5,6 +5,7 @@ import { Button } from "@rmwc/button";
 import SmoothCollapse from "react-smooth-collapse";
 import { IntroExpandedContext } from "../Context/IntroExpandedContext";
 import AddNodeButton from "./AddNodeButton"
+import { Stage, Layer, Circle } from "react-konva";
 
 import '@rmwc/theme/styles';
 import '@rmwc/fab/styles';
@@ -22,6 +23,8 @@ interface nodeListStateInterface {
     value: number,
     elevation: number,
     className: string,
+    xPosition: number,
+    yPosition: number
 }
 
 const BFS: FunctionComponent = () => {
@@ -55,12 +58,24 @@ const BFS: FunctionComponent = () => {
         }
     }
 
-    const addNodeHandler = () => {
+    // const addNodeHandler = () => {
+    //     setNodeListState(prevState => {
+    //         return [...prevState, {
+    //             value: getRandomInt(100),
+    //             elevation: 3,
+    //             className: "",
+    //         }]
+    //     });
+    // }
+
+    const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
             return [...prevState, {
                 value: getRandomInt(100),
                 elevation: 3,
-                className: ""
+                className: "",
+                xPosition: x,
+                yPosition: y
             }]
         });
     }
@@ -115,7 +130,7 @@ const BFS: FunctionComponent = () => {
                                     options={{
                                         primary: 'white'
                                     }} >
-                                    <Button onClick={collapseHandler} label="collapse" unelevated />
+                                    <Button onClick={collapseHandler} label="start exploring" unelevated />
                                 </ThemeProvider>
                             </div>
                         }
@@ -138,7 +153,7 @@ const BFS: FunctionComponent = () => {
 
             <div className="operation-section">
                 <div className="operation-node-section">
-                    {nodeListState.map((node, index) => {
+                    {/* {nodeListState.map((node, index) => {
                         return (
                             <Elevation
                                 className={`operation-node${nodeListState[index].className}`}
@@ -151,7 +166,27 @@ const BFS: FunctionComponent = () => {
                                 <p>{node.value}</p>
                             </Elevation>
                         )
-                    })}
+                    })} */}
+
+                    <Stage width={window.innerWidth - 850} height={window.innerHeight}>
+                        <Layer>
+                            {nodeListState.map((node, index) => {
+                                return (
+                                    <Circle
+                                        x={node.xPosition}
+                                        y={node.yPosition}
+                                        radius={35}
+                                        fill='white'
+                                        draggable
+                                        shadowBlur={10}
+                                        shadowColor='black'
+                                        shadowOffset={{x:0, y:3}}
+                                        shadowOpacity={0.3}
+                                    />
+                                )
+                            })}
+                        </Layer>
+                    </Stage>
                 </div>
 
                 <div className="search-status-stack-section">
@@ -159,7 +194,9 @@ const BFS: FunctionComponent = () => {
                 </div>
 
                 <div className="add-node-button">
-                    <AddNodeButton onClick={addNodeHandler} />
+                    <AddNodeButton onClick={() => {
+                        addNodeHandler(Math.random() * (window.innerWidth - 950) + 35, Math.random() * 500 + 30)
+                    }} />
                 </div>
             </div>
         </div>
