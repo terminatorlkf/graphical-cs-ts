@@ -44,11 +44,13 @@ br {
 }
 
 .nav-items {
+    margin-left: 3rem;
+    margin-right: 2.7rem;
     padding-top: 6px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     list-style-type: none;
 }
 
