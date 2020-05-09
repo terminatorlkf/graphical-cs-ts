@@ -70,6 +70,8 @@ br {
 }
 
 .nav-item {
+    padding-top:1.2rem;
+    padding-bottom:1.2rem;
     padding-left: 10px;
     padding-right: 10px;
     font-family: "Roboto Mono", monospace;

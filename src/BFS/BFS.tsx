@@ -1,16 +1,14 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
-import { Stage, Layer, Circle } from "react-konva";
+import { Stage, Layer, Circle, Group, Text } from "react-konva";
+import { Elevation } from "@rmwc/elevation";
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 
+import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
 import './BFS.css'
-
-const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * Math.floor(max));
-}
 
 interface nodeListStateInterface {
     value: number,
@@ -24,12 +22,13 @@ interface nodeListStateInterface {
 
 const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>([]);
+    const [nodeClickState, setNodeClickState] = useState<number | null>(null);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
             return [...prevState, {
-                value: getRandomInt(100),
+                value: prevState.length,
                 elevation: 5,
                 className: "",
                 xPosition: x,
@@ -84,6 +83,12 @@ const BFS: FunctionComponent = () => {
 
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
+
+        if (newNode.fill === 'red') {
+            setNodeClickState(index);
+        } else {
+            setNodeClickState(null);
+        }
     }
 
     return (
@@ -100,21 +105,51 @@ const BFS: FunctionComponent = () => {
                         <Layer>
                             {nodeListState.map((node, index) => {
                                 return (
-                                    <Circle
-                                        ref={node.ref}
+                                    <Group
+                                        key={index}
                                         x={node.xPosition}
                                         y={node.yPosition}
-                                        radius={35}
-                                        fill={node.fill}
                                         draggable
-                                        shadowBlur={node.elevation}
-                                        shadowColor='black'
-                                        shadowOffset={{ x: 0, y: 3 }}
-                                        shadowOpacity={0.3}
                                         onClick={() => nodeClickHandler(index)}
                                         onMouseOver={() => mouseOverNodeHandler(index)}
                                         onMouseOut={() => mouseOutHandler(index)}
-                                    />
+                                        onDragMove={(e) => {
+                                            node.xPosition = e.target.x();
+                                            node.yPosition = e.target.y();
+                                        }}
+                                    >
+                                        <Circle
+                                            ref={node.ref}
+                                            radius={35}
+                                            fill={node.fill}
+                                            shadowBlur={node.elevation}
+                                            shadowColor='black'
+                                            shadowOffset={{ x: 0, y: 3 }}
+                                            shadowOpacity={0.3}
+
+                                        />
+                                        {node.value < 10 ?
+                                            <Text
+                                                text={`${node.value}`}
+                                                fontSize={20}
+                                                fontFamily='Roboto'
+                                                x={-5}
+                                                y={-6}
+                                                fill={node.fill === 'white' ? 'black' : 'white'}
+                                            />
+                                            :
+                                            <Text
+                                                text={`${node.value}`}
+                                                fontSize={20}
+                                                fontFamily='Roboto'
+                                                x={-11}
+                                                y={-6}
+                                                fill={node.fill === 'white' ? 'black' : 'white'}
+                                            />
+                                        }
+
+                                    </Group>
+
                                 )
                             })}
                         </Layer>
@@ -123,6 +158,12 @@ const BFS: FunctionComponent = () => {
 
                 <div className="search-status-stack-section">
                     <h1>Priority Queue</h1>
+                    
+                    <div className="node-status-section">
+                        <Elevation z={3}>
+                            <h3>{nodeClickState && nodeClickState}</h3>
+                        </Elevation>
+                    </div>
                 </div>
 
                 <div className="add-node-button">
