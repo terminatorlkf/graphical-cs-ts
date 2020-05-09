@@ -4,24 +4,16 @@ import { Stage, Layer, Circle, Group, Text } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
+import { nodeListStateInterface } from './nodeListStateInterface';
+import { presetNodeState } from './PresetNodeState';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
 import './BFS.css'
 
-interface nodeListStateInterface {
-    value: number,
-    elevation: number,
-    className: string,
-    xPosition: number,
-    yPosition: number,
-    fill: string,
-    ref: React.MutableRefObject<Konva.Circle> | null
-}
-
 const BFS: FunctionComponent = () => {
-    const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>([]);
+    const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
     const [nodeClickState, setNodeClickState] = useState<number | null>(null);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
@@ -158,7 +150,7 @@ const BFS: FunctionComponent = () => {
 
                 <div className="search-status-stack-section">
                     <h1>Priority Queue</h1>
-                    
+
                     <div className="node-status-section">
                         <Elevation z={3}>
                             <h3>{nodeClickState && nodeClickState}</h3>
@@ -168,7 +160,7 @@ const BFS: FunctionComponent = () => {
 
                 <div className="add-node-button">
                     <AddNodeButton onClick={() => {
-                        addNodeHandler(Math.random() * (window.innerWidth - 300) + 100, Math.random() * 500 + 30)
+                        addNodeHandler(Math.random() * (window.innerWidth - 600) + 100, Math.random() * 500)
                     }} />
                 </div>
             </div>
