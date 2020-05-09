@@ -120,26 +120,14 @@ const BFS: FunctionComponent = () => {
                                             shadowOpacity={0.3}
 
                                         />
-                                        {node.value < 10 ?
-                                            <Text
-                                                text={`${node.value}`}
-                                                fontSize={20}
-                                                fontFamily='Roboto'
-                                                x={-5}
-                                                y={-6}
-                                                fill={node.fill === 'white' ? 'black' : 'white'}
-                                            />
-                                            :
-                                            <Text
-                                                text={`${node.value}`}
-                                                fontSize={20}
-                                                fontFamily='Roboto'
-                                                x={-11}
-                                                y={-6}
-                                                fill={node.fill === 'white' ? 'black' : 'white'}
-                                            />
-                                        }
-
+                                        <Text
+                                            text={`${node.value}`}
+                                            fontSize={20}
+                                            fontFamily='Roboto'
+                                            x={node.value < 10 ? -5 : -11}
+                                            y={-6}
+                                            fill={node.fill === 'white' ? 'black' : 'white'}
+                                        />
                                     </Group>
 
                                 )
@@ -152,7 +140,7 @@ const BFS: FunctionComponent = () => {
                     <h1>Priority Queue</h1>
 
                     <div className="node-status-section">
-                        <Elevation z={3}>
+                        <Elevation z={3} height={10}>
                             <h3>{nodeClickState && nodeClickState}</h3>
                         </Elevation>
                     </div>
@@ -160,7 +148,7 @@ const BFS: FunctionComponent = () => {
 
                 <div className="add-node-button">
                     <AddNodeButton onClick={() => {
-                        addNodeHandler(Math.random() * (window.innerWidth - 600) + 100, Math.random() * 500)
+                        addNodeHandler(Math.random() * (window.innerWidth - 700) + 100, Math.random() * 500)
                     }} />
                 </div>
             </div>
