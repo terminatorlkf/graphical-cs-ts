@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
 import { Stage, Layer, Circle, Group, Text } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
+import { Button } from '@rmwc/button';
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
@@ -10,6 +11,7 @@ import { presetNodeState } from './PresetNodeState';
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
+import '@rmwc/button/styles';
 import './BFS.css'
 
 const BFS: FunctionComponent = () => {
@@ -26,7 +28,8 @@ const BFS: FunctionComponent = () => {
                 xPosition: x,
                 yPosition: y,
                 fill: 'white',
-                ref: null
+                ref: null,
+                neighbor: null
             }]
         });
     }
@@ -129,7 +132,6 @@ const BFS: FunctionComponent = () => {
                                             fill={node.fill === 'white' ? 'black' : 'white'}
                                         />
                                     </Group>
-
                                 )
                             })}
                         </Layer>
@@ -137,13 +139,19 @@ const BFS: FunctionComponent = () => {
                 </div>
 
                 <div className="search-status-stack-section">
-                    <h1>Priority Queue</h1>
+                    {/* <h1>Priority Queue</h1> */}
 
-                    <div className="node-status-section">
-                        <Elevation className={nodeClickState !== -1 ? 'node-status-card': ''} z={3} height={10}>
-                            <h3>{nodeClickState !== -1 && nodeClickState}</h3>
-                        </Elevation>
-                    </div>
+                    {nodeClickState !== -1 &&
+                        <div className="node-status-section">
+                            <Elevation className={nodeClickState !== -1 ? 'node-status-card' : ''} z={3} height={10}>
+                                <h2 style={{wordSpacing:'-5px', paddingLeft:'0.6rem'}}>{`node ${nodeClickState}`}</h2>
+                                <div className="node-manipulation-section">
+                                    <Button label="add neighbor" />
+                                    <Button label='delete node' danger />
+                                </div>
+                            </Elevation>
+                        </div>
+                    }
                 </div>
 
                 <div className="add-node-button">

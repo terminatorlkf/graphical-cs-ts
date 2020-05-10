@@ -7,5 +7,6 @@ export interface nodeListStateInterface {
     xPosition: number,
     yPosition: number,
     fill: string,
-    ref: React.MutableRefObject<Konva.Circle> | null
+    ref: React.MutableRefObject<Konva.Circle> | null,
+    neighbor: nodeListStateInterface[] | null
 }

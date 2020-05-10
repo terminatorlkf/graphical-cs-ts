@@ -93,9 +93,20 @@ p {
 }
 
 .node-status-card {
+    margin-top: 3.6rem;
     padding-top: 0.4rem;
     padding-left: 1.4rem;
     width: 22rem;
     border-radius: 7px;
     height: 22rem;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+}
+
+.node-manipulation-section {
+    display: flex;
+    justify-content:space-evenly;
+    padding-bottom:1rem;
+    padding-left: 4rem;
 }
