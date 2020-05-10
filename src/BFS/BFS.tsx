@@ -34,6 +34,11 @@ const BFS: FunctionComponent = () => {
         });
     }
 
+    const deleteNodeHandler = (index: number) => {
+        setNodeListState(nodeListState.filter((node) => node.value !== index));
+        setNodeClickState(-1);
+    }
+
     const mouseOverNodeHandler = (index: number) => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
@@ -127,7 +132,7 @@ const BFS: FunctionComponent = () => {
                                             text={`${node.value}`}
                                             fontSize={20}
                                             fontFamily='Roboto'
-                                            x={node.value < 10 ? -5 : -11}
+                                            x={node.value < 10 ? -6 : -11}
                                             y={-6}
                                             fill={node.fill === 'white' ? 'black' : 'white'}
                                         />
@@ -144,10 +149,21 @@ const BFS: FunctionComponent = () => {
                     {nodeClickState !== -1 &&
                         <div className="node-status-section">
                             <Elevation className={nodeClickState !== -1 ? 'node-status-card' : ''} z={3} height={10}>
-                                <h2 style={{wordSpacing:'-5px', paddingLeft:'0.6rem'}}>{`node ${nodeClickState}`}</h2>
-                                <div className="node-manipulation-section">
+                                <div className="node-status-card-content">
+                                    <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
+                                    <h4>
+                                        neighbor: {nodeListState[nodeClickState].neighbor ?
+                                            nodeListState[nodeClickState].neighbor?.map((neighbor => neighbor.value))
+                                            :
+                                            `null`
+                                        }
+                                    </h4>
+
+                                </div>
+
+                                <div className="node-status-card-manipulation">
                                     <Button label="add neighbor" />
-                                    <Button label='delete node' danger />
+                                    <Button label='delete node' danger onClick={() => deleteNodeHandler(nodeClickState)} />
                                 </div>
                             </Elevation>
                         </div>

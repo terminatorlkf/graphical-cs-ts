@@ -104,7 +104,11 @@ p {
     justify-content:space-between;
 }
 
-.node-manipulation-section {
+.node-status-card-content {
+    padding-left: 0.6rem;
+}
+
+.node-status-card-manipulation {
     display: flex;
     justify-content:space-evenly;
     padding-bottom:1rem;
