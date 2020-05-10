@@ -14,7 +14,7 @@ import './BFS.css'
 
 const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
-    const [nodeClickState, setNodeClickState] = useState<number | null>(null);
+    const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const addNodeHandler = (x: number, y: number) => {
@@ -79,7 +79,7 @@ const BFS: FunctionComponent = () => {
         if (newNode.fill === 'red') {
             setNodeClickState(index);
         } else {
-            setNodeClickState(null);
+            setNodeClickState(-1);
         }
     }
 
@@ -140,8 +140,8 @@ const BFS: FunctionComponent = () => {
                     <h1>Priority Queue</h1>
 
                     <div className="node-status-section">
-                        <Elevation z={3} height={10}>
-                            <h3>{nodeClickState && nodeClickState}</h3>
+                        <Elevation className={nodeClickState !== -1 ? 'node-status-card': ''} z={3} height={10}>
+                            <h3>{nodeClickState !== -1 && nodeClickState}</h3>
                         </Elevation>
                     </div>
                 </div>

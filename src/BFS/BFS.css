@@ -58,6 +58,7 @@ p {
 
 .search-status-stack-section {
     margin-right: 10rem;
+    padding-right: 20px;
 }
 
 .operation-node-section {
@@ -89,4 +90,12 @@ p {
     padding-top: 0.3rem;
     padding-left: 0;
     padding-right:0;
+}
+
+.node-status-card {
+    padding-top: 0.4rem;
+    padding-left: 1.4rem;
+    width: 22rem;
+    border-radius: 7px;
+    height: 22rem;
 }
