@@ -1,0 +1,1 @@
+export const pageIndex = ['/bfs', '/dfs', '/iterative-deepening', '/a-star', '/beam-search'];

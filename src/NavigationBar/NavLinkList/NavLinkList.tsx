@@ -1,18 +1,21 @@
-import React, { FunctionComponent, useState, useContext } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import NavLink from "../NavLink/NavLink"
-import { CurrentPageContext } from '../../Context/CurrentPageContext';
+import { useLocation } from 'react-router-dom';
+import { pageIndex } from '../../shared/pageIndex/pageIndex';
 
 interface NavLinkLisProps {
     className: string,
 }
 
 const NavLinkList: FunctionComponent<NavLinkLisProps> = ({ className }) => {
-    const [currentPageState, setCurrentPageState] = useState(0);
-    const currentPage = useContext(CurrentPageContext);
+    let currentPageIndex = pageIndex.indexOf(useLocation().pathname);
+    if (useLocation().pathname === '/') {
+        currentPageIndex = 2;
+    }
+    const [currentPageState, setCurrentPageState] = useState(currentPageIndex);
 
     const navLinkClickHandler = (index: number) => {
-        setCurrentPageState(index)
-        currentPage && currentPage.setCurrentPage(index);
+        setCurrentPageState(index);
     }
 
     return (

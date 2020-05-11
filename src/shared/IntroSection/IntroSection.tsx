@@ -10,10 +10,11 @@ import './IntroSection.css';
 
 interface IntroSectionInterface {
     title: string,
-    source: string
+    source: string,
+    color: string
 }
 
-const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, children }) => {
+const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, color, children }) => {
     const IntroExpanded = useContext(IntroExpandedContext);
 
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
@@ -43,7 +44,7 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
     }
 
     return (
-        <div className={"intro-section" + collapsedTitleState}>
+        <div className={"intro-section" + collapsedTitleState} style={{backgroundColor: color}}>
             <div className="intro-section-content">
                 <div className={"intro-section-content-title" + collapsedTitleState}>
                     <h1>{title}</h1>

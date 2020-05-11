@@ -7,6 +7,7 @@ import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
 import { presetNodeState } from './PresetNodeState';
+import { colorArray } from "../shared/colorArray/colorArray";
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -94,7 +95,7 @@ const BFS: FunctionComponent = () => {
 
     return (
         <div>
-            <IntroSection title="Breadth-First Search" source='Wikipedia'>
+            <IntroSection title="Breadth-First Search" source='Wikipedia' color={colorArray[0]}>
                 "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
                 sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
                 It uses the opposite strategy as depth-first search, which instead explores the node branch as far as possible before being forced to backtrack and expand other nodes."
