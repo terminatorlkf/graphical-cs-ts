@@ -6,6 +6,7 @@ import { Button } from "@rmwc/button";
 
 import '@rmwc/theme/styles';
 import '@rmwc/button/styles';
+import './IntroSection.css';
 
 interface IntroSectionInterface {
     title: string,
