@@ -1,9 +1,12 @@
 import React from "react";
+import IntroSection from '../shared/IntroSection/IntroSection';
 
 const DFS = ()=> {
     return (
         <div>
-            <h1>DFS</h1>
+            <IntroSection title='Depth-First Search' source='your ass'>
+                "All"
+            </IntroSection>
         </div>
     );
 }
