@@ -17,6 +17,7 @@ import './BFS.css'
 const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
+    const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const addNodeHandler = (x: number, y: number) => {
@@ -29,7 +30,7 @@ const BFS: FunctionComponent = () => {
                 yPosition: y,
                 fill: 'white',
                 ref: null,
-                neighbor: null
+                neighbor: []
             }]
         });
     }
@@ -131,9 +132,10 @@ const BFS: FunctionComponent = () => {
                                         <Text
                                             text={`${node.value}`}
                                             fontSize={20}
-                                            fontFamily='Roboto'
-                                            x={node.value < 10 ? -6 : -11}
-                                            y={-6}
+                                            fontFamily="'Roboto Mono'"
+                                            fontStyle='bold'
+                                            x={node.value < 10 ? -6 : -12}
+                                            y={-7}
                                             fill={node.fill === 'white' ? 'black' : 'white'}
                                         />
                                     </Group>
@@ -149,22 +151,42 @@ const BFS: FunctionComponent = () => {
                     {nodeClickState !== -1 &&
                         <div className="node-status-section">
                             <Elevation className={nodeClickState !== -1 ? 'node-status-card' : ''} z={3} height={10}>
+
                                 <div className="node-status-card-content">
+
                                     <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
-                                    <h4>
-                                        neighbor: {nodeListState[nodeClickState].neighbor ?
-                                            nodeListState[nodeClickState].neighbor?.map((neighbor => neighbor.value))
+
+                                    <div className='node-status-card-neighbor-section'>
+                                        <h4 style={{ marginTop: '0.4rem' }}>neighbor:</h4>
+                                        {nodeListState[nodeClickState].neighbor.length !== 0 ?
+                                            nodeListState[nodeClickState].neighbor.map((neighbor => neighbor.value))
                                             :
-                                            `null`
+                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
                                         }
-                                    </h4>
+
+                                        {addNeighborMode &&
+                                            <div className="neighbor-list">
+                                                {nodeListState.map(node => {
+                                                    if (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor?.includes(node)) {
+                                                        return (
+                                                            <Elevation style={{ borderRadius: '50%' }}>
+                                                                <p>{node.value}</p>
+                                                            </Elevation>
+                                                        )
+                                                    }
+
+                                                })}
+
+                                            </div>
+                                        }
+                                    </div>
 
                                 </div>
 
                                 <div className="node-status-card-manipulation">
-                                    <Button label="add neighbor" />
                                     <Button label='delete node' danger onClick={() => deleteNodeHandler(nodeClickState)} />
                                 </div>
+
                             </Elevation>
                         </div>
                     }

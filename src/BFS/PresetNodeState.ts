@@ -9,7 +9,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 317.2,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 1,
@@ -19,7 +19,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 226.0,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 2,
@@ -29,7 +29,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 263.0,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 3,
@@ -39,7 +39,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 99,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 4,
@@ -49,7 +49,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 494,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 5,
@@ -59,7 +59,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 351.4,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 6,
@@ -69,7 +69,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 119.0,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 7,
@@ -79,7 +79,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 496.2,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 8,
@@ -89,7 +89,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 177.6,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 9,
@@ -99,7 +99,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 58.7,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 10,
@@ -109,7 +109,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 397,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 11,
@@ -119,7 +119,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 368.7,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 12,
@@ -129,7 +129,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 504.6,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     },
     {
         value: 13,
@@ -139,6 +139,6 @@ export const presetNodeState: nodeListStateInterface[] = [
         yPosition: 253.3,
         fill: 'white',
         ref: null,
-        neighbor: null
+        neighbor: []
     }
 ]

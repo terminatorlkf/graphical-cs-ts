@@ -110,7 +110,19 @@ p {
 
 .node-status-card-manipulation {
     display: flex;
-    justify-content:space-evenly;
+    justify-content:flex-end;
+    padding-right: 1.5rem;
     padding-bottom:1rem;
     padding-left: 4rem;
+}
+
+.node-status-card-neighbor-section {
+    display: flex;
+    flex-direction:row;
+    justify-content:flex-start;
+}
+
+.neighbor-list {
+    display: flex;
+    line-break: flex;
 }
