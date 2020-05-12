@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
+import SmoothCollapse from "react-smooth-collapse";
 import { Stage, Layer, Circle, Group, Text } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
 import { Button } from '@rmwc/button';
@@ -20,6 +21,9 @@ const BFS: FunctionComponent = () => {
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
+    const availableNeighbors = addNeighborMode ? nodeListState.filter(node => {
+        return (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor.includes(node));
+    }) : [];
 
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
@@ -47,22 +51,29 @@ const BFS: FunctionComponent = () => {
         newNode.ref = nodeRef;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
-        nodeRef.current.to({
-            shadowBlur: 50,
-            duration: 0.1
-        });
+        if (nodeRef.current) {
+            nodeRef.current.to({
+                shadowBlur: 50,
+                duration: 0.1
+            });
+        }
+        console.log('mouse is over. The current ref is: ' + nodeRef.current);
     }
 
     const mouseOutHandler = (index: number) => {
-        nodeRef.current.to({
-            shadowBlur: 5,
-            duration: 0.15
-        });
+        if (nodeRef.current) {
+            nodeRef.current.to({
+                shadowBlur: 5,
+                duration: 0.15
+            });
+        }
+
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
         newNode.ref = null;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
+        console.log('mouse is out. The current ref is: ' + nodeRef.current);
     }
 
     const nodeClickHandler = (index: number) => {
@@ -158,28 +169,35 @@ const BFS: FunctionComponent = () => {
                                     <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
 
                                     <div className='node-status-card-neighbor-section'>
-                                        <h4 style={{ marginTop: '0.4rem' }}>neighbor:</h4>
-                                        {nodeListState[nodeClickState].neighbor.length !== 0 ?
-                                            nodeListState[nodeClickState].neighbor.map((neighbor => neighbor.value))
-                                            :
-                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
-                                        }
+                                        <div className='neighbor-title'>
+                                            <h4 style={{ marginTop: '0.4rem' }}>neighbor:</h4>
+                                            {nodeListState[nodeClickState].neighbor.length !== 0 ?
+                                                nodeListState[nodeClickState].neighbor.map((neighbor => neighbor.value))
+                                                :
+                                                <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
+                                            }
 
-                                        {addNeighborMode &&
+                                        </div>
+
+                                        <SmoothCollapse allowOverflowWhenOpen expanded={addNeighborMode} className="neighbor-list-collapse-section">
                                             <div className="neighbor-list">
-                                                {nodeListState.map(node => {
-                                                    if (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor?.includes(node)) {
+                                                {availableNeighbors.map((node, index) => {
                                                         return (
-                                                            <Elevation style={{ borderRadius: '50%' }}>
+                                                            <Elevation
+                                                                key={index}
+                                                                z={2}
+                                                                className="neighbor-node"
+                                                                onMouseOver={() => mouseOverNodeHandler(nodeListState.indexOf(node))}
+                                                                onMouseOut={() => mouseOutHandler(nodeListState.indexOf(node))}
+                                                            >
                                                                 <p>{node.value}</p>
                                                             </Elevation>
                                                         )
-                                                    }
 
                                                 })}
 
                                             </div>
-                                        }
+                                        </SmoothCollapse>
                                     </div>
 
                                 </div>
