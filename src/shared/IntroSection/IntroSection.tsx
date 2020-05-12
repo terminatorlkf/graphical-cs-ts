@@ -13,11 +13,7 @@ import './IntroSection.css';
 
 interface IntroSectionInterface {
     title: string,
-<<<<<<< Updated upstream
     source: string
-=======
-    source: string,
->>>>>>> Stashed changes
 }
 
 const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, children }) => {
@@ -62,11 +58,7 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
         );
     }
     return (
-<<<<<<< Updated upstream
-        <div className={"intro-section" + collapsedTitleState}>
-=======
         <div className={"intro-section" + collapsedTitleState} style={{ backgroundColor: color }}>
->>>>>>> Stashed changes
             <div className="intro-section-content">
                 <div className={"intro-section-content-title" + collapsedTitleState}>
                     <h1>{title}</h1>
