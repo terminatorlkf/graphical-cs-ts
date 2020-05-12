@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Home from './Home/Home'
 import BFS from './BFS/BFS'
 import DFS from "./DFS/DFS"
 import AStar from "./AStar/AStar"
@@ -43,8 +44,12 @@ function App() {
           }}>
           <Router>
             <NavigationBar />
-
             <Switch>
+
+              <Route path="/home">
+                <Home />
+              </Route>
+
               <Route path="/bfs">
                 <BFS />
               </Route>
@@ -65,7 +70,6 @@ function App() {
                 <IterativeDeepening />
               </Route>
 
-              <Redirect to="/bfs" />
             </Switch>
           </Router>
         </CurrentPageContext.Provider>
