@@ -18,8 +18,9 @@ interface IntroSectionInterface {
 
 const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, children }) => {
     const IntroExpanded = useContext(IntroExpandedContext);
+    const currentPageIndex = pageIndex.indexOf(useLocation().pathname);
 
-    const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
+    const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[currentPageIndex - 1];
     const setIsOpenedGlobal = IntroExpanded && IntroExpanded.setExpanded;
     const [isOpened, setIsOpened] = useState(isOpenedGlobal ? true : false);
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
@@ -28,7 +29,7 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
     let color = colorArray[pageIndex.indexOf(useLocation().pathname)];
 
     const collapseHandler = () => {
-        setIsOpenedGlobal && setIsOpenedGlobal(0);
+        setIsOpenedGlobal && setIsOpenedGlobal(currentPageIndex - 1);
 
         setIsOpened((prevState: boolean) => {
             return !prevState;
