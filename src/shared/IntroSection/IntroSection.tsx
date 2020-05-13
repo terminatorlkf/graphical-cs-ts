@@ -13,10 +13,11 @@ import './IntroSection.css';
 
 interface IntroSectionInterface {
     title: string,
-    source: string
+    source: string,
+    color: string
 }
 
-const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, children }) => {
+const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, color, children }) => {
     const IntroExpanded = useContext(IntroExpandedContext);
 
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];

@@ -1,9 +1,3 @@
-p {
-    padding-left: 10rem;
-    padding-right: 10rem;
-}
-
-
 .add-node-button {
     position: fixed;
     right: 5rem;
@@ -11,10 +5,9 @@ p {
     margin-top: 40px;
 }
 
-
 .operation-section {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
 .search-status-stack-section {
@@ -23,13 +16,13 @@ p {
 }
 
 .operation-node-section {
-    justify-content:center;
+    justify-content: center;
     flex-wrap: wrap;
     max-width: 55rem;
     margin-top: 3rem;
     padding-left: 10rem;
     padding-right: 10rem;
-    display:flex;
+    display: flex;
 }
 
 .operation-node {
@@ -37,20 +30,20 @@ p {
     margin-bottom: 2rem;
     text-align: center;
     height: 4rem;
-    width:4rem;
-    border-radius:50%;
+    width: 4rem;
+    border-radius: 50%;
 }
 
 .operation-node-clicked {
-    background-color:red;
-    color:white;
+    background-color: red;
+    color: white;
 }
 
 .operation-node p {
     user-select: none;
     padding-top: 0.3rem;
     padding-left: 0;
-    padding-right:0;
+    padding-right: 0;
 }
 
 .node-status-card {
@@ -59,10 +52,11 @@ p {
     padding-left: 1.4rem;
     width: 22rem;
     border-radius: 7px;
-    height: 22rem;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    justify-content:space-between;
+    justify-content: space-between;
+    transition:height 0.1s ease-in-out;
 }
 
 .node-status-card-content {
@@ -71,19 +65,43 @@ p {
 
 .node-status-card-manipulation {
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
     padding-right: 1.5rem;
-    padding-bottom:1rem;
+    padding-bottom: 1rem;
     padding-left: 4rem;
 }
 
 .node-status-card-neighbor-section {
     display: flex;
-    flex-direction:row;
-    justify-content:flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.neighbor-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
 }
 
 .neighbor-list {
     display: flex;
-    line-break: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.neighbor-node {
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    text-align: center;
+    margin-right: 0.6rem;
+    margin-bottom:0.6rem;
+    user-select: none;
+}
+
+.neighbor-list-collapse-section {
+    margin-left: -1rem;
+    padding-left:1rem;
+    overflow: visible;
 }

@@ -12,6 +12,11 @@
     flex-direction: column;
 }
 
+.intro-section p {
+    padding-left: 10rem;
+    padding-right: 10rem;
+}
+
 .intro-section-content-title {
     height: fit-content;
     transition: height 0.8s ease-in;

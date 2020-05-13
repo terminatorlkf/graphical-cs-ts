@@ -10,7 +10,7 @@ import '@rmwc/ripple/styles';
 import "./NavigationBar.css";
 
 interface NavigationBarProps {
-    className?: string
+    className?: string,
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
