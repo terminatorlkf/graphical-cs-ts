@@ -8,8 +8,6 @@ import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
 import { presetNodeState } from './PresetNodeState';
-import { colorArray } from "../shared/colorArray/colorArray";
-
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';

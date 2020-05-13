@@ -49,17 +49,7 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
             }, 20);
         }
     }
-
-    if (title === '/') {
-        return (
-            <div className={"intro-section" + collapsedTitleState} style={{ backgroundColor: color }}>
-                <div className="intro-section-content">
-                    <div className={"intro-section-content-title" + collapsedTitleState}>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    
     return (
         <div className={"intro-section" + collapsedTitleState} style={{ backgroundColor: color }}>
             <div className="intro-section-content">

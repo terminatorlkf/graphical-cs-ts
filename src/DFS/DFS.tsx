@@ -1,6 +1,5 @@
 import React from "react";
 import IntroSection from '../shared/IntroSection/IntroSection';
-import { colorArray } from "../shared/colorArray/colorArray";
 
 const DFS = ()=> {
     return (

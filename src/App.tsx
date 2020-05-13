@@ -69,7 +69,8 @@ function App() {
               <Route Path="/iterative-deepening">
                 <IterativeDeepening />
               </Route>
-
+              
+              <Redirect to="/bfs" />
             </Switch>
           </Router>
         </CurrentPageContext.Provider>
