@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+  /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext } from "react";
 import { IntroExpandedContext } from "../Context/IntroExpandedContext"
 import NavLinkList from "./NavLinkList/NavLinkList";
@@ -37,5 +37,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
         </React.Fragment>
     );
 }
+
 
 export default NavigationBar;
