@@ -51,13 +51,14 @@ const BFS: FunctionComponent = () => {
         newNode.ref = nodeRef;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
-        if (nodeRef.current) {
-            nodeRef.current.to({
-                shadowBlur: 50,
-                duration: 0.1
-            });
-        }
-        console.log('mouse is over. The current ref is: ' + nodeRef.current);
+        setTimeout(() => {
+            if (nodeRef.current) {
+                nodeRef.current.to({
+                    shadowBlur: 50,
+                    duration: 0.1
+                });
+            }
+        }, 0);
     }
 
     const mouseOutHandler = (index: number) => {
@@ -73,7 +74,6 @@ const BFS: FunctionComponent = () => {
         newNode.ref = null;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
-        console.log('mouse is out. The current ref is: ' + nodeRef.current);
     }
 
     const nodeClickHandler = (index: number) => {
