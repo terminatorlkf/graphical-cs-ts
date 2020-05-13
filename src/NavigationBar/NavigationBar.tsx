@@ -16,12 +16,14 @@ interface NavigationBarProps {
 const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
 
     let currentPageIndex = pageIndex.indexOf(useLocation().pathname);
-    if (useLocation().pathname === '/') {
-        currentPageIndex = 3;
-    }
+
     const IntroExpanded = useContext(IntroExpandedContext);
 
-    const titleClass = !IntroExpanded?.pagesExpanded[currentPageIndex ? currentPageIndex : 0] ? "title-secondary" : "title";
+    let titleClass = !IntroExpanded?.pagesExpanded[currentPageIndex - 1] ? "title-secondary" : "title";
+
+    if (currentPageIndex === 0) {
+        titleClass = "title";
+    }
 
     return (
         <React.Fragment>

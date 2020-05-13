@@ -46,6 +46,10 @@ function App() {
             <NavigationBar />
             <Switch>
 
+              <Route path="/" exact>
+                <Redirect to="/home"/>
+              </Route>
+
               <Route path="/home">
                 <Home />
               </Route>
@@ -70,7 +74,6 @@ function App() {
                 <IterativeDeepening />
               </Route>
               
-              <Redirect to="/bfs" />
             </Switch>
           </Router>
         </CurrentPageContext.Provider>

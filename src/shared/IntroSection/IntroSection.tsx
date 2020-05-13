@@ -26,9 +26,6 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
     const [expandButtonIsMounted, setExpandButtonIsMounted] = useState(isOpenedGlobal ? false : true);
 
     let color = colorArray[pageIndex.indexOf(useLocation().pathname)];
-    if (useLocation().pathname === '/') {
-        color = colorArray[3];
-    }
 
     const collapseHandler = () => {
         setIsOpenedGlobal && setIsOpenedGlobal(0);
