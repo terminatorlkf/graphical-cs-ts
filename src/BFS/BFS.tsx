@@ -21,9 +21,6 @@ const BFS: FunctionComponent = () => {
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
-    const availableNeighbors = addNeighborMode ? nodeListState.filter(node => {
-        return (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor.includes(node));
-    }) : [];
 
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
@@ -181,7 +178,8 @@ const BFS: FunctionComponent = () => {
 
                                         <SmoothCollapse allowOverflowWhenOpen expanded={addNeighborMode} className="neighbor-list-collapse-section">
                                             <div className="neighbor-list">
-                                                {availableNeighbors.map((node, index) => {
+                                                {nodeListState.map((node, index) => {
+                                                    if (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor.includes(node)) {
                                                         return (
                                                             <Elevation
                                                                 key={index}
@@ -193,7 +191,7 @@ const BFS: FunctionComponent = () => {
                                                                 <p>{node.value}</p>
                                                             </Elevation>
                                                         )
-
+                                                    }
                                                 })}
 
                                             </div>
