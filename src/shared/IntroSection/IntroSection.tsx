@@ -3,6 +3,9 @@ import SmoothCollapse from "react-smooth-collapse";
 import { IntroExpandedContext } from "../../Context/IntroExpandedContext";
 import { ThemeProvider } from "@rmwc/theme";
 import { Button } from "@rmwc/button";
+import { colorArray } from "../colorArray/colorArray";
+import { useLocation } from 'react-router-dom';
+import { pageIndex } from '../pageIndex/pageIndex'
 
 import '@rmwc/theme/styles';
 import '@rmwc/button/styles';
@@ -10,11 +13,10 @@ import './IntroSection.css';
 
 interface IntroSectionInterface {
     title: string,
-    source: string,
-    color: string
+    source: string
 }
 
-const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, color, children }) => {
+const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, source, children }) => {
     const IntroExpanded = useContext(IntroExpandedContext);
 
     const isOpenedGlobal = IntroExpanded && IntroExpanded.pagesExpanded[0];
@@ -22,6 +24,8 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
     const [isOpened, setIsOpened] = useState(isOpenedGlobal ? true : false);
     const [collapsedTitleState, setCollapsedTitleState] = useState(isOpenedGlobal ? "" : " intro-section-collapsed");
     const [expandButtonIsMounted, setExpandButtonIsMounted] = useState(isOpenedGlobal ? false : true);
+
+    let color = colorArray[pageIndex.indexOf(useLocation().pathname)];
 
     const collapseHandler = () => {
         setIsOpenedGlobal && setIsOpenedGlobal(0);
@@ -42,9 +46,9 @@ const IntroSection: React.FunctionComponent<IntroSectionInterface> = ({ title, s
             }, 20);
         }
     }
-
+    
     return (
-        <div className={"intro-section" + collapsedTitleState} style={{backgroundColor: color}}>
+        <div className={"intro-section" + collapsedTitleState} style={{ backgroundColor: color }}>
             <div className="intro-section-content">
                 <div className={"intro-section-content-title" + collapsedTitleState}>
                     <h1>{title}</h1>
