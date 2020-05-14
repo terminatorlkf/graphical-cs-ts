@@ -119,7 +119,7 @@ const BFS: FunctionComponent = () => {
                 yPosition: e.target.y()
             }
             prevState[index] = node;
-            return prevState;
+            return prevState.slice();
         });
     }
 
@@ -163,7 +163,7 @@ const BFS: FunctionComponent = () => {
                                         onClick={() => nodeClickHandler(index)}
                                         onMouseOver={() => mouseOverNodeHandler(index)}
                                         onMouseOut={() => mouseOutHandler(index)}
-                                        onDragMove={(e) => updatePosition(index, e)}
+                                        onDragMove={e => updatePosition(index, e)}
                                     >
                                         <Circle
                                             ref={node.ref}
