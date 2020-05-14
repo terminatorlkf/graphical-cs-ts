@@ -9,12 +9,18 @@
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23);
     text-align: center;
     display:flex;
+    width: 101%;
     flex-direction: column;
 }
 
 .intro-section p {
     padding-left: 10rem;
     padding-right: 10rem;
+}
+
+.description p {
+    line-height: 1.7rem;
+    font-size: 1.1rem;
 }
 
 .intro-section-content-title {
@@ -27,6 +33,7 @@
 }
 
 .intro-section-collapsed {
+    width:99.8%;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 21px;
