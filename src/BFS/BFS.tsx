@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useRef } from "react";
+import React, { FunctionComponent, useState, useRef, useEffect } from "react";
 import AddNodeButton from "./AddNodeButton"
 import SmoothCollapse from "react-smooth-collapse";
 import { Stage, Layer, Circle, Group, Text } from "react-konva";
@@ -16,6 +16,7 @@ import './BFS.css'
 
 const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
+    const [neighborPairState, setNeighborPairState] = useState<nodeListStateInterface[][]>([]);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
@@ -23,6 +24,7 @@ const BFS: FunctionComponent = () => {
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
             return [...prevState, {
+                index: prevState.length,
                 value: prevState.length,
                 elevation: 5,
                 className: "",
@@ -99,6 +101,12 @@ const BFS: FunctionComponent = () => {
         }
     }
 
+    const neighborNodeClickHandler = (index: number) => {
+        setNeighborPairState(prevState => {
+            return [...prevState, [nodeListState[index], nodeListState[nodeClickState]]];
+        });
+    }
+
     return (
         <div>
             <IntroSection title="Breadth-First Search" source='Wikipedia'>
@@ -166,25 +174,72 @@ const BFS: FunctionComponent = () => {
                                     <div className='node-status-card-neighbor-section'>
                                         <div className='neighbor-title'>
                                             <h4 style={{ marginTop: '0.4rem' }}>neighbor:</h4>
-                                            {nodeListState[nodeClickState].neighbor.length !== 0 ?
-                                                nodeListState[nodeClickState].neighbor.map((neighbor => neighbor.value))
-                                                :
-                                                <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
-                                            }
-
+                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
                                         </div>
+
+                                        <div className="neighbor-list">
+                                            {neighborPairState.map((nodePair, index) => {
+                                                let neighborNodeIndex = -1;
+                                                if (nodePair[0].index === nodeListState[nodeClickState].index)
+                                                    neighborNodeIndex = 1;
+
+                                                if (nodePair[1].index === nodeListState[nodeClickState].index)
+                                                    neighborNodeIndex = 0;
+
+                                                if (neighborNodeIndex !== -1) {
+                                                    let neighborNodeIndexOriginal = -1;
+
+                                                    for (let i = 0; i < nodeListState.length; i++) {
+                                                        if (nodeListState[i].index === nodePair[neighborNodeIndex].index) 
+                                                            neighborNodeIndexOriginal = i;
+                                                    }
+
+                                                    return (
+                                                        <Elevation
+                                                            key={index}
+                                                            z={2}
+                                                            className="neighbor-node"
+                                                            onMouseOver={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
+                                                            onMouseOut={() => mouseOutHandler(neighborNodeIndexOriginal)}
+                                                        >
+                                                            <p>{nodePair[neighborNodeIndex].value}</p>
+                                                        </Elevation>
+                                                    );
+                                                }
+                                            })
+                                            }
+                                        </div>
+
+                                        {neighborPairState.length !== 0 &&
+                                            <br />
+                                        }
 
                                         <SmoothCollapse allowOverflowWhenOpen expanded={addNeighborMode} className="neighbor-list-collapse-section">
                                             <div className="neighbor-list">
                                                 {nodeListState.map((node, index) => {
-                                                    if (node.value !== nodeClickState && !nodeListState[nodeClickState].neighbor.includes(node)) {
+                                                    let isNeighbor = true;
+                                                    if (node.value === nodeClickState)
+                                                        isNeighbor = false;
+
+                                                    neighborPairState.map(nodePair => {
+                                                        if ((nodePair[0].index === nodeListState[nodeClickState].index && nodePair[1].index === node.index) ||
+                                                            (nodePair[1].index === nodeListState[nodeClickState].index && nodePair[0].index === node.index)) {
+                                                            isNeighbor = false;
+                                                        }
+                                                    })
+
+                                                    if (isNeighbor) {
                                                         return (
                                                             <Elevation
                                                                 key={index}
                                                                 z={2}
                                                                 className="neighbor-node"
-                                                                onMouseOver={() => mouseOverNodeHandler(nodeListState.indexOf(node))}
-                                                                onMouseOut={() => mouseOutHandler(nodeListState.indexOf(node))}
+                                                                onMouseOver={() => mouseOverNodeHandler(index)}
+                                                                onMouseOut={() => mouseOutHandler(index)}
+                                                                onClick={() => {
+                                                                    neighborNodeClickHandler(index);
+                                                                    mouseOutHandler(index);
+                                                                }}
                                                             >
                                                                 <p>{node.value}</p>
                                                             </Elevation>

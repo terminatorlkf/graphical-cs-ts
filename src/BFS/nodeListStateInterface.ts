@@ -1,6 +1,7 @@
 import Konva from 'konva';
 
 export interface nodeListStateInterface {
+    index: number;
     value: number,
     elevation: number,
     className: string,
@@ -8,5 +9,4 @@ export interface nodeListStateInterface {
     yPosition: number,
     fill: string,
     ref: React.MutableRefObject<Konva.Circle> | null,
-    neighbor: nodeListStateInterface[]
 }
