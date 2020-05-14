@@ -1,13 +1,16 @@
-import React, { FunctionComponent, useState, useRef, useEffect } from "react";
+import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
 import SmoothCollapse from "react-smooth-collapse";
-import { Stage, Layer, Circle, Group, Text } from "react-konva";
+import { Stage, Layer, Circle, Group, Text, Line } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
 import { Button } from '@rmwc/button';
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
 import { presetNodeState } from './PresetNodeState';
+import { KonvaEventObject } from "konva/types/Node";
+import { presetEdges } from './presetEdges';
+
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -16,7 +19,7 @@ import './BFS.css'
 
 const BFS: FunctionComponent = () => {
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
-    const [neighborPairState, setNeighborPairState] = useState<nodeListStateInterface[][]>([]);
+    const [edgeState, setEdgeState] = useState<number[][]>(presetEdges);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
@@ -102,8 +105,21 @@ const BFS: FunctionComponent = () => {
     }
 
     const neighborNodeClickHandler = (index: number) => {
-        setNeighborPairState(prevState => {
-            return [...prevState, [nodeListState[index], nodeListState[nodeClickState]]];
+        setEdgeState(prevState => {
+            return [...prevState, [index, nodeClickState]];
+        });
+    }
+
+    const updatePosition = (index: number, e: KonvaEventObject<DragEvent>) => {
+        setNodeListState(prevState => {
+            let node = { ...prevState[index] };
+            node = {
+                ...node,
+                xPosition: e.target.x(),
+                yPosition: e.target.y()
+            }
+            prevState[index] = node;
+            return prevState;
         });
     }
 
@@ -119,6 +135,24 @@ const BFS: FunctionComponent = () => {
                 <div className="operation-node-section">
                     <Stage width={window.innerWidth - 580} height={window.innerHeight}>
                         <Layer>
+
+                            {edgeState.length !== 0 &&
+                                edgeState.map((edge, index) => {
+                                    const x1 = nodeListState[edge[0]].xPosition;
+                                    const y1 = nodeListState[edge[0]].yPosition;
+                                    const x2 = nodeListState[edge[1]].xPosition;
+                                    const y2 = nodeListState[edge[1]].yPosition;
+                                    const locationVector = [x1, y1, x2, y2];
+
+                                    return (
+                                        <Line
+                                            points={locationVector}
+                                            stroke='black'
+                                            strokeWidth={4}
+                                        />
+                                    )
+                                })}
+
                             {nodeListState.map((node, index) => {
                                 return (
                                     <Group
@@ -129,10 +163,7 @@ const BFS: FunctionComponent = () => {
                                         onClick={() => nodeClickHandler(index)}
                                         onMouseOver={() => mouseOverNodeHandler(index)}
                                         onMouseOut={() => mouseOutHandler(index)}
-                                        onDragMove={(e) => {
-                                            node.xPosition = e.target.x();
-                                            node.yPosition = e.target.y();
-                                        }}
+                                        onDragMove={(e) => updatePosition(index, e)}
                                     >
                                         <Circle
                                             ref={node.ref}
@@ -178,19 +209,19 @@ const BFS: FunctionComponent = () => {
                                         </div>
 
                                         <div className="neighbor-list">
-                                            {neighborPairState.map((nodePair, index) => {
+                                            {edgeState.map((nodePair, index) => {
                                                 let neighborNodeIndex = -1;
-                                                if (nodePair[0].index === nodeListState[nodeClickState].index)
+                                                if (nodePair[0] === nodeListState[nodeClickState].index)
                                                     neighborNodeIndex = 1;
 
-                                                if (nodePair[1].index === nodeListState[nodeClickState].index)
+                                                if (nodePair[1] === nodeListState[nodeClickState].index)
                                                     neighborNodeIndex = 0;
 
                                                 if (neighborNodeIndex !== -1) {
                                                     let neighborNodeIndexOriginal = -1;
 
                                                     for (let i = 0; i < nodeListState.length; i++) {
-                                                        if (nodeListState[i].index === nodePair[neighborNodeIndex].index) 
+                                                        if (nodeListState[i].index === nodePair[neighborNodeIndex])
                                                             neighborNodeIndexOriginal = i;
                                                     }
 
@@ -202,7 +233,7 @@ const BFS: FunctionComponent = () => {
                                                             onMouseOver={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
                                                             onMouseOut={() => mouseOutHandler(neighborNodeIndexOriginal)}
                                                         >
-                                                            <p>{nodePair[neighborNodeIndex].value}</p>
+                                                            <p>{nodePair[neighborNodeIndex]}</p>
                                                         </Elevation>
                                                     );
                                                 }
@@ -210,7 +241,7 @@ const BFS: FunctionComponent = () => {
                                             }
                                         </div>
 
-                                        {neighborPairState.length !== 0 &&
+                                        {edgeState.length !== 0 &&
                                             <br />
                                         }
 
@@ -221,9 +252,9 @@ const BFS: FunctionComponent = () => {
                                                     if (node.value === nodeClickState)
                                                         isNeighbor = false;
 
-                                                    neighborPairState.map(nodePair => {
-                                                        if ((nodePair[0].index === nodeListState[nodeClickState].index && nodePair[1].index === node.index) ||
-                                                            (nodePair[1].index === nodeListState[nodeClickState].index && nodePair[0].index === node.index)) {
+                                                    edgeState.map(nodePair => {
+                                                        if ((nodePair[0] === nodeListState[nodeClickState].index && nodePair[1] === node.index) ||
+                                                            (nodePair[1] === nodeListState[nodeClickState].index && nodePair[0] === node.index)) {
                                                             isNeighbor = false;
                                                         }
                                                     })
