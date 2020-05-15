@@ -1,26 +1,36 @@
 import React from 'react';
 import Node from './Node';
-import { nodeListStateInterface } from './nodeListStateInterface';
+import { nodeListStateInterface } from '../nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
+import { KonvaEventObject } from 'konva/types/Node';
+import EdgeList from '../Edges/EdgeList';
 
 interface OperationNodeInterface {
     nodeList: nodeListStateInterface[],
-    nodeClickHandler: (index: number) => void,
-    mouseOverNodeHandler: (index: number) => void,
-    mouseOutHandler: (index: number) => void
+    edgeList: number[][],
+    onClick: (index: number) => void,
+    onMouseEnter: (index: number) => void,
+    onMouseLeave: (index: number) => void,
+    onDragMove: (index: number, e: KonvaEventObject<DragEvent>) => void
 }
 
 const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
     nodeList,
-    nodeClickHandler,
-    mouseOverNodeHandler,
-    mouseOutHandler
+    edgeList,
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    onDragMove
 }) => {
 
     return (
         <div className="operation-node-section">
             <Stage width={window.innerWidth - 580} height={window.innerHeight}>
                 <Layer>
+                    <EdgeList
+                        edgeList={edgeList}
+                        nodeListState={nodeList}
+                    />
                     {nodeList.map((node, index) => {
                         return (
                             <Node
@@ -32,9 +42,10 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
                                 yPosition={node.yPosition}
                                 fill={node.fill}
                                 ref={node.ref}
-                                nodeClickHandler={() => nodeClickHandler(index)}
-                                mouseOverNodeHandler={() => mouseOverNodeHandler(index)}
-                                mouseOutHandler={() => mouseOutHandler(index)}
+                                onClick={() => onClick(index)}
+                                onMouseEnter={() => onMouseEnter(index)}
+                                onMouseLeave={() => onMouseLeave(index)}
+                                onDragMove={(e) => onDragMove(index, e)}
                             />
                         );
                     })}

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
 import SmoothCollapse from "react-smooth-collapse";
-import { Stage, Layer, Circle, Group, Text, Line } from "react-konva";
+import { Stage, Layer, Circle, Group, Text } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
 import { Button } from '@rmwc/button';
 import Konva from 'konva';
@@ -10,7 +10,7 @@ import { nodeListStateInterface } from './nodeListStateInterface';
 import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
-import EdgeList from './Edges/EdgeList';
+import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -53,6 +53,7 @@ const BFS: FunctionComponent = () => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
         newNode.ref = nodeRef;
+        console.log(newNode.ref);
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
         setTimeout(() => {
@@ -89,10 +90,12 @@ const BFS: FunctionComponent = () => {
         let newNode = { ...newNodeState[index] };
         newNode.fill = newNode.fill === defaultFill ? clickedFill : defaultFill;
 
-        nodeRef.current.to({
-            fill: newNode.fill,
-            duration: 0.15
-        })
+        if (nodeRef.current) {
+            nodeRef.current.to({
+                fill: newNode.fill,
+                duration: 0.15
+            })
+        }
 
         for (let i = 0; i < newNodeState.length; i++) {
             if (i !== index && newNodeState[i].fill === clickedFill) {
@@ -154,68 +157,14 @@ const BFS: FunctionComponent = () => {
             </IntroSection>
 
             <div className="operation-section">
-                <div className="operation-node-section">
-                    <Stage width={window.innerWidth - 580} height={window.innerHeight}>
-                        <Layer>
-                            <EdgeList
-                                edgeList={edgeState}
-                                nodeListState={nodeListState}
-                            />
-{/*                         
-                            {edgeState.length !== 0 &&
-                                edgeState.map((edge, index) => {
-                                    const x1 = nodeListState[edge[0]].xPosition;
-                                    const y1 = nodeListState[edge[0]].yPosition;
-                                    const x2 = nodeListState[edge[1]].xPosition;
-                                    const y2 = nodeListState[edge[1]].yPosition;
-                                    const locationVector = [x1, y1, x2, y2];
-
-                                    return (
-                                        <Line
-                                            points={locationVector}
-                                            stroke='black'
-                                            strokeWidth={4}
-                                        />
-                                    )
-                                })} */}
-
-                            {nodeListState.map((node, index) => {
-                                return (
-                                    <Group
-                                        key={index}
-                                        x={node.xPosition}
-                                        y={node.yPosition}
-                                        draggable
-                                        onClick={() => nodeClickHandler(index)}
-                                        onMouseEnter={() => mouseOverNodeHandler(index)}
-                                        onMouseLeave={() => mouseOutHandler(index)}
-                                        onDragMove={e => updatePosition(index, e)}
-                                    >
-                                        <Circle
-                                            ref={node.ref}
-                                            radius={35}
-                                            fill={node.fill}
-                                            shadowBlur={node.elevation}
-                                            shadowColor='black'
-                                            shadowOffset={{ x: 0, y: 3 }}
-                                            shadowOpacity={0.3}
-
-                                        />
-                                        <Text
-                                            text={`${node.value}`}
-                                            fontSize={20}
-                                            fontFamily="'Roboto Mono'"
-                                            fontStyle='bold'
-                                            x={node.value < 10 ? -6 : -12}
-                                            y={-7}
-                                            fill={node.fill === 'white' ? 'black' : 'white'}
-                                        />
-                                    </Group>
-                                )
-                            })}
-                        </Layer>
-                    </Stage>
-                </div>
+                <OperationNodeSection 
+                    nodeList={nodeListState}
+                    edgeList={edgeState}
+                    onClick={nodeClickHandler}
+                    onMouseEnter={mouseOverNodeHandler}
+                    onMouseLeave={mouseOutHandler}
+                    onDragMove={updatePosition}
+                />
 
                 <div className="search-status-stack-section">
                     {/* <h1>Priority Queue</h1> */}
