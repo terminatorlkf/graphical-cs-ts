@@ -31,7 +31,7 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
                                 xPosition={node.xPosition}
                                 yPosition={node.yPosition}
                                 fill={node.fill}
-                                ref={node.ref}
+                                ref={null}
                                 nodeClickHandler={() => nodeClickHandler(index)}
                                 mouseOverNodeHandler={() => mouseOverNodeHandler(index)}
                                 mouseOutHandler={() => mouseOutHandler(index)}

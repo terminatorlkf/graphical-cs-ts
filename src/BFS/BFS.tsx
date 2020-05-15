@@ -22,7 +22,7 @@ const BFS: FunctionComponent = () => {
     const [edgeState, setEdgeState] = useState<number[][]>(presetEdges);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
-    const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
+    const nodeRef = useRef() as React.MutableRefObject<Konva.Text>;
 
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
@@ -33,7 +33,7 @@ const BFS: FunctionComponent = () => {
                 className: "",
                 xPosition: x,
                 yPosition: y,
-                fill: 'white',
+                fill: '#9e9e9e',
                 ref: null,
                 neighbor: []
             }]
@@ -54,7 +54,9 @@ const BFS: FunctionComponent = () => {
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
-                    shadowBlur: 50,
+                    x: nodeListState[index].value < 10 ? -10 : -16,
+                    y: -50,
+                    fontSize: 30,
                     duration: 0.1
                 });
             }
@@ -64,7 +66,9 @@ const BFS: FunctionComponent = () => {
     const mouseOutHandler = (index: number) => {
         if (nodeRef.current) {
             nodeRef.current.to({
-                shadowBlur: 5,
+                x: nodeListState[index].value < 10 ? -6 : -12,
+                y: -40,
+                fontSize: 20,
                 duration: 0.15
             });
         }
@@ -79,7 +83,7 @@ const BFS: FunctionComponent = () => {
     const nodeClickHandler = (index: number) => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
-        newNode.fill = newNode.fill === 'white' ? 'red' : 'white';
+        newNode.fill = newNode.fill === '#9e9e9e' ? 'red' : '#9e9e9e';
 
         nodeRef.current.to({
             fill: newNode.fill,
@@ -89,7 +93,7 @@ const BFS: FunctionComponent = () => {
         for (let i = 0; i < newNodeState.length; i++) {
             if (i !== index && newNodeState[i].fill === 'red') {
                 let oldNode = { ...newNodeState[i] };
-                oldNode.fill = 'white';
+                oldNode.fill = '#9e9e9e';
                 newNodeState[i] = oldNode;
             }
         }
@@ -147,8 +151,8 @@ const BFS: FunctionComponent = () => {
                                     return (
                                         <Line
                                             points={locationVector}
-                                            stroke='black'
-                                            strokeWidth={4}
+                                            stroke='lightgray'
+                                            strokeWidth={2}
                                         />
                                     )
                                 })}
@@ -166,23 +170,20 @@ const BFS: FunctionComponent = () => {
                                         onDragMove={e => updatePosition(index, e)}
                                     >
                                         <Circle
-                                            ref={node.ref}
-                                            radius={35}
+                                            radius={8}
                                             fill={node.fill}
-                                            shadowBlur={node.elevation}
-                                            shadowColor='black'
-                                            shadowOffset={{ x: 0, y: 3 }}
-                                            shadowOpacity={0.3}
-
+                                            // stroke='black'
+                                            // strokeWidth={2}
                                         />
                                         <Text
+                                            ref={node.ref}
                                             text={`${node.value}`}
                                             fontSize={20}
                                             fontFamily="'Roboto Mono'"
                                             fontStyle='bold'
                                             x={node.value < 10 ? -6 : -12}
-                                            y={-7}
-                                            fill={node.fill === 'white' ? 'black' : 'white'}
+                                            y={-40}
+                                            fill='black'
                                         />
                                     </Group>
                                 )

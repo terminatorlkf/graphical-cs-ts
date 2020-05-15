@@ -8,7 +8,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 204.9,
         yPosition: 317.2,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -18,7 +18,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 887.3,
         yPosition: 226.0,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -28,7 +28,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 360.0,
         yPosition: 263.0,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -38,7 +38,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 794.7,
         yPosition: 99,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -48,7 +48,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 491.1,
         yPosition: 494,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -58,7 +58,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 458.1,
         yPosition: 351.4,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -68,7 +68,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 252.2,
         yPosition: 119.0,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -78,7 +78,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 812.1,
         yPosition: 496.2,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -88,7 +88,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 505.7,
         yPosition: 201.6,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -98,7 +98,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 584.9,
         yPosition: 77.7,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -108,7 +108,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 632.7,
         yPosition: 397,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -118,7 +118,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 821.1,
         yPosition: 368.7,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -128,7 +128,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 257.8,
         yPosition: 504.6,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     },
     {
@@ -138,7 +138,7 @@ export const presetNodeState: nodeListStateInterface[] = [
         className: '',
         xPosition: 719.0,
         yPosition: 253.3,
-        fill: 'white',
+        fill: '#9e9e9e',
         ref: null,
     }
 ]
