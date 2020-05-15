@@ -10,6 +10,7 @@ import { nodeListStateInterface } from './nodeListStateInterface';
 import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
+import EdgeList from './Edges/EdgeList';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -118,7 +119,7 @@ const BFS: FunctionComponent = () => {
             setEdgeState(prevState => {
                 return prevState.filter(edge => {
                     return !((edge[0] === index && edge[1] === nodeClickState) ||
-                    (edge[0] === nodeClickState && edge[1] === index));
+                        (edge[0] === nodeClickState && edge[1] === index));
                 });
             });
         }
@@ -156,7 +157,11 @@ const BFS: FunctionComponent = () => {
                 <div className="operation-node-section">
                     <Stage width={window.innerWidth - 580} height={window.innerHeight}>
                         <Layer>
-
+                            <EdgeList
+                                edgeList={edgeState}
+                                nodeListState={nodeListState}
+                            />
+{/*                         
                             {edgeState.length !== 0 &&
                                 edgeState.map((edge, index) => {
                                     const x1 = nodeListState[edge[0]].xPosition;
@@ -172,7 +177,7 @@ const BFS: FunctionComponent = () => {
                                             strokeWidth={4}
                                         />
                                     )
-                                })}
+                                })} */}
 
                             {nodeListState.map((node, index) => {
                                 return (
@@ -260,9 +265,7 @@ const BFS: FunctionComponent = () => {
                                                             onMouseEnter={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
                                                             onMouseLeave={() => mouseOutHandler(neighborNodeIndexOriginal)}
                                                             onClick={() => {
-                                                                console.log('clicked');
                                                                 setCurrentNeighbor(neighborNodeIndexOriginal);
-                                                                console.log(currentNeighbor);
                                                                 setEditNeighborMode(true);
                                                             }}
                                                         >
