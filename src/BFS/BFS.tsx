@@ -7,7 +7,7 @@ import { Button } from '@rmwc/button';
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
-import { presetNodeState } from './PresetNodeState';
+import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
 
@@ -18,10 +18,13 @@ import '@rmwc/button/styles';
 import './BFS.css'
 
 const BFS: FunctionComponent = () => {
+    const clickedFill = '#EC407A';
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
     const [edgeState, setEdgeState] = useState<number[][]>(presetEdges);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
+    const [editNeighborMode, setEditNeighborMode] = useState<boolean>(false);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
+    const [currentNeighbor, setCurrentNeighbor] = useState<number>(-1);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const addNodeHandler = (x: number, y: number) => {
@@ -33,7 +36,7 @@ const BFS: FunctionComponent = () => {
                 className: "",
                 xPosition: x,
                 yPosition: y,
-                fill: 'white',
+                fill: defaultFill,
                 ref: null,
                 neighbor: []
             }]
@@ -54,6 +57,8 @@ const BFS: FunctionComponent = () => {
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
+                    fontSize: 25,
+                    radius: 40,
                     shadowBlur: 50,
                     duration: 0.1
                 });
@@ -64,6 +69,8 @@ const BFS: FunctionComponent = () => {
     const mouseOutHandler = (index: number) => {
         if (nodeRef.current) {
             nodeRef.current.to({
+                fontSize: 20,
+                radius: 35,
                 shadowBlur: 5,
                 duration: 0.15
             });
@@ -79,7 +86,7 @@ const BFS: FunctionComponent = () => {
     const nodeClickHandler = (index: number) => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
-        newNode.fill = newNode.fill === 'white' ? 'red' : 'white';
+        newNode.fill = newNode.fill === defaultFill ? clickedFill : defaultFill;
 
         nodeRef.current.to({
             fill: newNode.fill,
@@ -87,9 +94,9 @@ const BFS: FunctionComponent = () => {
         })
 
         for (let i = 0; i < newNodeState.length; i++) {
-            if (i !== index && newNodeState[i].fill === 'red') {
+            if (i !== index && newNodeState[i].fill === clickedFill) {
                 let oldNode = { ...newNodeState[i] };
-                oldNode.fill = 'white';
+                oldNode.fill = defaultFill;
                 newNodeState[i] = oldNode;
             }
         }
@@ -97,14 +104,28 @@ const BFS: FunctionComponent = () => {
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
 
-        if (newNode.fill === 'red') {
+        if (newNode.fill === clickedFill) {
             setNodeClickState(index);
+            setAddNeighborMode(false);
         } else {
             setNodeClickState(-1);
         }
     }
 
-    const neighborNodeClickHandler = (index: number) => {
+    const deleteNeighbor = (index: number) => {
+        console.log(index);
+        if (currentNeighbor !== -1) {
+            setEdgeState(prevState => {
+                return prevState.filter(edge => {
+                    return !((edge[0] === index && edge[1] === nodeClickState) ||
+                    (edge[0] === nodeClickState && edge[1] === index));
+                });
+            });
+        }
+        setEditNeighborMode(false);
+    }
+
+    const availableNeighborClickHandler = (index: number) => {
         setEdgeState(prevState => {
             return [...prevState, [index, nodeClickState]];
         });
@@ -161,8 +182,8 @@ const BFS: FunctionComponent = () => {
                                         y={node.yPosition}
                                         draggable
                                         onClick={() => nodeClickHandler(index)}
-                                        onMouseOver={() => mouseOverNodeHandler(index)}
-                                        onMouseOut={() => mouseOutHandler(index)}
+                                        onMouseEnter={() => mouseOverNodeHandler(index)}
+                                        onMouseLeave={() => mouseOutHandler(index)}
                                         onDragMove={e => updatePosition(index, e)}
                                     >
                                         <Circle
@@ -198,16 +219,22 @@ const BFS: FunctionComponent = () => {
                         <div className="node-status-section">
                             <Elevation className={nodeClickState !== -1 ? 'node-status-card' : ''} z={3} height={10}>
 
+                                <div className="node-status-card-title">
+                                    <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
+                                </div>
+
                                 <div className="node-status-card-content">
 
-                                    <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
+                                    <div className='neighbor-title'>
+                                        <h4 style={{ marginTop: '0.4rem' }}>neighbor</h4>
+                                        {!editNeighborMode ?
+                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
+                                            :
+                                            <Button label='delete neighbor' onClick={() => deleteNeighbor(currentNeighbor)} />
+                                        }
+                                    </div>
 
                                     <div className='node-status-card-neighbor-section'>
-                                        <div className='neighbor-title'>
-                                            <h4 style={{ marginTop: '0.4rem' }}>neighbor:</h4>
-                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
-                                        </div>
-
                                         <div className="neighbor-list">
                                             {edgeState.map((nodePair, index) => {
                                                 let neighborNodeIndex = -1;
@@ -230,8 +257,14 @@ const BFS: FunctionComponent = () => {
                                                             key={index}
                                                             z={2}
                                                             className="neighbor-node"
-                                                            onMouseOver={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
-                                                            onMouseOut={() => mouseOutHandler(neighborNodeIndexOriginal)}
+                                                            onMouseEnter={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
+                                                            onMouseLeave={() => mouseOutHandler(neighborNodeIndexOriginal)}
+                                                            onClick={() => {
+                                                                console.log('clicked');
+                                                                setCurrentNeighbor(neighborNodeIndexOriginal);
+                                                                console.log(currentNeighbor);
+                                                                setEditNeighborMode(true);
+                                                            }}
                                                         >
                                                             <p>{nodePair[neighborNodeIndex]}</p>
                                                         </Elevation>
@@ -268,7 +301,7 @@ const BFS: FunctionComponent = () => {
                                                                 onMouseOver={() => mouseOverNodeHandler(index)}
                                                                 onMouseOut={() => mouseOutHandler(index)}
                                                                 onClick={() => {
-                                                                    neighborNodeClickHandler(index);
+                                                                    availableNeighborClickHandler(index);
                                                                     mouseOutHandler(index);
                                                                 }}
                                                             >

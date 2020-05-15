@@ -47,6 +47,7 @@
 }
 
 .node-status-card {
+    overflow: hidden;
     margin-top: 3.6rem;
     padding-top: 0.4rem;
     padding-left: 1.4rem;
@@ -57,6 +58,28 @@
     flex-direction: column;
     justify-content: space-between;
     transition:height 0.1s ease-in-out;
+}
+
+.node-status-card-title {
+    margin-left: -1.4rem;
+    background-color: #EC407A;
+    margin-top: -0.5rem;
+    color: white;
+    padding-bottom: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.node-status-card-title h2 {
+    margin-left: 2rem;
+    margin-bottom: 0.2rem;
+}
+
+.neighbor-title {
+    padding-right: 1.5rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .node-status-card-content {
@@ -77,17 +100,10 @@
     justify-content: flex-start;
 }
 
-.neighbor-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
 .neighbor-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
 }
 
 .neighbor-node {
