@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
 import SmoothCollapse from "react-smooth-collapse";
-import { Stage, Layer, Circle, Group, Text } from "react-konva";
 import { Elevation } from "@rmwc/elevation";
 import { Button } from '@rmwc/button';
 import Konva from 'konva';
@@ -11,6 +10,7 @@ import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
 import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
+import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -19,7 +19,7 @@ import '@rmwc/button/styles';
 import './BFS.css'
 
 const BFS: FunctionComponent = () => {
-    const clickedFill = '#EC407A';
+    const clickedFill = 'red';
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
     const [edgeState, setEdgeState] = useState<number[][]>(presetEdges);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
@@ -171,9 +171,9 @@ const BFS: FunctionComponent = () => {
 
                     {nodeClickState !== -1 &&
                         <div className="node-status-section">
-                            <Elevation className={nodeClickState !== -1 ? 'node-status-card' : ''} z={3} height={10}>
+                            <Elevation className='node-status-card' z={3} height={10}>
 
-                                <div className="node-status-card-title">
+                                <div className="node-status-card-title" style={{backgroundColor: clickedFill}}>
                                     <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
                                 </div>
 
@@ -189,7 +189,18 @@ const BFS: FunctionComponent = () => {
                                     </div>
 
                                     <div className='node-status-card-neighbor-section'>
-                                        <div className="neighbor-list">
+                                        <NodeNeighborList
+                                            neighborList={edgeState}
+                                            nodeList={nodeListState}
+                                            currentNodeIndex={nodeClickState}
+                                            onMouseEnter={mouseOverNodeHandler}
+                                            onMouseLeave={mouseOutHandler}
+                                            onClick={(index) =>{
+                                                setCurrentNeighbor(index);
+                                                setEditNeighborMode(prevState => !prevState);
+                                            }}
+                                        />
+                                        {/* <div className="neighbor-list">
                                             {edgeState.map((nodePair, index) => {
                                                 let neighborNodeIndex = -1;
                                                 if (nodePair[0] === nodeListState[nodeClickState].index)
@@ -215,7 +226,7 @@ const BFS: FunctionComponent = () => {
                                                             onMouseLeave={() => mouseOutHandler(neighborNodeIndexOriginal)}
                                                             onClick={() => {
                                                                 setCurrentNeighbor(neighborNodeIndexOriginal);
-                                                                setEditNeighborMode(true);
+                                                                setEditNeighborMode(prevState => !prevState);
                                                             }}
                                                         >
                                                             <p>{nodePair[neighborNodeIndex]}</p>
@@ -224,7 +235,7 @@ const BFS: FunctionComponent = () => {
                                                 }
                                             })
                                             }
-                                        </div>
+                                        </div> */}
 
                                         {edgeState.length !== 0 &&
                                             <br />
