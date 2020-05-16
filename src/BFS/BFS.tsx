@@ -11,6 +11,7 @@ import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
 import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
+import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -203,41 +204,18 @@ const BFS: FunctionComponent = () => {
 
                                         {edgeState.length !== 0 && <br />}
 
-                                        <SmoothCollapse allowOverflowWhenOpen expanded={addNeighborMode} className="neighbor-list-collapse-section">
-                                            <div className="neighbor-list">
-                                                {nodeListState.map((node, index) => {
-                                                    let isNeighbor = true;
-                                                    if (node.value === nodeClickState)
-                                                        isNeighbor = false;
-
-                                                    edgeState.map(nodePair => {
-                                                        if ((nodePair[0] === nodeListState[nodeClickState].index && nodePair[1] === node.index) ||
-                                                            (nodePair[1] === nodeListState[nodeClickState].index && nodePair[0] === node.index)) {
-                                                            isNeighbor = false;
-                                                        }
-                                                    })
-
-                                                    if (isNeighbor) {
-                                                        return (
-                                                            <Elevation
-                                                                key={index}
-                                                                z={2}
-                                                                className="neighbor-node"
-                                                                onMouseOver={() => mouseOverNodeHandler(index)}
-                                                                onMouseOut={() => mouseOutHandler(index)}
-                                                                onClick={() => {
-                                                                    availableNeighborClickHandler(index);
-                                                                    mouseOutHandler(index);
-                                                                }}
-                                                            >
-                                                                <p>{node.value}</p>
-                                                            </Elevation>
-                                                        )
-                                                    }
-                                                })}
-
-                                            </div>
-                                        </SmoothCollapse>
+                                        <AvailableNeighborList 
+                                            expanded={addNeighborMode}
+                                            nodeList={nodeListState}
+                                            edgeList={edgeState}
+                                            currentNodeIndex={nodeClickState}
+                                            onMouseEnter={mouseOverNodeHandler}
+                                            onMouseLeave={mouseOutHandler}
+                                            onClick={index => {
+                                                availableNeighborClickHandler(index);
+                                                mouseOutHandler(index);
+                                            }}
+                                        />
                                     </div>
 
                                 </div>
