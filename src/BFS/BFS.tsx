@@ -200,46 +200,8 @@ const BFS: FunctionComponent = () => {
                                                 setEditNeighborMode(prevState => !prevState);
                                             }}
                                         />
-                                        {/* <div className="neighbor-list">
-                                            {edgeState.map((nodePair, index) => {
-                                                let neighborNodeIndex = -1;
-                                                if (nodePair[0] === nodeListState[nodeClickState].index)
-                                                    neighborNodeIndex = 1;
 
-                                                if (nodePair[1] === nodeListState[nodeClickState].index)
-                                                    neighborNodeIndex = 0;
-
-                                                if (neighborNodeIndex !== -1) {
-                                                    let neighborNodeIndexOriginal = -1;
-
-                                                    for (let i = 0; i < nodeListState.length; i++) {
-                                                        if (nodeListState[i].index === nodePair[neighborNodeIndex])
-                                                            neighborNodeIndexOriginal = i;
-                                                    }
-
-                                                    return (
-                                                        <Elevation
-                                                            key={index}
-                                                            z={2}
-                                                            className="neighbor-node"
-                                                            onMouseEnter={() => mouseOverNodeHandler(neighborNodeIndexOriginal)}
-                                                            onMouseLeave={() => mouseOutHandler(neighborNodeIndexOriginal)}
-                                                            onClick={() => {
-                                                                setCurrentNeighbor(neighborNodeIndexOriginal);
-                                                                setEditNeighborMode(prevState => !prevState);
-                                                            }}
-                                                        >
-                                                            <p>{nodePair[neighborNodeIndex]}</p>
-                                                        </Elevation>
-                                                    );
-                                                }
-                                            })
-                                            }
-                                        </div> */}
-
-                                        {edgeState.length !== 0 &&
-                                            <br />
-                                        }
+                                        {edgeState.length !== 0 && <br />}
 
                                         <SmoothCollapse allowOverflowWhenOpen expanded={addNeighborMode} className="neighbor-list-collapse-section">
                                             <div className="neighbor-list">
