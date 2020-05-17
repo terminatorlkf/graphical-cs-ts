@@ -40,7 +40,16 @@ const BFS: FunctionComponent = () => {
     }
 
     const deleteNodeHandler = (index: number) => {
-        setNodeListState(nodeListState.filter((node) => node.value !== index));
+        setEdgeState(prevState => prevState.filter(edge => !(edge[0] === index || edge[1] === index)));
+        setNodeListState(prevState =>{
+            let node = {...prevState[index]};
+            node = {
+                ...node,
+                index: -1
+            }
+            prevState[index] = node;
+            return prevState.slice();
+        } );
         setNodeClickState(-1);
     }
 
@@ -172,9 +181,7 @@ const BFS: FunctionComponent = () => {
                                 addNeighborMode={addNeighborMode}
                                 currentNeighborIndex={currentNeighbor}
                                 expanded={addNeighborMode}
-                                onAddNeighbor={() => {
-                                    setAddNeighborMode(prevState => !prevState)
-                                }}
+                                onAddNeighbor={() => setAddNeighborMode(prevState => !prevState)}
                                 onDeleteNeighbor={index => deleteNeighbor(index)}
                                 onMouseEnterNeighbor={mouseOverNodeHandler}
                                 onMouseLeaveNeighbor={mouseOutHandler}

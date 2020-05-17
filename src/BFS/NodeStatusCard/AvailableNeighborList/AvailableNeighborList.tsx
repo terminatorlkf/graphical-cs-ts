@@ -35,6 +35,7 @@ const AvailableNeighborList = (props: AvailableNeighborListProps) => {
                         if (isNeighbor) {
                             return (
                                 <AvailableNeighborNode 
+                                    key={index}
                                     index={index}
                                     value={node.value}
                                     onMouseEnter={onMouseEnter}
@@ -43,6 +44,7 @@ const AvailableNeighborList = (props: AvailableNeighborListProps) => {
                                 />
                             )
                         }
+                        return null;
                     })}
                 </div>
             </SmoothCollapse>

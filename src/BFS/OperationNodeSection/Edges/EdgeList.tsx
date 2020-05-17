@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { nodeListStateInterface } from '../nodeListStateInterface';
+import { nodeListStateInterface } from '../../nodeListStateInterface';
 import Edge from './Edge';
 
 interface EdgeListInterface {

@@ -3,7 +3,7 @@ import Node from './Node';
 import { nodeListStateInterface } from '../nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
-import EdgeList from '../Edges/EdgeList';
+import EdgeList from './Edges/EdgeList';
 
 interface OperationNodeInterface {
     nodeList: nodeListStateInterface[],
@@ -32,22 +32,25 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
                         nodeListState={nodeList}
                     />
                     {nodeList.map((node, index) => {
-                        return (
-                            <Node
-                                index={index}
-                                key={index}
-                                value={node.value}
-                                elevation={node.elevation}
-                                xPosition={node.xPosition}
-                                yPosition={node.yPosition}
-                                fill={node.fill}
-                                ref={node.ref}
-                                onClick={() => onClick(index)}
-                                onMouseEnter={() => onMouseEnter(index)}
-                                onMouseLeave={() => onMouseLeave(index)}
-                                onDragMove={(e) => onDragMove(index, e)}
-                            />
-                        );
+                        if (node.index !== -1) {
+                            return (
+                                <Node
+                                    index={index}
+                                    key={index}
+                                    value={node.value}
+                                    elevation={node.elevation}
+                                    xPosition={node.xPosition}
+                                    yPosition={node.yPosition}
+                                    fill={node.fill}
+                                    ref={node.ref}
+                                    onClick={() => onClick(index)}
+                                    onMouseEnter={() => onMouseEnter(index)}
+                                    onMouseLeave={() => onMouseLeave(index)}
+                                    onDragMove={(e) => onDragMove(index, e)}
+                                />
+                            );
+                        }
+                        return null;
                     })}
                 </Layer>
             </Stage>
