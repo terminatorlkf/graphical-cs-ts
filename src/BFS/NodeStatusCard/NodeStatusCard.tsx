@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Elevation } from '@rmwc/elevation';
 import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
@@ -29,11 +29,11 @@ export type NodeStatusCardProps = {
     onDeleteNode: (index: number) => void
 }
 
-const NodeStatusCard = (props: NodeStatusCardProps) => {
+const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React.Ref<HTMLButtonElement>) => {
 
     const { edgeList, nodeList, currentNodeIndex, backgroundColor, editNeighborMode,
         currentNeighborIndex, addNeighborMode, expanded, onAddNeighbor, onDeleteNeighbor,
-        onMouseEnterNeighbor, onMouseLeaveNeighbor, onClickNeighbor,onMouseEnterAvailableNeighbor, 
+        onMouseEnterNeighbor, onMouseLeaveNeighbor, onClickNeighbor, onMouseEnterAvailableNeighbor,
         onMouseLeaveAvailableNeighbor, onClickAvailableNeighbor, onDeleteNode } = props;
 
     return (
@@ -46,8 +46,9 @@ const NodeStatusCard = (props: NodeStatusCardProps) => {
                     editNeighborMode={editNeighborMode}
                     addNeighborMode={addNeighborMode}
                     currentNeighborIndex={currentNeighborIndex}
-                    addNeighborModeButtonOnClick={onAddNeighbor}
-                    deleteNeighborModeButtonOnClick={index => onDeleteNeighbor(index)}
+                    onAddNeighbor={onAddNeighbor}
+                    onDeleteNeighbor={index => onDeleteNeighbor(index)}
+                    ref={ref}
                 />
 
                 <div className="node-status-card-content">
@@ -83,6 +84,6 @@ const NodeStatusCard = (props: NodeStatusCardProps) => {
             </Elevation>
         </div>
     );
-}
+});
 
 export default NodeStatusCard;

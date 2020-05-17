@@ -1,4 +1,4 @@
-import { nodeListStateInterface } from './nodeListStateInterface';
+import { nodeListStateInterface } from '../nodeListStateInterface';
 
 export const defaultFill = 'rgba(80, 80, 80, 1)'
 

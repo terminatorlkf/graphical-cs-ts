@@ -3,10 +3,10 @@ import AddNodeButton from "./AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
-import { presetNodeState, defaultFill } from './PresetNodeState';
+import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
-import { presetEdges } from './presetEdges';
-import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
+import { presetEdges } from './PresetValues/presetEdges';
+import OperationNodeSection from './OperationNodeSection/Nodes/OperationNodeSection'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 
 import '@rmwc/fab/styles';
@@ -22,6 +22,7 @@ const BFS: FunctionComponent = () => {
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
     const [currentNeighbor, setCurrentNeighbor] = useState<number>(-1);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
+    const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const addNodeHandler = (x: number, y: number) => {
         setNodeListState(prevState => {
@@ -39,17 +40,18 @@ const BFS: FunctionComponent = () => {
         });
     }
 
+
     const deleteNodeHandler = (index: number) => {
         setEdgeState(prevState => prevState.filter(edge => !(edge[0] === index || edge[1] === index)));
-        setNodeListState(prevState =>{
-            let node = {...prevState[index]};
+        setNodeListState(prevState => {
+            let node = { ...prevState[index] };
             node = {
                 ...node,
                 index: -1
             }
             prevState[index] = node;
             return prevState.slice();
-        } );
+        });
         setNodeClickState(-1);
     }
 
@@ -172,32 +174,39 @@ const BFS: FunctionComponent = () => {
                     {/* <h1>Priority Queue</h1> */}
 
                     {nodeClickState !== -1 &&
-                            <NodeStatusCard
-                                edgeList={edgeState}
-                                nodeList={nodeListState}
-                                currentNodeIndex={nodeClickState}
-                                backgroundColor={clickedFill}
-                                editNeighborMode={editNeighborMode}
-                                addNeighborMode={addNeighborMode}
-                                currentNeighborIndex={currentNeighbor}
-                                expanded={addNeighborMode}
-                                onAddNeighbor={() => setAddNeighborMode(prevState => !prevState)}
-                                onDeleteNeighbor={index => deleteNeighbor(index)}
-                                onMouseEnterNeighbor={mouseOverNodeHandler}
-                                onMouseLeaveNeighbor={mouseOutHandler}
-                                onClickNeighbor={index => {
-                                    setCurrentNeighbor(index);
-                                    setEditNeighborMode(prevState => !prevState);
-                                }}
-                                onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
-                                onMouseLeaveAvailableNeighbor={mouseOutHandler}
-                                onClickAvailableNeighbor={index => {
-                                    availableNeighborClickHandler(index);
-                                    mouseOutHandler(index);
-                                }}
-                                onDeleteNode={deleteNodeHandler}
-                            />
+                        <NodeStatusCard
+                            edgeList={edgeState}
+                            nodeList={nodeListState}
+                            currentNodeIndex={nodeClickState}
+                            backgroundColor={clickedFill}
+                            editNeighborMode={editNeighborMode}
+                            addNeighborMode={addNeighborMode}
+                            currentNeighborIndex={currentNeighbor}
+                            expanded={addNeighborMode}
+                            onAddNeighbor={() => {
+                                setAddNeighborMode(prevState => !prevState);
+                                setTimeout(() => {
+                                    buttonRef.current?.blur();
+                                }, 390)
+                            }}
+                            onDeleteNeighbor={index => deleteNeighbor(index)}
+                            onMouseEnterNeighbor={mouseOverNodeHandler}
+                            onMouseLeaveNeighbor={mouseOutHandler}
+                            onClickNeighbor={index => {
+                                setCurrentNeighbor(index);
+                                setEditNeighborMode(prevState => !prevState);
+                            }}
+                            onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
+                            onMouseLeaveAvailableNeighbor={mouseOutHandler}
+                            onClickAvailableNeighbor={index => {
+                                availableNeighborClickHandler(index);
+                                mouseOutHandler(index);
+                            }}
+                            onDeleteNode={deleteNodeHandler}
+                            ref={buttonRef}
+                        />
                     }
+
                 </div>
 
                 <div className="add-node-button">

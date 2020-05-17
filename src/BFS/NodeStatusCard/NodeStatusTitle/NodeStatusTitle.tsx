@@ -9,18 +9,18 @@ export type NodeStatusTitleProps = {
     editNeighborMode: boolean,
     addNeighborMode: boolean,
     currentNeighborIndex: number,
-    addNeighborModeButtonOnClick: () => void,
-    deleteNeighborModeButtonOnClick: (index: number) => void
+    onAddNeighbor: () => void,
+    onDeleteNeighbor: (index: number) => void
 }
 
-const NodeStatusTitle = (props: NodeStatusTitleProps) => {
+const NodeStatusTitle = React.forwardRef((props: NodeStatusTitleProps, ref?: React.Ref<HTMLButtonElement>) => {
     const { currentNodeIndex,
         backgroundColor,
         editNeighborMode,
         addNeighborMode,
         currentNeighborIndex,
-        addNeighborModeButtonOnClick,
-        deleteNeighborModeButtonOnClick } = props;
+        onAddNeighbor,
+        onDeleteNeighbor } = props;
 
     return (
         <React.Fragment>
@@ -31,15 +31,13 @@ const NodeStatusTitle = (props: NodeStatusTitleProps) => {
             <div className='neighbor-title'>
                 <h4 style={{ marginTop: '0.4rem' }}>neighbor</h4>
                 {!editNeighborMode ?
-                    <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => {
-                        addNeighborModeButtonOnClick();
-                    }} />
+                    <Button ref={ref} label={addNeighborMode ? 'finish' : 'add'} onClick={onAddNeighbor} />
                     :
-                    <Button label='delete neighbor' onClick={() => deleteNeighborModeButtonOnClick(currentNeighborIndex)} />
+                    <Button ref={ref} label='delete neighbor' onClick={() => onDeleteNeighbor(currentNeighborIndex)} />
                 }
             </div>
         </React.Fragment>
     );
-}
+})
 
 export default NodeStatusTitle;

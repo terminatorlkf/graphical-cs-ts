@@ -1,9 +1,9 @@
 import React from 'react';
 import Node from './Node';
-import { nodeListStateInterface } from '../nodeListStateInterface';
+import { nodeListStateInterface } from '../../nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
-import EdgeList from './Edges/EdgeList';
+import EdgeList from '../Edges/EdgeList';
 
 interface OperationNodeInterface {
     nodeList: nodeListStateInterface[],
