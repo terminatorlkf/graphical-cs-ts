@@ -1,7 +1,5 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
-import { Elevation } from "@rmwc/elevation";
-import { Button } from '@rmwc/button';
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from './nodeListStateInterface';
@@ -9,15 +7,10 @@ import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
 import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
-import NodeNeighborList from './NodeStatusCard/NodeNeighborSection/NodeNeighborList';
-import AvailableNeighborList from './NodeStatusCard/AvailableNeighborList/AvailableNeighborList';
-import NodeStatusTitle from './NodeStatusCard/NodeStatusTitle/NodeStatusTitle';
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 
-import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
-import '@rmwc/button/styles';
 import './BFS.css'
 
 const BFS: FunctionComponent = () => {
