@@ -193,8 +193,16 @@ const BFS: FunctionComponent = () => {
                             onMouseEnterNeighbor={mouseOverNodeHandler}
                             onMouseLeaveNeighbor={mouseOutHandler}
                             onClickNeighbor={index => {
-                                setCurrentNeighbor(index);
-                                setEditNeighborMode(prevState => !prevState);
+                                if (currentNeighbor === -1) {
+                                    setCurrentNeighbor(index);
+                                    setEditNeighborMode(true);
+                                } else if (index === currentNeighbor){
+                                    setCurrentNeighbor(-1);
+                                    setEditNeighborMode(false);
+                                }
+                                else 
+                                    setCurrentNeighbor(index);
+
                             }}
                             onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
                             onMouseLeaveAvailableNeighbor={mouseOutHandler}
