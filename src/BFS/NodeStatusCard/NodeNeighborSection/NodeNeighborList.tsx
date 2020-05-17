@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Elevation } from '@rmwc/elevation';
 import { nodeListStateInterface } from '../../nodeListStateInterface';
 
@@ -8,13 +8,23 @@ export type NodeNeighborListProps = {
     neighborList: number[][],
     nodeList: nodeListStateInterface[],
     currentNodeIndex: number,
+    currentNeighborIndex: number,
     onMouseEnter: (index: number) => void,
     onMouseLeave: (index: number) => void,
     onClick: (index: number) => void
 }
 
+export interface colorStateInterface {
+    backgroundColor: string,
+    textColor: string
+}
+
 const NodeNeighborList = (props: NodeNeighborListProps) => {
-    const {neighborList, nodeList, currentNodeIndex, onMouseEnter, onMouseLeave, onClick} = props;
+    const { neighborList, nodeList, currentNodeIndex, currentNeighborIndex, onMouseEnter, onMouseLeave, onClick } = props;
+    // const [colorState, setColorState] = useState<colorStateInterface>({
+    //     backgroundColor: 'white',
+    //     textColor: 'black'
+    // });
 
     return (
         <div className="neighbor-list">
@@ -34,13 +44,46 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                             neighborNodeIndexOriginal = i;
                     }
 
+                    const backgroundColor = currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white';
+                    const textColor = currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black';
+
+                    // setColorState(prevState => {
+                    //     return {
+                    //         ...prevState,
+                    //         backgroundColor: currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white',
+                    //         textColor: currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black'
+                    //     }
+                    // });
+
                     return (
                         <Elevation
+                            style={{
+                                backgroundColor: backgroundColor,
+                                color: textColor
+                            }}
                             key={index}
                             z={2}
                             className="neighbor-node"
-                            onMouseEnter={() => onMouseEnter(neighborNodeIndexOriginal)}
-                            onMouseLeave={() => onMouseLeave(neighborNodeIndexOriginal)}
+                            onMouseEnter={() => {
+                                // setColorState(prevState => {
+                                //     return {
+                                //         ...prevState,
+                                //         backgroundColor: 'red',
+                                //         textColor: 'white'
+                                //     }
+                                // })
+                                onMouseEnter(neighborNodeIndexOriginal)
+                            }}
+                            onMouseLeave={() => {
+                                // setColorState(prevState => {
+                                //     return {
+                                //         ...prevState,
+                                //         backgroundColor: currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white',
+                                //         textColor: currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black'
+                                //     }
+                                // })
+                                onMouseLeave(neighborNodeIndexOriginal)
+                            }}
                             onClick={() => {
                                 onClick(neighborNodeIndexOriginal);
                             }}

@@ -57,6 +57,7 @@ const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React
                             neighborList={edgeList}
                             nodeList={nodeList}
                             currentNodeIndex={currentNodeIndex}
+                            currentNeighborIndex={currentNeighborIndex}
                             onMouseEnter={onMouseEnterNeighbor}
                             onMouseLeave={onMouseLeaveNeighbor}
                             onClick={index => onClickNeighbor(index)}
