@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
-import SmoothCollapse from "react-smooth-collapse";
 import { Elevation } from "@rmwc/elevation";
 import { Button } from '@rmwc/button';
 import Konva from 'konva';
@@ -12,6 +11,7 @@ import { presetEdges } from './presetEdges';
 import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
+import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -158,7 +158,7 @@ const BFS: FunctionComponent = () => {
             </IntroSection>
 
             <div className="operation-section">
-                <OperationNodeSection 
+                <OperationNodeSection
                     nodeList={nodeListState}
                     edgeList={edgeState}
                     onClick={nodeClickHandler}
@@ -174,21 +174,19 @@ const BFS: FunctionComponent = () => {
                         <div className="node-status-section">
                             <Elevation className='node-status-card' z={3} height={10}>
 
-                                <div className="node-status-card-title" style={{backgroundColor: clickedFill}}>
-                                    <h2 style={{ wordSpacing: '-5px' }}>{`node ${nodeClickState}`}</h2>
-                                </div>
+                                <NodeStatusTitle 
+                                    currentNodeIndex={nodeClickState}
+                                    backgroundColor={clickedFill}
+                                    editNeighborMode={editNeighborMode}
+                                    addNeighborMode={addNeighborMode}
+                                    currentNeighborIndex={currentNeighbor}
+                                    addNeighborModeButtonOnClick={() => {
+                                        setAddNeighborMode(prevState => !prevState)
+                                    }}
+                                    deleteNeighborModeButtonOnClick={deleteNeighbor}
+                                />
 
                                 <div className="node-status-card-content">
-
-                                    <div className='neighbor-title'>
-                                        <h4 style={{ marginTop: '0.4rem' }}>neighbor</h4>
-                                        {!editNeighborMode ?
-                                            <Button label={addNeighborMode ? 'finish' : 'add'} onClick={() => setAddNeighborMode(prevState => !prevState)} />
-                                            :
-                                            <Button label='delete neighbor' onClick={() => deleteNeighbor(currentNeighbor)} />
-                                        }
-                                    </div>
-
                                     <div className='node-status-card-neighbor-section'>
                                         <NodeNeighborList
                                             neighborList={edgeState}
@@ -196,7 +194,7 @@ const BFS: FunctionComponent = () => {
                                             currentNodeIndex={nodeClickState}
                                             onMouseEnter={mouseOverNodeHandler}
                                             onMouseLeave={mouseOutHandler}
-                                            onClick={(index) =>{
+                                            onClick={(index) => {
                                                 setCurrentNeighbor(index);
                                                 setEditNeighborMode(prevState => !prevState);
                                             }}
@@ -204,7 +202,7 @@ const BFS: FunctionComponent = () => {
 
                                         {edgeState.length !== 0 && <br />}
 
-                                        <AvailableNeighborList 
+                                        <AvailableNeighborList
                                             expanded={addNeighborMode}
                                             nodeList={nodeListState}
                                             edgeList={edgeState}

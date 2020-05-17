@@ -75,7 +75,7 @@
 
 .neighbor-title {
     padding-right: 1.5rem;
-
+    padding-left: 0.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
