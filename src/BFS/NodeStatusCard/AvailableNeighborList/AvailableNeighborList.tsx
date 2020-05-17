@@ -1,6 +1,6 @@
 import React from 'react';
 import AvailableNeighborNode from './AvailableNeighborNode';
-import { nodeListStateInterface } from '../nodeListStateInterface';
+import { nodeListStateInterface } from '../../nodeListStateInterface';
 import SmoothCollapse from 'react-smooth-collapse';
 
 export type AvailableNeighborListProps = {

@@ -9,9 +9,10 @@ import { presetNodeState, defaultFill } from './PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './presetEdges';
 import OperationNodeSection from './OperationNodeSection/OperationNodeSection'
-import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
-import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
-import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
+import NodeNeighborList from './NodeStatusCard/NodeNeighborSection/NodeNeighborList';
+import AvailableNeighborList from './NodeStatusCard/AvailableNeighborList/AvailableNeighborList';
+import NodeStatusTitle from './NodeStatusCard/NodeStatusTitle/NodeStatusTitle';
+import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/fab/styles';
@@ -54,7 +55,6 @@ const BFS: FunctionComponent = () => {
         const newNodeState = [...nodeListState];
         let newNode = { ...newNodeState[index] };
         newNode.ref = nodeRef;
-        console.log(newNode.ref);
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
         setTimeout(() => {
@@ -118,7 +118,6 @@ const BFS: FunctionComponent = () => {
     }
 
     const deleteNeighbor = (index: number) => {
-        console.log(index);
         if (currentNeighbor !== -1) {
             setEdgeState(prevState => {
                 return prevState.filter(edge => {
@@ -171,59 +170,33 @@ const BFS: FunctionComponent = () => {
                     {/* <h1>Priority Queue</h1> */}
 
                     {nodeClickState !== -1 &&
-                        <div className="node-status-section">
-                            <Elevation className='node-status-card' z={3} height={10}>
-
-                                <NodeStatusTitle 
-                                    currentNodeIndex={nodeClickState}
-                                    backgroundColor={clickedFill}
-                                    editNeighborMode={editNeighborMode}
-                                    addNeighborMode={addNeighborMode}
-                                    currentNeighborIndex={currentNeighbor}
-                                    addNeighborModeButtonOnClick={() => {
-                                        setAddNeighborMode(prevState => !prevState)
-                                    }}
-                                    deleteNeighborModeButtonOnClick={deleteNeighbor}
-                                />
-
-                                <div className="node-status-card-content">
-                                    <div className='node-status-card-neighbor-section'>
-                                        <NodeNeighborList
-                                            neighborList={edgeState}
-                                            nodeList={nodeListState}
-                                            currentNodeIndex={nodeClickState}
-                                            onMouseEnter={mouseOverNodeHandler}
-                                            onMouseLeave={mouseOutHandler}
-                                            onClick={(index) => {
-                                                setCurrentNeighbor(index);
-                                                setEditNeighborMode(prevState => !prevState);
-                                            }}
-                                        />
-
-                                        {edgeState.length !== 0 && <br />}
-
-                                        <AvailableNeighborList
-                                            expanded={addNeighborMode}
-                                            nodeList={nodeListState}
-                                            edgeList={edgeState}
-                                            currentNodeIndex={nodeClickState}
-                                            onMouseEnter={mouseOverNodeHandler}
-                                            onMouseLeave={mouseOutHandler}
-                                            onClick={index => {
-                                                availableNeighborClickHandler(index);
-                                                mouseOutHandler(index);
-                                            }}
-                                        />
-                                    </div>
-
-                                </div>
-
-                                <div className="node-status-card-manipulation">
-                                    <Button label='delete node' danger onClick={() => deleteNodeHandler(nodeClickState)} />
-                                </div>
-
-                            </Elevation>
-                        </div>
+                            <NodeStatusCard
+                                edgeList={edgeState}
+                                nodeList={nodeListState}
+                                currentNodeIndex={nodeClickState}
+                                backgroundColor={clickedFill}
+                                editNeighborMode={editNeighborMode}
+                                addNeighborMode={addNeighborMode}
+                                currentNeighborIndex={currentNeighbor}
+                                expanded={addNeighborMode}
+                                onAddNeighbor={() => {
+                                    setAddNeighborMode(prevState => !prevState)
+                                }}
+                                onDeleteNeighbor={index => deleteNeighbor(index)}
+                                onMouseEnterNeighbor={mouseOverNodeHandler}
+                                onMouseLeaveNeighbor={mouseOutHandler}
+                                onClickNeighbor={index => {
+                                    setCurrentNeighbor(index);
+                                    setEditNeighborMode(prevState => !prevState);
+                                }}
+                                onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
+                                onMouseLeaveAvailableNeighbor={mouseOutHandler}
+                                onClickAvailableNeighbor={index => {
+                                    availableNeighborClickHandler(index);
+                                    mouseOutHandler(index);
+                                }}
+                                onDeleteNode={deleteNodeHandler}
+                            />
                     }
                 </div>
 

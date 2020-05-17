@@ -1,6 +1,6 @@
 import React from 'react';
 import { Elevation } from '@rmwc/elevation';
-import { nodeListStateInterface } from '../nodeListStateInterface';
+import { nodeListStateInterface } from '../../nodeListStateInterface';
 
 import '@rmwc/elevation/styles';
 
