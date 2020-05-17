@@ -187,7 +187,7 @@ const BFS: FunctionComponent = () => {
                                 setAddNeighborMode(prevState => !prevState);
                                 setTimeout(() => {
                                     buttonRef.current?.blur();
-                                }, 390)
+                                }, 360);
                             }}
                             onDeleteNeighbor={index => deleteNeighbor(index)}
                             onMouseEnterNeighbor={mouseOverNodeHandler}
@@ -202,7 +202,6 @@ const BFS: FunctionComponent = () => {
                                 }
                                 else 
                                     setCurrentNeighbor(index);
-
                             }}
                             onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
                             onMouseLeaveAvailableNeighbor={mouseOutHandler}

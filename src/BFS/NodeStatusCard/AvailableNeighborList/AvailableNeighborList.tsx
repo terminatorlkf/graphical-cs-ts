@@ -21,29 +21,32 @@ const AvailableNeighborList = (props: AvailableNeighborListProps) => {
             <SmoothCollapse allowOverflowWhenOpen expanded={expanded} className="neighbor-list-collapse-section">
                 <div className="neighbor-list">
                     {nodeList.map((node, index) => {
-                        let isNeighbor = true;
-                        if (node.value === currentNodeIndex)
-                            isNeighbor = false;
-
-                        edgeList.map(nodePair => {
-                            if ((nodePair[0] === nodeList[currentNodeIndex].index && nodePair[1] === node.index) ||
-                                (nodePair[1] === nodeList[currentNodeIndex].index && nodePair[0] === node.index)) {
+                        if (node.index !== -1) {
+                            let isNeighbor = true;
+                            if (node.value === currentNodeIndex)
                                 isNeighbor = false;
+    
+                            edgeList.map(nodePair => {
+                                if ((nodePair[0] === nodeList[currentNodeIndex].index && nodePair[1] === node.index) ||
+                                    (nodePair[1] === nodeList[currentNodeIndex].index && nodePair[0] === node.index)) {
+                                    isNeighbor = false;
+                                }
+                            })
+    
+                            if (isNeighbor) {
+                                return (
+                                    <AvailableNeighborNode 
+                                        key={index}
+                                        index={index}
+                                        value={node.value}
+                                        onMouseEnter={onMouseEnter}
+                                        onMouseLeave={onMouseLeave}
+                                        onClick={onClick}
+                                    />
+                                )
                             }
-                        })
-
-                        if (isNeighbor) {
-                            return (
-                                <AvailableNeighborNode 
-                                    key={index}
-                                    index={index}
-                                    value={node.value}
-                                    onMouseEnter={onMouseEnter}
-                                    onMouseLeave={onMouseLeave}
-                                    onClick={onClick}
-                                />
-                            )
                         }
+                    
                         return null;
                     })}
                 </div>
