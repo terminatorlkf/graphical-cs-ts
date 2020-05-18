@@ -40,7 +40,6 @@ const BFS: FunctionComponent = () => {
         });
     }
 
-
     const deleteNodeHandler = (index: number) => {
         setEdgeState(prevState => prevState.filter(edge => !(edge[0] === index || edge[1] === index)));
         setNodeListState(prevState => {

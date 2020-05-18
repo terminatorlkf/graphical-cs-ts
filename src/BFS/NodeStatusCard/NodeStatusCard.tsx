@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Elevation } from '@rmwc/elevation';
 import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
@@ -79,7 +79,7 @@ const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React
                 </div>
 
                 <div className="node-status-card-manipulation">
-                    <Button label='delete node' danger onClick={() => onDeleteNode(currentNodeIndex)} />
+                    <Button label='delete' danger onClick={() => onDeleteNode(currentNodeIndex)} />
                 </div>
 
             </Elevation>

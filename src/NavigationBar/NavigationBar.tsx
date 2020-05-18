@@ -1,5 +1,6 @@
-  /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useContext, useState } from "react";
+import { Redirect } from 'react-router-dom';
 import { IntroExpandedContext } from "../Context/IntroExpandedContext"
 import NavLinkList from "./NavLinkList/NavLinkList";
 import { colorArray } from "../shared/colorArray/colorArray";
@@ -14,6 +15,7 @@ interface NavigationBarProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
+    const [redirect, setRedirect] = useState<boolean>(false);
 
     let currentPageIndex = pageIndex.indexOf(useLocation().pathname);
 
@@ -25,12 +27,23 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
         titleClass = "title";
     }
 
+    const handleClickTitle = () => {
+        setRedirect(true);
+
+        setTimeout(() => {
+            setRedirect(false);
+        }, 0.1);
+    }
+
     return (
         <React.Fragment>
             <nav className='navbar' style={{ backgroundColor: colorArray[currentPageIndex ? currentPageIndex : 0] }}>
                 <div className={titleClass}>
-                    <h1>GRAPHICAL CS</h1>
+                    <h1 onClick={handleClickTitle}>GRAPHICAL CS</h1>
                 </div>
+
+                {redirect && 
+                <Redirect to='home' />}
 
                 <div className="navigation-component">
                     <NavLinkList className="nav-items" />

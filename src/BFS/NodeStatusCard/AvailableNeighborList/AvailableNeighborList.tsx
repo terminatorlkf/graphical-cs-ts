@@ -31,6 +31,7 @@ const AvailableNeighborList = (props: AvailableNeighborListProps) => {
                                     (nodePair[1] === nodeList[currentNodeIndex].index && nodePair[0] === node.index)) {
                                     isNeighbor = false;
                                 }
+                                return null;
                             })
     
                             if (isNeighbor) {

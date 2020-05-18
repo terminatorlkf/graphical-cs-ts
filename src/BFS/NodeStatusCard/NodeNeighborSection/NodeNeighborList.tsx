@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Elevation } from '@rmwc/elevation';
 import { nodeListStateInterface } from '../../nodeListStateInterface';
 
@@ -92,6 +92,8 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                         </Elevation>
                     );
                 }
+
+                return null;
             })
             }
         </div>
