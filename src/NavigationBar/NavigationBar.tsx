@@ -39,7 +39,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ className }) => {
         <React.Fragment>
             <nav className='navbar' style={{ backgroundColor: colorArray[currentPageIndex ? currentPageIndex : 0] }}>
                 <div className={titleClass}>
-                    <h1 onClick={handleClickTitle}>GRAPHICAL CS</h1>
+                    <h1 onClick={handleClickTitle} style={{cursor: "pointer"}}>GRAPHICAL CS</h1>
                 </div>
 
                 {redirect && 
