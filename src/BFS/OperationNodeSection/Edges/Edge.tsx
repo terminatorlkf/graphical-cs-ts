@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Line } from 'react-konva';
-import { nodeListStateInterface } from '../../nodeListStateInterface';
+import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
 
 interface EdgeInterface {
     edge: number[],

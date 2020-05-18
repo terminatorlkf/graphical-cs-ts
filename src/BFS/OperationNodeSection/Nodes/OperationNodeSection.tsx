@@ -1,13 +1,14 @@
 import React from 'react';
 import Node from './Node';
-import { nodeListStateInterface } from '../../nodeListStateInterface';
+import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
 import EdgeList from '../Edges/EdgeList';
+import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
 
 interface OperationNodeInterface {
     nodeList: nodeListStateInterface[],
-    edgeList: number[][],
+    edgeList: EdgeListInterface[],
     onClick: (index: number) => void,
     onMouseEnter: (index: number) => void,
     onMouseLeave: (index: number) => void,

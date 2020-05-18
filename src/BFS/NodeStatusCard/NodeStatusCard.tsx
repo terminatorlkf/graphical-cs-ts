@@ -4,13 +4,14 @@ import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
 import { Button } from '@rmwc/button';
-import { nodeListStateInterface } from '../nodeListStateInterface';
+import { nodeListStateInterface } from '../Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../Interfaces/EdgeListInterface';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
 
 export type NodeStatusCardProps = {
-    edgeList: number[][],
+    edgeList: EdgeListInterface[],
     nodeList: nodeListStateInterface[],
     currentNodeIndex: number,
     backgroundColor: string,
@@ -54,7 +55,7 @@ const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React
                 <div className="node-status-card-content">
                     <div className='node-status-card-neighbor-section'>
                         <NodeNeighborList
-                            neighborList={edgeList}
+                            edgeList={edgeList}
                             nodeList={nodeList}
                             currentNodeIndex={currentNodeIndex}
                             currentNeighborIndex={currentNeighborIndex}

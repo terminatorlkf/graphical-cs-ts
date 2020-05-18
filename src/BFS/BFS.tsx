@@ -2,12 +2,13 @@ import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
-import { nodeListStateInterface } from './nodeListStateInterface';
+import { nodeListStateInterface } from './Interfaces/nodeListStateInterface';
 import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from './PresetValues/presetEdges';
 import OperationNodeSection from './OperationNodeSection/Nodes/OperationNodeSection'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
+import { EdgeListInterface } from './Interfaces/EdgeListInterface';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -16,7 +17,7 @@ import './BFS.css'
 const BFS: FunctionComponent = () => {
     const clickedFill = 'red';
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
-    const [edgeState, setEdgeState] = useState<number[][]>(presetEdges);
+    const [edgeState, setEdgeState] = useState<EdgeListInterface[]>(presetEdges);
     const [nodeClickState, setNodeClickState] = useState<number>(-1);
     const [editNeighborMode, setEditNeighborMode] = useState<boolean>(false);
     const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
@@ -41,7 +42,7 @@ const BFS: FunctionComponent = () => {
     }
 
     const deleteNodeHandler = (index: number) => {
-        setEdgeState(prevState => prevState.filter(edge => !(edge[0] === index || edge[1] === index)));
+        setEdgeState(prevState => prevState.filter(edge => !(edge.edge[0] === index || edge.edge[1] === index)));
         setNodeListState(prevState => {
             let node = { ...prevState[index] };
             node = {
@@ -124,8 +125,8 @@ const BFS: FunctionComponent = () => {
         if (currentNeighbor !== -1) {
             setEdgeState(prevState => {
                 return prevState.filter(edge => {
-                    return !((edge[0] === index && edge[1] === nodeClickState) ||
-                        (edge[0] === nodeClickState && edge[1] === index));
+                    return !((edge.edge[0] === index && edge.edge[1] === nodeClickState) ||
+                        (edge.edge[0] === nodeClickState && edge.edge[1] === index));
                 });
             });
         }
@@ -133,8 +134,16 @@ const BFS: FunctionComponent = () => {
     }
 
     const availableNeighborClickHandler = (index: number) => {
+        let i = -1;
+
+        if (edgeState.length === 0) i = 0;
+        else i = edgeState.length;
+
         setEdgeState(prevState => {
-            return [...prevState, [index, nodeClickState]];
+            return [...prevState, {
+                index: i,
+                edge: [index, nodeClickState]
+            }];
         });
     }
 
@@ -201,11 +210,11 @@ const BFS: FunctionComponent = () => {
                                 if (currentNeighbor === -1) {
                                     setCurrentNeighbor(index);
                                     setEditNeighborMode(true);
-                                } else if (index === currentNeighbor){
+                                } else if (index === currentNeighbor) {
                                     setCurrentNeighbor(-1);
                                     setEditNeighborMode(false);
                                 }
-                                else 
+                                else
                                     setCurrentNeighbor(index);
                             }}
                             onMouseEnterAvailableNeighbor={mouseOverNodeHandler}

@@ -1,20 +1,24 @@
-import React, { FunctionComponent } from 'react';
-import { nodeListStateInterface } from '../../nodeListStateInterface';
+import React from 'react';
+import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
 import Edge from './Edge';
 
-interface EdgeListInterface {
-    edgeList: number[][]
+
+export type EdgeListProps = {
+    edgeList: EdgeListInterface[]
     nodeListState: nodeListStateInterface[]
 }
 
-const EdgeList: FunctionComponent<EdgeListInterface> = ({ edgeList, nodeListState }) => {
+const EdgeList = (props : EdgeListProps) => {
+    const {edgeList, nodeListState} = props;
+    
     return (
         <React.Fragment>
             {edgeList.length !== 0 &&
                 edgeList.map((edge) => {
                     return (
                         <Edge
-                            edge={edge}
+                            edge={edge.edge}
                             nodeListState={nodeListState}
                         />
                     );
