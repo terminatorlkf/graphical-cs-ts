@@ -137,11 +137,11 @@ const BFS: FunctionComponent = () => {
         let i = -1;
 
         if (edgeState.length === 0) i = 0;
-        else i = edgeState[edgeState.length - 2].index + 2;
+        else i = edgeState[edgeState.length - 2].key + 2;
 
         setEdgeState(prevState => {
             return [...prevState, {
-                index: i,
+                key: i,
                 edge: [index, nodeClickState]
             }];
         });

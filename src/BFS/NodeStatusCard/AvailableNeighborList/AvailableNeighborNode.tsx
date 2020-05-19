@@ -20,6 +20,7 @@ const AvailableNeighborNode = (props: AvailableNeighborNodeProps) => {
                 key={index}
                 z={2}
                 className="neighbor-node"
+                style={{paddingTop:'1%'}}
                 onMouseEnter={() => onMouseEnter(index)}
                 onMouseLeave={() => onMouseLeave(index)}
                 onClick={() => onClick(index)}

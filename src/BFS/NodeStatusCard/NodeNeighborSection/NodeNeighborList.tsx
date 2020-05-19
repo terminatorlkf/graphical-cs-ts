@@ -19,13 +19,11 @@ export type NodeNeighborListProps = {
 const NodeNeighborList = (props: NodeNeighborListProps) => {
     const { edgeList, nodeList, currentNodeIndex, currentNeighborIndex, onMouseEnter, onMouseLeave, onClick } = props;
 
-    const transition = useTransition(edgeList, edge => edge.index, {
-        from: { opacity: 0 },
-        enter: { opacity: 1 },
-        leave: { opacity: 0 }
+    const transition = useTransition(edgeList, edge => edge.key, {
+        from: { opacity: 0, transform: 'translate3d(0, 1rem, 0)' },
+        enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        leave: { opacity: 0, transform: 'translate3d(0, 1rem, 0)'}
     });
-
-    console.log(transition);
 
     return (
         <div className="neighbor-list">

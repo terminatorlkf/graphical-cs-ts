@@ -3,6 +3,7 @@ import AvailableNeighborNode from './AvailableNeighborNode';
 import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
 import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
 import SmoothCollapse from 'react-smooth-collapse';
+import { useTransition, animated } from 'react-spring';
 
 export type AvailableNeighborListProps = {
     expanded: boolean,
@@ -15,40 +16,54 @@ export type AvailableNeighborListProps = {
 }
 
 const AvailableNeighborList = (props: AvailableNeighborListProps) => {
-    const { expanded, nodeList, edgeList, currentNodeIndex, onMouseEnter, onMouseLeave, onClick} = props;
+    const { expanded, nodeList, edgeList, currentNodeIndex, onMouseEnter, onMouseLeave, onClick } = props;
+
+    const transition = useTransition(nodeList, node => node.index, {
+        from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
+        update: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' }
+    });
 
     return (
         <React.Fragment>
             <SmoothCollapse allowOverflowWhenOpen expanded={expanded} className="neighbor-list-collapse-section">
                 <div className="neighbor-list">
-                    {nodeList.map((node, index) => {
-                        if (node.index !== -1) {
+                    {transition.map(({ item, props, key }) => {
+                        if (item.index !== -1) {
                             let isNeighbor = true;
-                            if (node.value === currentNodeIndex)
+                            if (item.value === currentNodeIndex)
                                 isNeighbor = false;
-    
+
                             edgeList.map(nodePair => {
-                                if ((nodePair.edge[0] === nodeList[currentNodeIndex].index && nodePair.edge[1] === node.index) ||
-                                    (nodePair.edge[1] === nodeList[currentNodeIndex].index && nodePair.edge[0] === node.index)) {
+                                if ((nodePair.edge[0] === nodeList[currentNodeIndex].index && nodePair.edge[1] === item.index) ||
+                                    (nodePair.edge[1] === nodeList[currentNodeIndex].index && nodePair.edge[0] === item.index)) {
                                     isNeighbor = false;
                                 }
                                 return null;
                             })
-    
-                            if (isNeighbor) {
+
+                            let index = -1;
+
+                            nodeList.map((node, i) => {
+                                if (node.value === item.value) index = i;
+                                return null;
+                            });
+
+                            if (isNeighbor && index !== -1) {
                                 return (
-                                    <AvailableNeighborNode 
-                                        key={index}
-                                        index={index}
-                                        value={node.value}
-                                        onMouseEnter={onMouseEnter}
-                                        onMouseLeave={onMouseLeave}
-                                        onClick={onClick}
-                                    />
+                                    <animated.div key={key} style={props}>
+                                        <AvailableNeighborNode
+                                            key={key}
+                                            index={index}
+                                            value={item.value}
+                                            onMouseEnter={onMouseEnter}
+                                            onMouseLeave={onMouseLeave}
+                                            onClick={onClick}
+                                        />
+                                    </animated.div>
                                 )
                             }
                         }
-                    
                         return null;
                     })}
                 </div>
