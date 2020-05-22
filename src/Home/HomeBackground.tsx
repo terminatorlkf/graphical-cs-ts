@@ -37,6 +37,21 @@ export default function HomeBackground() {
         from: { x: state.xPosition, y: state.yPosition }
     })));
 
+    const lineSet = animations.map((node, index) => {
+        return linePoints(index);
+    })
+
+    const linePoints = (index: number) => {
+        return [
+            0,
+            0,
+            animations[Math.floor(index / 8)].x.getValue() - animations[index].x.getValue(),
+            animations[Math.floor(index / 8)].y.getValue() - animations[index].y.getValue(),
+        ];
+    }
+
+    const [lineState, setLineState] = useState<number[][]>(lineSet)
+
     return (
         <div className="home-background">
             <Stage width={window.innerWidth} height={window.innerHeight}>
@@ -49,11 +64,8 @@ export default function HomeBackground() {
                                     {...props}
                                 >
                                     <Line
-                                        points={[
-                                            0, 
-                                            0, 
-                                            animations[0].x.getValue() - props.x.getValue(), 
-                                            animations[0].y.getValue() - props.y.getValue()]}
+                                        onClick={setLineState(prevState => prevState[index] = linePoints(index))}
+                                        points={lineState[index]}
                                         stroke='black' />
                                     <Circle radius={5} fill="black" />
                                 </animated.Group>
