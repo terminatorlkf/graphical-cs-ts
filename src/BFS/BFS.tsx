@@ -1,14 +1,14 @@
 import React, { FunctionComponent, useState, useRef } from "react";
-import AddNodeButton from "./AddNodeButton"
+import AddNodeButton from "./OperationNodeSection/Nodes/AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
-import { nodeListStateInterface } from './Interfaces/nodeListStateInterface';
-import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
+import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
+import { presetNodeState, defaultFill } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
-import { presetEdges } from './PresetValues/presetEdges';
+import { presetEdges } from '../redux/BFS/store/graph/PresetValues/presetEdges';
 import OperationNodeSection from './OperationNodeSection/Nodes/OperationNodeSection'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
-import { EdgeListInterface } from './Interfaces/EdgeListInterface';
+import { EdgeListInterface } from '../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';

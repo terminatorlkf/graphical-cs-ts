@@ -1,7 +1,7 @@
 import React from 'react';
 import { Elevation } from '@rmwc/elevation';
-import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
-import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
+import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import { useTransition, animated } from 'react-spring';
 
 import '@rmwc/elevation/styles';

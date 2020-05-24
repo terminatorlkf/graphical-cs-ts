@@ -4,8 +4,8 @@ import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
 import { Button } from '@rmwc/button';
-import { nodeListStateInterface } from '../Interfaces/nodeListStateInterface';
-import { EdgeListInterface } from '../Interfaces/EdgeListInterface';
+import { nodeListStateInterface } from '../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';

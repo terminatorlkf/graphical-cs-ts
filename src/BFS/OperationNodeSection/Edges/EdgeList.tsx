@@ -1,17 +1,12 @@
 import React from 'react';
-import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
-import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
 import Edge from './Edge';
+import { useSelector } from 'react-redux';
+import { graphStateInterface } from '../../../redux/BFS/store/graph/graphReducer';
 
+const EdgeList = () => {
+    const edgeList = useSelector((state: graphStateInterface) => state.edgeList);
+    const nodeList = useSelector((state: graphStateInterface) => state.nodeList);
 
-export type EdgeListProps = {
-    edgeList: EdgeListInterface[]
-    nodeListState: nodeListStateInterface[]
-}
-
-const EdgeList = (props : EdgeListProps) => {
-    const {edgeList, nodeListState} = props;
-    
     return (
         <React.Fragment>
             {edgeList.length !== 0 &&
@@ -19,7 +14,7 @@ const EdgeList = (props : EdgeListProps) => {
                     return (
                         <Edge
                             edge={edge.edge}
-                            nodeListState={nodeListState}
+                            nodeListState={nodeList}
                         />
                     );
                 })

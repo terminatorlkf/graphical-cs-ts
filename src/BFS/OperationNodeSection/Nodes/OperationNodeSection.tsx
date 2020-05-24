@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Node from './Node';
-import { nodeListStateInterface } from '../../Interfaces/nodeListStateInterface';
+import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
 import EdgeList from '../Edges/EdgeList';
-import { EdgeListInterface } from '../../Interfaces/EdgeListInterface';
+import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
+import { useSelector, useDispatch } from 'react-redux';
+import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
+import { graphStateInterface } from '../../../redux/BFS/store/graph/graphReducer';
 
 interface OperationNodeInterface {
     nodeList: nodeListStateInterface[],
@@ -16,22 +19,21 @@ interface OperationNodeInterface {
 }
 
 const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
-    nodeList,
-    edgeList,
     onClick,
     onMouseEnter,
     onMouseLeave,
     onDragMove
 }) => {
 
+    const dispatch = useDispatch();
+    const nodeList = useSelector((state: graphStateInterface) => state.nodeList);
+    console.log(nodeList);
+
     return (
         <div className="operation-node-section">
             <Stage width={window.innerWidth - 580} height={window.innerHeight}>
                 <Layer>
-                    <EdgeList
-                        edgeList={edgeList}
-                        nodeListState={nodeList}
-                    />
+                    <EdgeList />
                     {nodeList.map((node, index) => {
                         if (node.index !== -1) {
                             return (
@@ -44,7 +46,7 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
                                     yPosition={node.yPosition}
                                     fill={node.fill}
                                     ref={node.ref}
-                                    onClick={() => onClick(index)}
+                                    onClick={() => dispatch({ type: graphActionType.CLICK_NODE })}
                                     onMouseEnter={() => onMouseEnter(index)}
                                     onMouseLeave={() => onMouseLeave(index)}
                                     onDragMove={(e) => onDragMove(index, e)}

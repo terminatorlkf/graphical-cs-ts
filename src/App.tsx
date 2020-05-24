@@ -8,7 +8,7 @@ import IterativeDeepening from "./IterativeDeepening/IterativeDeepening"
 import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';
-import NavigationBar from "./NavigationBar/NavigationBar"
+import NavigationBar from "./NavigationBar/NavigationBar";
 
 import './App.css';
 
@@ -47,7 +47,7 @@ function App() {
             <Switch>
 
               <Route path="/" exact>
-                <Redirect to="/home"/>
+                <Redirect to="/home" />
               </Route>
 
               <Route path="/home">
@@ -73,12 +73,12 @@ function App() {
               <Route Path="/iterative-deepening">
                 <IterativeDeepening />
               </Route>
-              
+
             </Switch>
           </Router>
         </CurrentPageContext.Provider>
       </IntroExpandedContext.Provider>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
