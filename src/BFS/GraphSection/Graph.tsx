@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Node from './Nodes/Node';
-import { nodeListStateInterface } from '../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
 import EdgeList from './Edges/EdgeList';
-import { EdgeListInterface } from '../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
 import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';

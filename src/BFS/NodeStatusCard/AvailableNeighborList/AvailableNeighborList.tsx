@@ -4,7 +4,6 @@ import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interface
 import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import SmoothCollapse from 'react-smooth-collapse';
 import { useTransition, animated } from 'react-spring';
-import { useSelector, useDispatch } from 'react-redux';
 
 export type AvailableNeighborListProps = {
     expanded: boolean,
