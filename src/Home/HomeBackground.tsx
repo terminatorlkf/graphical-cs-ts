@@ -37,18 +37,18 @@ export default function HomeBackground() {
         from: { x: state.xPosition, y: state.yPosition }
     })));
 
-    const lineSet = animations.map((node, index) => {
-        return linePoints(index);
-    })
-
     const linePoints = (index: number) => {
         return [
             0,
             0,
-            animations[Math.floor(index / 8)].x.getValue() - animations[index].x.getValue(),
-            animations[Math.floor(index / 8)].y.getValue() - animations[index].y.getValue(),
+            animations[Math.floor(index / 8) * 8].x.getValue() - animations[index].x.getValue(),
+            animations[Math.floor(index / 8) * 8].y.getValue() - animations[index].y.getValue(),
         ];
     }
+    
+    const lineSet = animations.map((node, index) => {
+        return linePoints(index);
+    })
 
     const [lineState, setLineState] = useState<number[][]>(lineSet)
 
@@ -56,7 +56,7 @@ export default function HomeBackground() {
         <div className="home-background">
             <Stage width={window.innerWidth} height={window.innerHeight}>
                 <Layer>
-                    {presetState.slice(0, 8).map((state, index) => {
+                    {presetState.map((state, index) => {
                         const props = animations[index]
                         return (
                             <React.Fragment>
@@ -64,7 +64,6 @@ export default function HomeBackground() {
                                     {...props}
                                 >
                                     <Line
-                                        onClick={setLineState(prevState => prevState[index] = linePoints(index))}
                                         points={lineState[index]}
                                         stroke='black' />
                                     <Circle radius={5} fill="black" />
