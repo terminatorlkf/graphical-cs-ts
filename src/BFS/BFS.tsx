@@ -4,7 +4,6 @@ import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { presetNodeState } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
-import { KonvaEventObject } from "konva/types/Node";
 import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
@@ -64,19 +63,6 @@ const BFS: FunctionComponent = () => {
         setNodeListState(newNodeState);
     }
 
-    const updatePosition = (index: number, e: KonvaEventObject<DragEvent>) => {
-        setNodeListState(prevState => {
-            let node = { ...prevState[index] };
-            node = {
-                ...node,
-                xPosition: e.target.x(),
-                yPosition: e.target.y()
-            }
-            prevState[index] = node;
-            return prevState.slice();
-        });
-    }
-
     return (
         <div>
             <IntroSection title="Breadth-First Search" source='Wikipedia'>
@@ -89,7 +75,7 @@ const BFS: FunctionComponent = () => {
                 <Graph
                     onMouseEnter={mouseOverNodeHandler}
                     onMouseLeave={mouseOutHandler}
-                    onDragMove={updatePosition}
+                    onDragMove={(index, e) => dispatch({type: graphActionType.DRAG_NODE, payload: {index, e}})}
                 />
 
                 <div className="search-status-stack-section">
