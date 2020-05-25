@@ -2,10 +2,10 @@ import * as graphActionType from './graphActionType';
 import { KonvaEventObject } from 'konva/types/Node';
 import Konva from 'konva';
 
-export const addNode = (x: number, y: number, defaultFill: string): graphActionType.addNodeAction => {
+export const addNode = (x: number, y: number): graphActionType.addNodeAction => {
     return {
         type: graphActionType.ADD_NODE,
-        payload: { x, y, defaultFill }
+        payload: { x, y }
     }
 }
 

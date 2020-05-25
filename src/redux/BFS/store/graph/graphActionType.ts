@@ -15,7 +15,7 @@ export const DELETE_NEIGHBOR = 'DELETE_NEIGHBOR';
 
 export interface addNodeAction {
     type: typeof ADD_NODE,
-    payload: { x: number, y: number, defaultFill: string }
+    payload: { x: number, y: number }
 }
 
 export interface deleteNodeAction {

@@ -46,7 +46,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                         className: "",
                         xPosition: (action as graphAction.addNodeAction).payload.x,
                         yPosition: (action as graphAction.addNodeAction).payload.y,
-                        fill: (action as graphAction.addNodeAction).payload.defaultFill,
+                        fill: state.defaultFill,
                         ref: null
                     }
                 ]
