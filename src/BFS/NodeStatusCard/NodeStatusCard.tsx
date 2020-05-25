@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Elevation } from '@rmwc/elevation';
 import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
@@ -12,19 +12,31 @@ import { useSelector, useDispatch } from 'react-redux';
 import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 
 export type NodeStatusCardProps = {
-    onAddNeighbor: () => void,
-    onDeleteNeighbor: (index: number) => void,
     onMouseEnterNeighbor: (index: number) => void,
     onMouseLeaveNeighbor: (index: number) => void,
     onMouseEnterAvailableNeighbor: (index: number) => void,
     onMouseLeaveAvailableNeighbor: (index: number) => void,
 }
 
-const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React.Ref<HTMLButtonElement>) => {
-
+const NodeStatusCard = (props: NodeStatusCardProps) => {
     const dispatch = useDispatch();
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
-    
+    const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
+
+    const addNeighborModeHandler = () => {
+        dispatch({ type: graphActionType.ADD_NEIGHBOR });
+        setTimeout(() => {
+            buttonRef.current?.blur();
+        }, 360);
+    }
+
+    const deleteNeighborHandler = (index: number) => {
+        dispatch({ type: graphActionType.DELETE_NEIGHBOR, payload: { index } });
+        setTimeout(() => {
+            buttonRef.current?.blur();
+        }, 360);
+    }
+
     return (
         <div className="node-status-section">
             <Elevation className='node-status-card' z={3} height={10}>
@@ -35,9 +47,9 @@ const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React
                     editNeighborMode={graph.editNeighborMode}
                     addNeighborMode={graph.addNeighborMode}
                     currentNeighborIndex={graph.currentNeighborIndex}
-                    onAddNeighbor={props.onAddNeighbor}
-                    onDeleteNeighbor={index => props.onDeleteNeighbor(index)}
-                    ref={ref}
+                    onAddNeighbor={addNeighborModeHandler}
+                    onDeleteNeighbor={deleteNeighborHandler}
+                    ref={buttonRef}
                 />
 
                 <div className="node-status-card-content">
@@ -72,6 +84,6 @@ const NodeStatusCard = React.forwardRef((props: NodeStatusCardProps, ref?: React
             </Elevation>
         </div>
     );
-});
+};
 
 export default NodeStatusCard;

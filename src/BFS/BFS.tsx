@@ -12,10 +12,8 @@ import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
 import './BFS.css'
 
-
 const BFS: FunctionComponent = () => {
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
-    const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const dispatch = useDispatch();
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
@@ -26,6 +24,7 @@ const BFS: FunctionComponent = () => {
 
     const mouseOverNodeHandler = (index: number) => {
         dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index, ref: nodeRef } });
+
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
@@ -70,23 +69,10 @@ const BFS: FunctionComponent = () => {
 
                     {graph.currentNodeIndex !== -1 &&
                         <NodeStatusCard
-                            onAddNeighbor={() => {
-                                dispatch({ type: graphActionType.ADD_NEIGHBOR });
-                                setTimeout(() => {
-                                    buttonRef.current?.blur();
-                                }, 360);
-                            }}
-                            onDeleteNeighbor={index => {
-                                dispatch({ type: graphActionType.DELETE_NEIGHBOR, payload: { index } });
-                                setTimeout(() => {
-                                    buttonRef.current?.blur();
-                                }, 360);
-                            }}
                             onMouseEnterNeighbor={mouseOverNodeHandler}
                             onMouseLeaveNeighbor={mouseOutHandler}
                             onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
                             onMouseLeaveAvailableNeighbor={mouseOutHandler}
-                            ref={buttonRef}
                         />
                     }
 
