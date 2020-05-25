@@ -12,6 +12,8 @@ export interface graphStateInterface {
     currentNeighborIndex: number,
     editNeighborMode: boolean,
     addNeighborMode: boolean,
+    clickedFill: string,
+    defaultFill: string
 }
 
 const initialGraphState: graphStateInterface = {
@@ -21,6 +23,8 @@ const initialGraphState: graphStateInterface = {
     currentNeighborIndex: -1,
     editNeighborMode: false,
     addNeighborMode: false,
+    defaultFill: defaultFill,
+    clickedFill: 'red'
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
@@ -59,8 +63,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
         // Reducer to fire after clicking on a node
         case graphAction.CLICK_NODE:
             newNodeList = [...state.nodeList];
-            const clickedFill = (action as graphAction.clickNodeAction).payload.clickedFill;
-            const defaultFill = (action as graphAction.clickNodeAction).payload.defaultFill;
+            const clickedFill = state.clickedFill;
+            const defaultFill = state.defaultFill;
             index = (action as graphAction.clickNodeAction).payload.index;
             let newNode = { ...newNodeList[index] }
             newNode.fill = newNode.fill === defaultFill ? clickedFill : defaultFill;

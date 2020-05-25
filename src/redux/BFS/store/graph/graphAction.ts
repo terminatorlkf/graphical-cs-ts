@@ -16,10 +16,10 @@ export const deleteNode = (index: number): graphActionType.deleteNodeAction => {
     }
 }
 
-export const clickNode = (index: number, clickedFill: string, defaultFill: string): graphActionType.clickNodeAction => {
+export const clickNode = (index: number): graphActionType.clickNodeAction => {
     return {
         type: graphActionType.CLICK_NODE,
-        payload: { index, clickedFill, defaultFill }
+        payload: { index }
     }
 }
 

@@ -25,7 +25,7 @@ export interface deleteNodeAction {
 
 export interface clickNodeAction {
     type: typeof CLICK_NODE,
-    payload: { index: number, clickedFill: string, defaultFill: string }
+    payload: { index: number }
 }
 
 export interface dragNodeAction {

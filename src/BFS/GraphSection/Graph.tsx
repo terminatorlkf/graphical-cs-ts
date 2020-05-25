@@ -1,26 +1,21 @@
 import React, { useEffect } from 'react';
-import Node from './Node';
-import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
+import Node from './Nodes/Node';
+import { nodeListStateInterface } from '../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
-import EdgeList from '../Edges/EdgeList';
-import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
+import EdgeList from './Edges/EdgeList';
+import { EdgeListInterface } from '../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
-import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
-import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
+import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
+import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 
 interface GraphInterface {
-    nodeList: nodeListStateInterface[],
-    edgeList: EdgeListInterface[],
-    onClick: (index: number) => void,
     onMouseEnter: (index: number) => void,
     onMouseLeave: (index: number) => void,
     onDragMove: (index: number, e: KonvaEventObject<DragEvent>) => void
 }
 
 const Graph: React.FunctionComponent<GraphInterface> = ({
-    onClick,
-    edgeList,
     onMouseEnter,
     onMouseLeave,
     onDragMove
@@ -48,7 +43,7 @@ const Graph: React.FunctionComponent<GraphInterface> = ({
                                         yPosition={node.yPosition}
                                         fill={node.fill}
                                         ref={node.ref}
-                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE })}
+                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index: index } })}
                                         onMouseEnter={() => onMouseEnter(index)}
                                         onMouseLeave={() => onMouseLeave(index)}
                                         onDragMove={(e) => onDragMove(index, e)}

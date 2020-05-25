@@ -6,7 +6,7 @@ import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/node
 import { presetNodeState, defaultFill } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from '../redux/BFS/store/graph/PresetValues/presetEdges';
-import Graph from './GraphSection/Nodes/Graph'
+import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { EdgeListInterface } from '../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 
@@ -170,9 +170,6 @@ const BFS: FunctionComponent = () => {
 
             <div className="operation-section">
                 <Graph
-                    nodeList={nodeListState}
-                    edgeList={edgeState}
-                    onClick={nodeClickHandler}
                     onMouseEnter={mouseOverNodeHandler}
                     onMouseLeave={mouseOutHandler}
                     onDragMove={updatePosition}
