@@ -8,11 +8,11 @@ import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
+import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
 import './BFS.css'
-import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
 
 
 const BFS: FunctionComponent = () => {
@@ -28,12 +28,7 @@ const BFS: FunctionComponent = () => {
     }
 
     const mouseOverNodeHandler = (index: number) => {
-        // const newNodeState = [...nodeListState];
-        // let newNode = { ...newNodeState[index] };
-        // newNode.ref = nodeRef;
-        // newNodeState[index] = newNode;
-        // setNodeListState(newNodeState);
-        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index: index} });
+        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index } });
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
@@ -56,11 +51,7 @@ const BFS: FunctionComponent = () => {
             });
         }
 
-        const newNodeState = [...nodeListState];
-        let newNode = { ...newNodeState[index] };
-        newNode.ref = null;
-        newNodeState[index] = newNode;
-        setNodeListState(newNodeState);
+        dispatch({ type: graphActionType.MOUSE_LEAVE_NODE, payload: { index } })
     }
 
     return (
@@ -75,7 +66,7 @@ const BFS: FunctionComponent = () => {
                 <Graph
                     onMouseEnter={mouseOverNodeHandler}
                     onMouseLeave={mouseOutHandler}
-                    onDragMove={(index, e) => dispatch({type: graphActionType.DRAG_NODE, payload: {index, e}})}
+                    onDragMove={(index, e) => dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
                 />
 
                 <div className="search-status-stack-section">
@@ -90,7 +81,7 @@ const BFS: FunctionComponent = () => {
                                 }, 360);
                             }}
                             onDeleteNeighbor={index => {
-                                dispatch({ type: graphActionType.DELETE_NEIGHBOR, payload: { index: index} });
+                                dispatch({ type: graphActionType.DELETE_NEIGHBOR, payload: { index } });
                                 setTimeout(() => {
                                     buttonRef.current?.blur();
                                 }, 360);
