@@ -1,11 +1,11 @@
 import React from 'react';
 import Edge from './Edge';
 import { useSelector } from 'react-redux';
-import { graphStateInterface } from '../../../redux/BFS/store/graph/graphReducer';
+import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
 
 const EdgeList = () => {
-    const edgeList = useSelector((state: graphStateInterface) => state.edgeList);
-    const nodeList = useSelector((state: graphStateInterface) => state.nodeList);
+    const edgeList = useSelector((state: bfsRootReducerInterface) => state.graph.edgeList);
+    const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
 
     return (
         <React.Fragment>

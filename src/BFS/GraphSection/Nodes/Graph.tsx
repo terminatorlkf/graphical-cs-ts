@@ -5,9 +5,9 @@ import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
 import EdgeList from '../Edges/EdgeList';
 import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
-import { graphStateInterface } from '../../../redux/BFS/store/graph/graphReducer';
+import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
 
 interface GraphInterface {
     nodeList: nodeListStateInterface[],
@@ -20,42 +20,45 @@ interface GraphInterface {
 
 const Graph: React.FunctionComponent<GraphInterface> = ({
     onClick,
+    edgeList,
     onMouseEnter,
     onMouseLeave,
     onDragMove
 }) => {
 
     const dispatch = useDispatch();
-    const nodeList = useSelector((state: graphStateInterface) => state.nodeList);
-    console.log('the nodeList is: ' + nodeList);
+    const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
+    const store = useStore();
 
     return (
         <div className="operation-node-section">
             <Stage width={window.innerWidth - 580} height={window.innerHeight}>
-                <Layer>
-                    <EdgeList />
-                    {nodeList.map((node, index) => {
-                        if (node.index !== -1) {
-                            return (
-                                <Node
-                                    index={index}
-                                    key={index}
-                                    value={node.value}
-                                    elevation={node.elevation}
-                                    xPosition={node.xPosition}
-                                    yPosition={node.yPosition}
-                                    fill={node.fill}
-                                    ref={node.ref}
-                                    onClick={() => dispatch({ type: graphActionType.CLICK_NODE })}
-                                    onMouseEnter={() => onMouseEnter(index)}
-                                    onMouseLeave={() => onMouseLeave(index)}
-                                    onDragMove={(e) => onDragMove(index, e)}
-                                />
-                            );
-                        }
-                        return null;
-                    })}
-                </Layer>
+                <Provider store={store}>
+                    <Layer>
+                        <EdgeList />
+                        {nodeList.map((node, index) => {
+                            if (node.index !== -1) {
+                                return (
+                                    <Node
+                                        index={index}
+                                        key={index}
+                                        value={node.value}
+                                        elevation={node.elevation}
+                                        xPosition={node.xPosition}
+                                        yPosition={node.yPosition}
+                                        fill={node.fill}
+                                        ref={node.ref}
+                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE })}
+                                        onMouseEnter={() => onMouseEnter(index)}
+                                        onMouseLeave={() => onMouseLeave(index)}
+                                        onDragMove={(e) => onDragMove(index, e)}
+                                    />
+                                );
+                            }
+                            return null;
+                        })}
+                    </Layer>
+                </Provider>
             </Stage>
 
         </div>

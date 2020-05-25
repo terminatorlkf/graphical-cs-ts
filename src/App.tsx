@@ -9,8 +9,6 @@ import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-d
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';
 import NavigationBar from "./NavigationBar/NavigationBar";
-import { Provider } from 'react-redux';
-import bfsStore from './redux/BFS/store';
 
 import './App.css';
 
@@ -44,7 +42,6 @@ function App() {
             currentPage,
             setCurrentPage: setPage
           }}>
-          <Provider store={bfsStore}>
             <Router>
               <NavigationBar />
               <Switch>
@@ -78,8 +75,6 @@ function App() {
                 </Route>
               </Switch>
             </Router>
-          </Provider>
-
         </CurrentPageContext.Provider>
       </IntroExpandedContext.Provider>
     </React.Fragment >
