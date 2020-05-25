@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
 import { graphStateInterface } from '../../../redux/BFS/store/graph/graphReducer';
 
-interface OperationNodeInterface {
+interface GraphInterface {
     nodeList: nodeListStateInterface[],
     edgeList: EdgeListInterface[],
     onClick: (index: number) => void,
@@ -18,7 +18,7 @@ interface OperationNodeInterface {
     onDragMove: (index: number, e: KonvaEventObject<DragEvent>) => void
 }
 
-const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
+const Graph: React.FunctionComponent<GraphInterface> = ({
     onClick,
     onMouseEnter,
     onMouseLeave,
@@ -27,7 +27,7 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
 
     const dispatch = useDispatch();
     const nodeList = useSelector((state: graphStateInterface) => state.nodeList);
-    console.log(nodeList);
+    console.log('the nodeList is: ' + nodeList);
 
     return (
         <div className="operation-node-section">
@@ -62,4 +62,4 @@ const OperationNodeSection: React.FunctionComponent<OperationNodeInterface> = ({
     )
 }
 
-export default OperationNodeSection;
+export default Graph;

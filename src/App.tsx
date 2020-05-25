@@ -9,6 +9,8 @@ import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-d
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';
 import NavigationBar from "./NavigationBar/NavigationBar";
+import { Provider } from 'react-redux';
+import bfsStore from './redux/BFS/store';
 
 import './App.css';
 
@@ -42,40 +44,42 @@ function App() {
             currentPage,
             setCurrentPage: setPage
           }}>
-          <Router>
-            <NavigationBar />
-            <Switch>
+          <Provider store={bfsStore}>
+            <Router>
+              <NavigationBar />
+              <Switch>
 
-              <Route path="/" exact>
-                <Redirect to="/home" />
-              </Route>
+                <Route path="/" exact>
+                  <Redirect to="/home" />
+                </Route>
 
-              <Route path="/home">
-                <Home />
-              </Route>
+                <Route path="/home">
+                  <Home />
+                </Route>
 
-              <Route path="/bfs">
-                <BFS />
-              </Route>
+                <Route path="/bfs">
+                  <BFS />
+                </Route>
 
-              <Route path="/dfs">
-                <DFS />
-              </Route>
+                <Route path="/dfs">
+                  <DFS />
+                </Route>
 
-              <Route path="/a-star">
-                <AStar />
-              </Route>
+                <Route path="/a-star">
+                  <AStar />
+                </Route>
 
-              <Route path="/beam-search">
-                <BeamSearch />
-              </Route>
+                <Route path="/beam-search">
+                  <BeamSearch />
+                </Route>
 
-              <Route Path="/iterative-deepening">
-                <IterativeDeepening />
-              </Route>
+                <Route Path="/iterative-deepening">
+                  <IterativeDeepening />
+                </Route>
+              </Switch>
+            </Router>
+          </Provider>
 
-            </Switch>
-          </Router>
         </CurrentPageContext.Provider>
       </IntroExpandedContext.Provider>
     </React.Fragment >

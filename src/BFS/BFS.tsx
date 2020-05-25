@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useState, useRef } from "react";
-import AddNodeButton from "./OperationNodeSection/Nodes/AddNodeButton"
+import AddNodeButton from "./GraphSection/Nodes/AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { presetNodeState, defaultFill } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
 import { presetEdges } from '../redux/BFS/store/graph/PresetValues/presetEdges';
-import OperationNodeSection from './OperationNodeSection/Nodes/OperationNodeSection'
+import Graph from './GraphSection/Nodes/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { EdgeListInterface } from '../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 
@@ -169,7 +169,7 @@ const BFS: FunctionComponent = () => {
             </IntroSection>
 
             <div className="operation-section">
-                <OperationNodeSection
+                <Graph
                     nodeList={nodeListState}
                     edgeList={edgeState}
                     onClick={nodeClickHandler}

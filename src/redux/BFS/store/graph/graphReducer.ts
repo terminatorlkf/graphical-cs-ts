@@ -25,7 +25,7 @@ const initialGraphState: graphStateInterface = {
 
 const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
     let index = -1;
-    let newNodeList = [];
+    let newNodeList:nodeListStateInterface[] = [];
     let currentNeighborIndex = -1;
 
     switch (action.type) {
