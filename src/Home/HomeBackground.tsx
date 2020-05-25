@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Circle, Layer, Stage, Line } from "react-konva";
-import { useSprings, animated, config } from '@react-spring/konva';
-import { KonvaEventObject } from "konva/types/Node";
+import { useSprings, animated } from '@react-spring/konva';
 
 import './HomeBackground.css';
+import { interpolate } from "react-spring";
 
 export default function HomeBackground() {
 
@@ -37,20 +37,18 @@ export default function HomeBackground() {
         from: { x: state.xPosition, y: state.yPosition }
     })));
 
-    const linePoints = (index: number) => {
-        return [
-            0,
-            0,
-            animations[Math.floor(index / 8) * 8].x.getValue() - animations[index].x.getValue(),
-            animations[Math.floor(index / 8) * 8].y.getValue() - animations[index].y.getValue(),
-        ];
+    const lineSet = () => {
+        return animations.map((node, index) => {
+            return [
+                0,
+                0,
+                animations[Math.floor(index / 8) * 8].x.getValue() - animations[index].x.getValue(),
+                animations[Math.floor(index / 8) * 8].y.getValue() - animations[index].y.getValue(),
+            ];
+        });
     }
-    
-    const lineSet = animations.map((node, index) => {
-        return linePoints(index);
-    })
 
-    const [lineState, setLineState] = useState<number[][]>(lineSet)
+    const [lineState, setLineState] = useState<number[][]>(lineSet())
 
     return (
         <div className="home-background">
