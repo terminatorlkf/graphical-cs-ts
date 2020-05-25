@@ -64,3 +64,9 @@ export const deleteNeighbor = (index: number): graphActionType.deleteNeighborAct
         payload: { index }
     }
 }
+
+export const addNeighbor = (): graphActionType.addNeighborAction => {
+    return {
+        type: graphActionType.ADD_NEIGHBOR
+    }
+}

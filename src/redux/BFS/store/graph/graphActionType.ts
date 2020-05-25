@@ -13,6 +13,8 @@ export const CLICK_EXISTING_NEIGHBOR = 'CLICK_EXISTING_NEIGHBOR'
 export const CLICK_AVAILABLE_NEIGHBOR = 'CLICK_AVAILABLE_NEIGHBOR';
 export const DELETE_NEIGHBOR = 'DELETE_NEIGHBOR';
 
+export const ADD_NEIGHBOR = 'ADD_NEIGHBOR';
+
 export interface addNodeAction {
     type: typeof ADD_NODE,
     payload: { x: number, y: number }
@@ -58,6 +60,10 @@ export interface deleteNeighborAction {
     payload: { index: number }
 }
 
+export interface addNeighborAction {
+    type: typeof ADD_NEIGHBOR
+}
+
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
-    | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction;
+    | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction;

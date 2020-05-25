@@ -3,6 +3,9 @@ import { Elevation } from '@rmwc/elevation';
 import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
 import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import { useTransition, animated } from 'react-spring';
+import { useSelector, useDispatch } from 'react-redux';
+import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
+import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
 
 import '@rmwc/elevation/styles';
 
@@ -10,14 +13,15 @@ export type NodeNeighborListProps = {
     edgeList: EdgeListInterface[],
     nodeList: nodeListStateInterface[],
     currentNodeIndex: number,
-    currentNeighborIndex: number,
     onMouseEnter: (index: number) => void,
-    onMouseLeave: (index: number) => void,
-    onClick: (index: number) => void
+    onMouseLeave: (index: number) => void
 }
 
 const NodeNeighborList = (props: NodeNeighborListProps) => {
-    const { edgeList, nodeList, currentNodeIndex, currentNeighborIndex, onMouseEnter, onMouseLeave, onClick } = props;
+    const { edgeList, nodeList, currentNodeIndex, onMouseEnter, onMouseLeave } = props;
+
+    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    const dispatch = useDispatch();
 
     const transition = useTransition(edgeList, edge => edge.key, {
         from: { opacity: 0, transform: 'translate3d(0, 1rem, 0)' },
@@ -42,8 +46,8 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                         if (nodeList[i].index === item.edge[neighborNodeIndex]) neighborNodeIndexOriginal = i;
                     }
 
-                    const backgroundColor = currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white';
-                    const textColor = currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black';
+                    const backgroundColor = graph.currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white';
+                    const textColor = graph.currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black';
 
                     return (
                         <animated.div style={props} key={key}>
@@ -63,7 +67,7 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                                     onMouseLeave(neighborNodeIndexOriginal)
                                 }}
                                 onClick={() => {
-                                    onClick(neighborNodeIndexOriginal);
+                                    dispatch({ type: graphActionType.CLICK_EXISTING_NEIGHBOR, payload: { index: neighborNodeIndexOriginal } });
                                 }}
                             >
                                 <p>{item.edge[neighborNodeIndex]}</p>

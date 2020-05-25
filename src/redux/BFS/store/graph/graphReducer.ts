@@ -31,6 +31,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
     let index = -1;
     let newNodeList:nodeListStateInterface[] = [];
     let currentNeighborIndex = -1;
+    let currentNodeIndex = -1;
+    let newNode: nodeListStateInterface = state.nodeList[0];
 
     switch (action.type) {
         // Reducer to fire after adding a node
@@ -66,7 +68,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
             const clickedFill = state.clickedFill;
             const defaultFill = state.defaultFill;
             index = (action as graphAction.clickNodeAction).payload.index;
-            let newNode = { ...newNodeList[index] }
+            newNode = { ...newNodeList[index] }
             newNode.fill = newNode.fill === defaultFill ? clickedFill : defaultFill;
 
             // make all other nodes besides the current clicked node the default color
@@ -166,7 +168,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
         case graphAction.CLICK_AVAILABLE_NEIGHBOR:
             let i = -1;
             currentNeighborIndex = (action as graphAction.clickAvailableNeighborAction).payload.index;
-            let currentNodeIndex = state.currentNodeIndex;
+            currentNodeIndex = state.currentNodeIndex;
 
             if (state.edgeList.length === 0) i = 0;
             else i = state.edgeList[state.edgeList.length - 2].key + 2;
@@ -184,7 +186,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
 
         case graphAction.DELETE_NEIGHBOR:
             index = (action as graphAction.deleteNeighborAction).payload.index;
-            currentNodeIndex = state.currentNeighborIndex;
+            currentNodeIndex = state.currentNodeIndex;
             let newEdgeList = { ...state.edgeList };
 
             if (currentNeighborIndex !== -1) {
@@ -200,6 +202,12 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                 editNeighborMode: false
             }
 
+        case graphAction.ADD_NEIGHBOR:
+            return {
+                ...state,
+                addNeighborMode: !state.addNeighborMode
+            }
+            
         default:
             return state
     }

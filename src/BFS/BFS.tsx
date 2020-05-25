@@ -3,64 +3,38 @@ import AddNodeButton from "./GraphSection/Nodes/AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
-import { presetNodeState, defaultFill } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
+import { presetNodeState } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
 import { KonvaEventObject } from "konva/types/Node";
-import { presetEdges } from '../redux/BFS/store/graph/PresetValues/presetEdges';
 import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
-import { EdgeListInterface } from '../redux/BFS/store/graph/Interfaces/EdgeListInterface';
+import { useDispatch, useSelector } from "react-redux";
+import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
 import './BFS.css'
+import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
+
 
 const BFS: FunctionComponent = () => {
-    const clickedFill = 'red';
     const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
-    const [edgeState, setEdgeState] = useState<EdgeListInterface[]>(presetEdges);
-    const [nodeClickState, setNodeClickState] = useState<number>(-1);
-    const [editNeighborMode, setEditNeighborMode] = useState<boolean>(false);
-    const [addNeighborMode, setAddNeighborMode] = useState<boolean>(false);
-    const [currentNeighbor, setCurrentNeighbor] = useState<number>(-1);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
-    const addNodeHandler = (x: number, y: number) => {
-        setNodeListState(prevState => {
-            return [...prevState, {
-                index: prevState.length,
-                value: prevState.length,
-                elevation: 5,
-                className: "",
-                xPosition: x,
-                yPosition: y,
-                fill: defaultFill,
-                ref: null,
-                neighbor: []
-            }]
-        });
-    }
+    const dispatch = useDispatch();
+    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
 
-    const deleteNodeHandler = (index: number) => {
-        setEdgeState(prevState => prevState.filter(edge => !(edge.edge[0] === index || edge.edge[1] === index)));
-        setNodeListState(prevState => {
-            let node = { ...prevState[index] };
-            node = {
-                ...node,
-                index: -1
-            }
-            prevState[index] = node;
-            return prevState.slice();
-        });
-        setNodeClickState(-1);
+    const addNodeHandler = (x: number, y: number) => {
+        dispatch({ type: graphActionType.ADD_NODE, payload: { x: x, y: y } });
     }
 
     const mouseOverNodeHandler = (index: number) => {
-        const newNodeState = [...nodeListState];
-        let newNode = { ...newNodeState[index] };
-        newNode.ref = nodeRef;
-        newNodeState[index] = newNode;
-        setNodeListState(newNodeState);
+        // const newNodeState = [...nodeListState];
+        // let newNode = { ...newNodeState[index] };
+        // newNode.ref = nodeRef;
+        // newNodeState[index] = newNode;
+        // setNodeListState(newNodeState);
+        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index: index} });
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
@@ -88,63 +62,6 @@ const BFS: FunctionComponent = () => {
         newNode.ref = null;
         newNodeState[index] = newNode;
         setNodeListState(newNodeState);
-    }
-
-    const nodeClickHandler = (index: number) => {
-        const newNodeState = [...nodeListState];
-        let newNode = { ...newNodeState[index] };
-        newNode.fill = newNode.fill === defaultFill ? clickedFill : defaultFill;
-
-        if (nodeRef.current) {
-            nodeRef.current.to({
-                fill: newNode.fill,
-                duration: 0.15
-            })
-        }
-
-        for (let i = 0; i < newNodeState.length; i++) {
-            if (i !== index && newNodeState[i].fill === clickedFill) {
-                let oldNode = { ...newNodeState[i] };
-                oldNode.fill = defaultFill;
-                newNodeState[i] = oldNode;
-            }
-        }
-
-        newNodeState[index] = newNode;
-        setNodeListState(newNodeState);
-
-        if (newNode.fill === clickedFill) {
-            setNodeClickState(index);
-            setAddNeighborMode(false);
-        } else {
-            setNodeClickState(-1);
-        }
-    }
-
-    const deleteNeighbor = (index: number) => {
-        if (currentNeighbor !== -1) {
-            setEdgeState(prevState => {
-                return prevState.filter(edge => {
-                    return !((edge.edge[0] === index && edge.edge[1] === nodeClickState) ||
-                        (edge.edge[0] === nodeClickState && edge.edge[1] === index));
-                });
-            });
-        }
-        setEditNeighborMode(false);
-    }
-
-    const availableNeighborClickHandler = (index: number) => {
-        let i = -1;
-
-        if (edgeState.length === 0) i = 0;
-        else i = edgeState[edgeState.length - 2].key + 2;
-
-        setEdgeState(prevState => {
-            return [...prevState, {
-                key: i,
-                edge: [index, nodeClickState]
-            }];
-        });
     }
 
     const updatePosition = (index: number, e: KonvaEventObject<DragEvent>) => {
@@ -178,49 +95,24 @@ const BFS: FunctionComponent = () => {
                 <div className="search-status-stack-section">
                     {/* <h1>Priority Queue</h1> */}
 
-                    {nodeClickState !== -1 &&
+                    {graph.currentNodeIndex !== -1 &&
                         <NodeStatusCard
-                            edgeList={edgeState}
-                            nodeList={nodeListState}
-                            currentNodeIndex={nodeClickState}
-                            backgroundColor={clickedFill}
-                            editNeighborMode={editNeighborMode}
-                            addNeighborMode={addNeighborMode}
-                            currentNeighborIndex={currentNeighbor}
-                            expanded={addNeighborMode}
                             onAddNeighbor={() => {
-                                setAddNeighborMode(prevState => !prevState);
+                                dispatch({ type: graphActionType.ADD_NEIGHBOR });
                                 setTimeout(() => {
                                     buttonRef.current?.blur();
                                 }, 360);
                             }}
                             onDeleteNeighbor={index => {
-                                deleteNeighbor(index);
-                                setCurrentNeighbor(-1);
+                                dispatch({ type: graphActionType.DELETE_NEIGHBOR, payload: { index: index} });
                                 setTimeout(() => {
                                     buttonRef.current?.blur();
                                 }, 360);
                             }}
                             onMouseEnterNeighbor={mouseOverNodeHandler}
                             onMouseLeaveNeighbor={mouseOutHandler}
-                            onClickNeighbor={index => {
-                                if (currentNeighbor === -1) {
-                                    setCurrentNeighbor(index);
-                                    setEditNeighborMode(true);
-                                } else if (index === currentNeighbor) {
-                                    setCurrentNeighbor(-1);
-                                    setEditNeighborMode(false);
-                                }
-                                else
-                                    setCurrentNeighbor(index);
-                            }}
                             onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
                             onMouseLeaveAvailableNeighbor={mouseOutHandler}
-                            onClickAvailableNeighbor={index => {
-                                availableNeighborClickHandler(index);
-                                mouseOutHandler(index);
-                            }}
-                            onDeleteNode={deleteNodeHandler}
                             ref={buttonRef}
                         />
                     }
