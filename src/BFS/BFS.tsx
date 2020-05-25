@@ -2,8 +2,6 @@ import React, { FunctionComponent, useState, useRef } from "react";
 import AddNodeButton from "./GraphSection/Nodes/AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
-import { nodeListStateInterface } from '../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
-import { presetNodeState } from '../redux/BFS/store/graph/PresetValues/PresetNodeState';
 import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +14,6 @@ import './BFS.css'
 
 
 const BFS: FunctionComponent = () => {
-    const [nodeListState, setNodeListState] = useState<nodeListStateInterface[]>(presetNodeState);
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
@@ -28,7 +25,7 @@ const BFS: FunctionComponent = () => {
     }
 
     const mouseOverNodeHandler = (index: number) => {
-        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index } });
+        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index, ref: nodeRef } });
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
@@ -70,7 +67,6 @@ const BFS: FunctionComponent = () => {
                 />
 
                 <div className="search-status-stack-section">
-                    {/* <h1>Priority Queue</h1> */}
 
                     {graph.currentNodeIndex !== -1 &&
                         <NodeStatusCard
