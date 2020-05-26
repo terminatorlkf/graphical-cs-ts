@@ -46,9 +46,8 @@ const NodeStatusCard = (props: NodeStatusCardProps) => {
                     backgroundColor={graph.clickedFill}
                     editNeighborMode={graph.editNeighborMode}
                     addNeighborMode={graph.addNeighborMode}
-                    currentNeighborIndex={graph.currentNeighborIndex}
                     onAddNeighbor={addNeighborModeHandler}
-                    onDeleteNeighbor={deleteNeighborHandler}
+                    onDeleteNeighbor={() => deleteNeighborHandler(graph.currentNeighborIndex)}
                     ref={buttonRef}
                 />
 

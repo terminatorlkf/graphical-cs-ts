@@ -8,9 +8,8 @@ export type NodeStatusTitleProps = {
     backgroundColor: string,
     editNeighborMode: boolean,
     addNeighborMode: boolean,
-    currentNeighborIndex: number,
     onAddNeighbor: () => void,
-    onDeleteNeighbor: (index: number) => void
+    onDeleteNeighbor: () => void
 }
 
 const NodeStatusTitle = React.forwardRef((props: NodeStatusTitleProps, ref?: React.Ref<HTMLButtonElement>) => {
@@ -18,7 +17,6 @@ const NodeStatusTitle = React.forwardRef((props: NodeStatusTitleProps, ref?: Rea
         backgroundColor,
         editNeighborMode,
         addNeighborMode,
-        currentNeighborIndex,
         onAddNeighbor,
         onDeleteNeighbor } = props;
 
@@ -33,7 +31,7 @@ const NodeStatusTitle = React.forwardRef((props: NodeStatusTitleProps, ref?: Rea
                 {!editNeighborMode ?
                     <Button ref={ref} label={addNeighborMode ? 'finish' : 'add'} onClick={onAddNeighbor} />
                     :
-                    <Button ref={ref} label='delete neighbor' onClick={() => onDeleteNeighbor(currentNeighborIndex)} />
+                    <Button ref={ref} label='delete neighbor' onClick={onDeleteNeighbor} />
                 }
             </div>
         </React.Fragment>

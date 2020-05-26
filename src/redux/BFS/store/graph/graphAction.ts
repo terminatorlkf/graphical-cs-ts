@@ -58,10 +58,9 @@ export const clickAvailableNeighbor = (index: number): graphActionType.clickAvai
     }
 }
 
-export const deleteNeighbor = (index: number): graphActionType.deleteNeighborAction => {
+export const deleteNeighbor = (): graphActionType.deleteNeighborAction => {
     return {
         type: graphActionType.DELETE_NEIGHBOR,
-        payload: { index }
     }
 }
 

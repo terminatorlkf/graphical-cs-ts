@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useRef } from "react";
+import React, { FunctionComponent, useRef } from "react";
 import AddNodeButton from "./GraphSection/Nodes/AddNodeButton"
 import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
@@ -19,7 +19,7 @@ const BFS: FunctionComponent = () => {
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
 
     const addNodeHandler = (x: number, y: number) => {
-        dispatch({ type: graphActionType.ADD_NODE, payload: { x: x, y: y } });
+        dispatch({ type: graphActionType.ADD_NODE, payload: { x, y } });
     }
 
     const mouseOverNodeHandler = (index: number) => {

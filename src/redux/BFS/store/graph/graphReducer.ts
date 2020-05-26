@@ -29,7 +29,7 @@ const initialGraphState: graphStateInterface = {
 
 const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
     let index = -1;
-    let newNodeList:nodeListStateInterface[] = [];
+    let newNodeList: nodeListStateInterface[] = [];
     let currentNeighborIndex = -1;
     let currentNodeIndex = -1;
     let newNode: nodeListStateInterface = state.nodeList[0];
@@ -87,14 +87,17 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                     ...state,
                     currentNodeIndex: index,
                     addNeighborMode: false,
-                    nodeList: newNodeList
+                    nodeList: newNodeList,
+                    currentNeighborIndex: -1
                 }
             } else {
                 //unclick the current node if it was clicked before
                 return {
                     ...state,
                     currentNodeIndex: -1,
-                    nodeList: newNodeList.slice()
+                    nodeList: newNodeList.slice(),
+                    currentNeighborIndex: -1
+
                 }
             }
 
@@ -185,18 +188,18 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
             }
 
         case graphAction.DELETE_NEIGHBOR:
-            index = (action as graphAction.deleteNeighborAction).payload.index;
+            currentNeighborIndex = state.currentNeighborIndex;
             currentNodeIndex = state.currentNodeIndex;
-            let newEdgeList = { ...state.edgeList };
+            let newEdgeList = [ ...state.edgeList ];
 
             if (currentNeighborIndex !== -1) {
-                newEdgeList = state.edgeList.filter(edge => {
-                    return !((edge.edge[0] === index && edge.edge[1] === currentNodeIndex) ||
-                        (edge.edge[0] === currentNodeIndex && edge.edge[1] === index));
+                newEdgeList = newEdgeList.filter(edge => {
+                    return !((edge.edge[0] === currentNeighborIndex && edge.edge[1] === currentNodeIndex) ||
+                        (edge.edge[0] === currentNodeIndex && edge.edge[1] === currentNeighborIndex));
                 });
             }
 
-            return { 
+            return {
                 ...state,
                 edgeList: newEdgeList,
                 editNeighborMode: false
@@ -207,7 +210,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                 ...state,
                 addNeighborMode: !state.addNeighborMode
             }
-            
+
         default:
             return state
     }

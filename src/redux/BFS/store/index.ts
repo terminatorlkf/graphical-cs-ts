@@ -7,7 +7,7 @@ const logger = createLogger({
     collapsed: true
 })
 
-
+// const composeEnhancers = composeWithDevTools({ trace: true, traceLimit: 25 });
 const bfsStore = createStore(reducer, undefined, composeWithDevTools(applyMiddleware(logger)));
 
 export default bfsStore;

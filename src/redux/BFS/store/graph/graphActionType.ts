@@ -57,7 +57,6 @@ export interface clickAvailableNeighborAction {
 
 export interface deleteNeighborAction {
     type: typeof DELETE_NEIGHBOR,
-    payload: { index: number }
 }
 
 export interface addNeighborAction {

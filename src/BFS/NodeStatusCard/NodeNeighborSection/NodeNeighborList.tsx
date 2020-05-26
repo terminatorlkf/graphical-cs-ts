@@ -26,7 +26,7 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
     const transition = useTransition(edgeList, edge => edge.key, {
         from: { opacity: 0, transform: 'translate3d(0, 1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
-        leave: { opacity: 0, transform: 'translate3d(0, 1rem, 0)'}
+        leave: { opacity: 0, transform: 'translate3d(0, 1rem, 0)' }
     });
 
     return (
@@ -45,7 +45,6 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                     for (let i = 0; i < nodeList.length; i++) {
                         if (nodeList[i].index === item.edge[neighborNodeIndex]) neighborNodeIndexOriginal = i;
                     }
-
                     const backgroundColor = graph.currentNeighborIndex === neighborNodeIndexOriginal ? 'red' : 'white';
                     const textColor = graph.currentNeighborIndex === neighborNodeIndexOriginal ? 'white' : 'black';
 
@@ -60,15 +59,9 @@ const NodeNeighborList = (props: NodeNeighborListProps) => {
                                 key={key}
                                 z={2}
                                 className="neighbor-node"
-                                onMouseEnter={() => {
-                                    onMouseEnter(neighborNodeIndexOriginal)
-                                }}
-                                onMouseLeave={() => {
-                                    onMouseLeave(neighborNodeIndexOriginal)
-                                }}
-                                onClick={() => {
-                                    dispatch({ type: graphActionType.CLICK_EXISTING_NEIGHBOR, payload: { index: neighborNodeIndexOriginal } });
-                                }}
+                                onMouseEnter={() => { onMouseEnter(neighborNodeIndexOriginal) }}
+                                onMouseLeave={() => { onMouseLeave(neighborNodeIndexOriginal) }}
+                                onClick={() => { dispatch({ type: graphActionType.CLICK_EXISTING_NEIGHBOR, payload: { neighborIndex: neighborNodeIndexOriginal } }) }}
                             >
                                 <p>{item.edge[neighborNodeIndex]}</p>
                             </Elevation>
