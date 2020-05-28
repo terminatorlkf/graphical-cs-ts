@@ -4,6 +4,8 @@ import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interface
 import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
 import SmoothCollapse from 'react-smooth-collapse';
 import { useTransition, animated } from 'react-spring';
+import { useDispatch } from 'react-redux';
+import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
 
 export type AvailableNeighborListProps = {
     expanded: boolean,
@@ -17,6 +19,7 @@ export type AvailableNeighborListProps = {
 
 const AvailableNeighborList = (props: AvailableNeighborListProps) => {
     const { expanded, nodeList, edgeList, currentNodeIndex, onMouseEnter, onMouseLeave, onClick } = props;
+    const dispatch = useDispatch();
 
     const transition = useTransition(nodeList, node => node.index, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
@@ -58,7 +61,7 @@ const AvailableNeighborList = (props: AvailableNeighborListProps) => {
                                             value={item.value}
                                             onMouseEnter={onMouseEnter}
                                             onMouseLeave={onMouseLeave}
-                                            onClick={onClick}
+                                            onClick={index => dispatch({ type: graphActionType.CLICK_AVAILABLE_NEIGHBOR, payload: { index: index } })}
                                         />
                                     </animated.div>
                                 )

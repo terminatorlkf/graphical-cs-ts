@@ -205,7 +205,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
             return {
                 ...state,
                 edgeList: newEdgeList,
-                editNeighborMode: false
+                editNeighborMode: false,
+                currentNeighborIndex: -1
             }
 
         case graphAction.ADD_NEIGHBOR:
