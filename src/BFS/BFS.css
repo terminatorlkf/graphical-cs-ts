@@ -47,6 +47,7 @@
 }
 
 .node-status-card {
+    background-color: white;
     overflow: hidden;
     margin-top: 3.6rem;
     padding-top: 0.4rem;

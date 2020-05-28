@@ -13,7 +13,8 @@ export interface graphStateInterface {
     editNeighborMode: boolean,
     addNeighborMode: boolean,
     clickedFill: string,
-    defaultFill: string
+    defaultFill: string,
+    nodeStatusCardToggled: boolean
 }
 
 const initialGraphState: graphStateInterface = {
@@ -24,7 +25,8 @@ const initialGraphState: graphStateInterface = {
     editNeighborMode: false,
     addNeighborMode: false,
     defaultFill: defaultFill,
-    clickedFill: 'red'
+    clickedFill: 'red',
+    nodeStatusCardToggled: false
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
@@ -88,16 +90,17 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                     currentNodeIndex: index,
                     addNeighborMode: false,
                     nodeList: newNodeList,
-                    currentNeighborIndex: -1
+                    currentNeighborIndex: -1,
+                    nodeStatusCardToggled: true
                 }
             } else {
                 //unclick the current node if it was clicked before
                 return {
                     ...state,
-                    currentNodeIndex: -1,
+                    nodeStatusCardToggled: false,
+                    // currentNodeIndex: -1,
                     nodeList: newNodeList.slice(),
                     currentNeighborIndex: -1
-
                 }
             }
 

@@ -5,11 +5,12 @@ import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
 import { Button } from '@rmwc/button';
 import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
+import { useSelector, useDispatch } from 'react-redux';
+import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
+import { useSpring, animated } from 'react-spring';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
-import { useSelector, useDispatch } from 'react-redux';
-import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 
 export type NodeStatusCardProps = {
     onMouseEnterNeighbor: (index: number) => void,
@@ -22,7 +23,7 @@ const NodeStatusCard = (props: NodeStatusCardProps) => {
     const dispatch = useDispatch();
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
-
+    
     const addNeighborModeHandler = () => {
         dispatch({ type: graphActionType.ADD_NEIGHBOR });
         setTimeout(() => {

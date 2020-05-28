@@ -7,6 +7,7 @@ import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
 import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
+import { useSpring, useTransition, animated } from 'react-spring';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -17,6 +18,17 @@ const BFS: FunctionComponent = () => {
 
     const dispatch = useDispatch();
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    // const nodeStatusCardProps = useSpring({
+    //     opacity: graph.currentNodeIndex === -1 ? 0 : 1,
+    //     transform: graph.currentNodeIndex === -1 ? 'translate3d(0, -1rem, 0)' : 'translate3d(0, 0, 0)'
+    // });
+
+    const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
+        from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
+        enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' }
+    });
+
 
     const addNodeHandler = (x: number, y: number) => {
         dispatch({ type: graphActionType.ADD_NODE, payload: { x, y } });
@@ -51,7 +63,7 @@ const BFS: FunctionComponent = () => {
     }
 
     return (
-        <div>
+        <div style={{ backgroundColor: 'rgba(250, 250, 250, 1)' }}>
             <IntroSection title="Breadth-First Search" source='Wikipedia'>
                 "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
                 sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
@@ -67,14 +79,20 @@ const BFS: FunctionComponent = () => {
 
                 <div className="search-status-stack-section">
 
-                    {graph.currentNodeIndex !== -1 &&
-                        <NodeStatusCard
-                            onMouseEnterNeighbor={mouseOverNodeHandler}
-                            onMouseLeaveNeighbor={mouseOutHandler}
-                            onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
-                            onMouseLeaveAvailableNeighbor={mouseOutHandler}
-                        />
-                    }
+                    {nodeStatusCardTransition.map(({ item, key, props }) => {
+                        return (
+                            item &&
+                            <animated.div style={props} key={key}>
+                                <NodeStatusCard
+                                    onMouseEnterNeighbor={mouseOverNodeHandler}
+                                    onMouseLeaveNeighbor={mouseOutHandler}
+                                    onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
+                                    onMouseLeaveAvailableNeighbor={mouseOutHandler}
+                                />
+                            </animated.div>
+                        );
+                    })}
+
 
                 </div>
 

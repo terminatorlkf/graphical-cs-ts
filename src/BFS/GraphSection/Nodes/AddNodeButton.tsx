@@ -12,7 +12,7 @@ const AddNodeButton: React.FunctionComponent<AddNodeButtonProps> = ({ onClick })
         <div className="add-node-button">
             <ThemeProvider
                 options={{
-                    secondary: 'red'
+                    secondary: 'rgba(19, 150, 241, 1)'
                 }}
             >
                 <Tooltip content="add node" showArrow>
