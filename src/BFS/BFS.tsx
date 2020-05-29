@@ -20,7 +20,7 @@ const BFS: FunctionComponent = () => {
     const dispatch = useDispatch();
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
 
-    const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
+    const statusCardTransition = useTransition(graph.nodeStatusCardToggled || graph.edgeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
         leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
@@ -76,26 +76,26 @@ const BFS: FunctionComponent = () => {
 
                 <div className="search-status-stack-section">
 
-                    {nodeStatusCardTransition.map(({ item, key, props }) => {
+                    {statusCardTransition.map(({ item, key, props }) => {
                         return (
                             item &&
-                            <animated.div style={props} key={key}>
-                                <NodeStatusCard
-                                    onMouseEnterNeighbor={mouseOverNodeHandler}
-                                    onMouseLeaveNeighbor={mouseOutHandler}
-                                    onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
-                                    onMouseLeaveAvailableNeighbor={mouseOutHandler}
-                                />
-                            </animated.div>
+                                <animated.div style={props} key={key}>
+                                    {graph.nodeStatusCardToggled && 
+                                    <NodeStatusCard
+                                        onMouseEnterNeighbor={mouseOverNodeHandler}
+                                        onMouseLeaveNeighbor={mouseOutHandler}
+                                        onMouseEnterAvailableNeighbor={mouseOverNodeHandler}
+                                        onMouseLeaveAvailableNeighbor={mouseOutHandler}
+                                    />}
+                                    {graph.edgeStatusCardToggled &&
+                                        <EdgeStatusCard
+                                        onMouseEnterNeighbor={mouseOverNodeHandler}
+                                        onMouseLeaveNeighbor={mouseOutHandler}
+                                    />
+                                    }
+                                </animated.div>     
                         );
                     })}
-                    {
-                        graph.edgeStatusCardToggled &&
-                        <EdgeStatusCard
-                            onMouseEnterNeighbor={mouseOverNodeHandler}
-                            onMouseLeaveNeighbor={mouseOutHandler}
-                        />
-                    }
                 </div>
 
                 <div className="add-node-button">

@@ -49,13 +49,22 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
 
         case graphAction.CLICK_EDGE:
             currentEdgeIndex = (action as graphAction.clickEdgeAction).payload.index;
-            return {
-                ...state,
-                currentEdgeIndex: currentEdgeIndex,
-                nodeStatusCardToggled: false,
-                edgeStatusCardToggled: true
+            if (state.edgeStatusCardToggled && currentEdgeIndex === state.currentEdgeIndex) {
+                return {
+                    ...state,
+                    currentEdgeIndex: -1,
+                    nodeStatusCardToggled: false,
+                    edgeStatusCardToggled: false
+                }
             }
-        
+            else {
+                return {
+                    ...state,
+                    currentEdgeIndex: currentEdgeIndex,
+                    nodeStatusCardToggled: false,
+                    edgeStatusCardToggled: true
+                }
+            }
         case graphAction.DELETE_EDGE:
             return {
                 ...state,
@@ -69,7 +78,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
             newEdgeList = [...state.edgeList];
             edgeIndex = (action as graphAction.mouseEnterEdgeAction).payload.index;
             let edgeRef = (action as graphAction.mouseEnterEdgeAction).payload.ref;
-            newEdge = {...newEdgeList[edgeIndex]};
+            newEdge = { ...newEdgeList[edgeIndex] };
             newEdge.ref = edgeRef;
             newEdgeList[edgeIndex] = newEdge;
 
@@ -248,7 +257,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
         case graphAction.DELETE_NEIGHBOR:
             currentNeighborIndex = state.currentNeighborIndex;
             currentNodeIndex = state.currentNodeIndex;
-            newEdgeList = [ ...state.edgeList ];
+            newEdgeList = [...state.edgeList];
 
             if (currentNeighborIndex !== -1) {
                 newEdgeList = newEdgeList.filter(edge => {

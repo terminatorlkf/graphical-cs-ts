@@ -28,7 +28,7 @@ const EdgeNeighborList = (props: EdgeNeighborListProps) => {
     const transition = useTransition(newNodeList, node => node.index, {
         from: { opacity: 0, transform: 'translate3d(0, 1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
-        leave: { opacity: 0, transform: 'translate3d(0, 1rem, 0)'}
+        leave: { opacity: 0}
     });
 
     return (
