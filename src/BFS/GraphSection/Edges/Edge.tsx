@@ -5,6 +5,7 @@ import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interface
 interface EdgeInterface {
     edge: number[],
     nodeListState: nodeListStateInterface[]
+    onClick: ()=>void
 }
 
 const Edge: FunctionComponent<EdgeInterface> = ({ edge, nodeListState }) => {

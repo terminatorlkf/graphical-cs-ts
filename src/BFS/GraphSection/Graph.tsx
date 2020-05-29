@@ -21,6 +21,7 @@ const Graph: React.FunctionComponent<GraphInterface> = ({
 
     const dispatch = useDispatch();
     const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
+    console.log(nodeList);
     const store = useStore();
 
     return (

@@ -1,6 +1,11 @@
 import { KonvaEventObject } from "konva/types/Node";
 import Konva from "konva";
 
+export const CLICK_EDGE = 'CLICK_EDGE';
+export const DELETE_EDGE = 'DELETE_EDGE';
+export const MOUSE_ENTER_EDGE = 'MOUSE_ENTER_EDGE';
+export const MOUSE_LEAVE_EDGE = 'MOUSE_LEAVE_EDGE';
+
 export const ADD_NODE = 'ADD_NODE';
 export const DELETE_NODE = 'DELETE_NODE';
 export const CLICK_NODE = 'CLICK_NODE';
@@ -14,6 +19,26 @@ export const CLICK_AVAILABLE_NEIGHBOR = 'CLICK_AVAILABLE_NEIGHBOR';
 export const DELETE_NEIGHBOR = 'DELETE_NEIGHBOR';
 
 export const ADD_NEIGHBOR = 'ADD_NEIGHBOR';
+
+export interface deleteEdgeAction {
+    type: typeof DELETE_EDGE,
+    payload: { index: number}
+}
+
+export interface clickEdgeAction {
+    type: typeof CLICK_EDGE,
+    payload: { index: number }
+}
+
+export interface mouseEnterEdgeAction {
+    type: typeof MOUSE_ENTER_EDGE,
+    payload: {index: number, ref: React.MutableRefObject<Konva.Line>}
+}
+
+export interface mouseLeaveEdgeAction {
+    type: typeof MOUSE_LEAVE_EDGE,
+    payload: {index: number}
+}
 
 export interface addNodeAction {
     type: typeof ADD_NODE,
@@ -63,6 +88,6 @@ export interface addNeighborAction {
     type: typeof ADD_NEIGHBOR
 }
 
-export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
+export type graphActionType = clickEdgeAction | deleteEdgeAction | mouseEnterEdgeAction| mouseLeaveEdgeAction | addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
     | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction;

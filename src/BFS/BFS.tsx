@@ -4,6 +4,7 @@ import Konva from 'konva';
 import IntroSection from '../shared/IntroSection/IntroSection';
 import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
+import EdgeStatusCard from './EdgeStatusCard/EdgeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
 import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
@@ -25,6 +26,13 @@ const BFS: FunctionComponent = () => {
         leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         config: { tension: 300 }
     });
+
+    const edgeStatusCardTransition = useTransition(graph.edgeStatusCardToggled, null, {
+        from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
+        enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' }
+    });
+
 
     const addNodeHandler = (x: number, y: number) => {
         dispatch({ type: graphActionType.ADD_NODE, payload: { x, y } });
@@ -88,6 +96,19 @@ const BFS: FunctionComponent = () => {
                             </animated.div>
                         );
                     })}
+
+                    {edgeStatusCardTransition.map(({ item, key, props }) => {
+                        return (
+                            item &&
+                            <animated.div style={props} key={key}>
+                                <EdgeStatusCard
+                                    onMouseEnterNeighbor={mouseOverNodeHandler}
+                                    onMouseLeaveNeighbor={mouseOutHandler}
+                                />
+                            </animated.div>
+                        );
+                    })}
+
 
                 </div>
 
