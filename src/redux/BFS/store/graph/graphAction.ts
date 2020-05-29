@@ -2,6 +2,13 @@ import * as graphActionType from './graphActionType';
 import { KonvaEventObject } from 'konva/types/Node';
 import Konva from 'konva';
 
+export const clickEdge = (index: number): graphActionType.clickEdgeAction => {
+    return {
+        type: graphActionType.CLICK_EDGE,
+        payload: { index }
+    }
+}
+
 export const addNode = (x: number, y: number): graphActionType.addNodeAction => {
     return {
         type: graphActionType.ADD_NODE,
