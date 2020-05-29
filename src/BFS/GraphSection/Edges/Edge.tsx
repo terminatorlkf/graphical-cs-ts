@@ -8,7 +8,7 @@ interface EdgeInterface {
 }
 
 const Edge: FunctionComponent<EdgeInterface> = ({ edge, nodeListState }) => {
-    let locationVector;
+    let locationVector: number[] = [];
     if (nodeListState[edge[0]] && nodeListState[edge[1]]) {
         const x1 = nodeListState[edge[0]].xPosition;
         const y1 = nodeListState[edge[0]].yPosition;

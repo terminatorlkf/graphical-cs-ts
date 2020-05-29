@@ -7,7 +7,6 @@ import { Button } from '@rmwc/button';
 import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
 import { useSelector, useDispatch } from 'react-redux';
 import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
-import { useSpring, animated } from 'react-spring';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
@@ -71,7 +70,6 @@ const NodeStatusCard = (props: NodeStatusCardProps) => {
                             currentNodeIndex={graph.currentNodeIndex}
                             onMouseEnter={props.onMouseEnterAvailableNeighbor}
                             onMouseLeave={props.onMouseLeaveAvailableNeighbor}
-                            onClick={index => dispatch({ type: graphActionType.CLICK_AVAILABLE_NEIGHBOR, payload: { index: index } })}
                         />
                     </div>
 

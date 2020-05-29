@@ -14,11 +14,10 @@ export type AvailableNeighborListProps = {
     currentNodeIndex: number
     onMouseEnter: (index: number) => void,
     onMouseLeave: (index: number) => void,
-    onClick: (index: number) => void
 }
 
 const AvailableNeighborList = (props: AvailableNeighborListProps) => {
-    const { expanded, nodeList, edgeList, currentNodeIndex, onMouseEnter, onMouseLeave, onClick } = props;
+    const { expanded, nodeList, edgeList, currentNodeIndex, onMouseEnter, onMouseLeave } = props;
     const dispatch = useDispatch();
 
     const transition = useTransition(nodeList, node => node.index, {
