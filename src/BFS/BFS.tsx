@@ -27,13 +27,6 @@ const BFS: FunctionComponent = () => {
         config: { tension: 300 }
     });
 
-    const edgeStatusCardTransition = useTransition(graph.edgeStatusCardToggled, null, {
-        from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
-        enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
-        leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' }
-    });
-
-
     const addNodeHandler = (x: number, y: number) => {
         dispatch({ type: graphActionType.ADD_NODE, payload: { x, y } });
     }
@@ -96,20 +89,13 @@ const BFS: FunctionComponent = () => {
                             </animated.div>
                         );
                     })}
-
-                    {edgeStatusCardTransition.map(({ item, key, props }) => {
-                        return (
-                            item &&
-                            <animated.div style={props} key={key}>
-                                <EdgeStatusCard
-                                    onMouseEnterNeighbor={mouseOverNodeHandler}
-                                    onMouseLeaveNeighbor={mouseOutHandler}
-                                />
-                            </animated.div>
-                        );
-                    })}
-
-
+                    {
+                        graph.edgeStatusCardToggled &&
+                        <EdgeStatusCard
+                            onMouseEnterNeighbor={mouseOverNodeHandler}
+                            onMouseLeaveNeighbor={mouseOutHandler}
+                        />
+                    }
                 </div>
 
                 <div className="add-node-button">
