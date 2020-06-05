@@ -12,7 +12,7 @@ const AddNodeButton: React.FunctionComponent<AddNodeButtonProps> = ({ onClick })
         <div className="add-node-button">
             <ThemeProvider
                 options={{
-                    secondary: 'rgba(19, 150, 241, 1)'
+                    secondary: '#df350f'
                 }}
             >
                 <Tooltip content="add node" showArrow>
@@ -23,7 +23,7 @@ const AddNodeButton: React.FunctionComponent<AddNodeButtonProps> = ({ onClick })
 
             </ThemeProvider>
 
-            <style>
+            <style jsx>
                 {`
                 .add-node-button {
                 position: fixed;

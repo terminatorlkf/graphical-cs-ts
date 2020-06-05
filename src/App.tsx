@@ -4,7 +4,7 @@ import BFS from './BFS/BFS'
 import DFS from "./DFS/DFS"
 import AStar from "./AStar/AStar"
 import BeamSearch from "./BeamSearch/BeamSearch"
-import IterativeDeepening from "./IterativeDeepening/IterativeDeepening"
+import IterativeDeepening from "./DFS/IterativeDeepening/IterativeDeepening"
 import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';

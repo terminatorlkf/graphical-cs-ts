@@ -1,5 +1,5 @@
 import React from "react";
-import IntroSection from '../shared/IntroSection/IntroSection';
+import IntroSection from '../../shared/IntroSection/IntroSection';
 
 const IterativeDeepening = ()=> {
     return (

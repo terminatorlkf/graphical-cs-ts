@@ -3,16 +3,15 @@ import Edge from './Edge';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-konva';
 import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
-import { useTransition, animated } from '@react-spring/konva';
+import { useSprings, animated } from '@react-spring/konva';
 
 const EdgeList = () => {
     const edgeList = useSelector((state: bfsRootReducerInterface) => state.graph.edgeList);
     const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
 
-    // const transition = useTransition(edgeList, edge => edge.key, {
-    //     from: edge => [{}],
-
-    // });
+    const springs = useSprings(edgeList.length, edgeList.map(edge => ({ 
+        points: [edge.edge[0]]
+    })));
 
     return (
         <React.Fragment>

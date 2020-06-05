@@ -15,6 +15,9 @@ export const DELETE_NEIGHBOR = 'DELETE_NEIGHBOR';
 
 export const ADD_NEIGHBOR = 'ADD_NEIGHBOR';
 
+export const SET_ROOT = 'SET_ROOT';
+export const SET_DESTINATION = 'SET_DESTINATION';
+
 export interface addNodeAction {
     type: typeof ADD_NODE,
     payload: { x: number, y: number }
@@ -63,6 +66,17 @@ export interface addNeighborAction {
     type: typeof ADD_NEIGHBOR
 }
 
+export interface setRootAction {
+    type: typeof SET_ROOT,
+    payload: { index: number }
+}
+
+export interface setDestinationAction {
+    type: typeof SET_DESTINATION,
+    payload: { index: number }
+}
+
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
-    | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction;
+    | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction | setRootAction
+    | setDestinationAction;

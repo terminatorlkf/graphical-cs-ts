@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
 import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
 import { useTransition, animated } from 'react-spring';
+import SearchStatusStack from './SearchStatusStack';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -23,7 +24,7 @@ const BFS: FunctionComponent = () => {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
         leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
-        config: { tension: 300 }
+        config: { tension: 170 }
     });
 
     const addNodeHandler = (x: number, y: number) => {
@@ -75,6 +76,7 @@ const BFS: FunctionComponent = () => {
 
                 <div className="search-status-stack-section">
 
+                    <SearchStatusStack>
                     {nodeStatusCardTransition.map(({ item, key, props }) => {
                         return (
                             item &&
@@ -88,6 +90,7 @@ const BFS: FunctionComponent = () => {
                             </animated.div>
                         );
                     })}
+                    </SearchStatusStack>
 
                 </div>
 

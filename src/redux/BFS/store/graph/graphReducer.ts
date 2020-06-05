@@ -15,6 +15,10 @@ export interface graphStateInterface {
     clickedFill: string,
     defaultFill: string,
     nodeStatusCardToggled: boolean
+    rootNodeIndex: number,
+    destinationNodeIndex: number
+    rootFill: string,
+    destinationFill: string
 }
 
 const initialGraphState: graphStateInterface = {
@@ -25,8 +29,12 @@ const initialGraphState: graphStateInterface = {
     editNeighborMode: false,
     addNeighborMode: false,
     defaultFill: defaultFill,
-    clickedFill: 'red',
-    nodeStatusCardToggled: false
+    clickedFill: '#cf0a4f',
+    nodeStatusCardToggled: false,
+    rootNodeIndex: -1,
+    destinationNodeIndex: -1,
+    rootFill: '#51df0f',
+    destinationFill: '#df9d0f'
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
@@ -213,6 +221,20 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
             return {
                 ...state,
                 addNeighborMode: !state.addNeighborMode
+            }
+
+        case graphAction.SET_ROOT: 
+            index = (action as graphAction.setRootAction).payload.index;
+            return {
+                ...state,
+                rootNodeIndex: index
+            }
+
+        case graphAction.SET_DESTINATION:
+            index = (action as graphAction.setDestinationAction).payload.index;
+            return {
+                ...state,
+                destinationNodeIndex: index
             }
 
         default:

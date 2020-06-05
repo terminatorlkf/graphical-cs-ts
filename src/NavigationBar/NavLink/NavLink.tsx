@@ -21,8 +21,10 @@ const NavLink: FunctionComponent<NavLinkProps> = ({ className, text, onClick, to
             >
                 <li className={className}>
                     <Link to={to}>
-                        <Ripple primary unbounded>
-                            <a onClick={onClick} className="nav-item">{text}</a>
+                        <Ripple primary>
+                            <div style={{marginTop: '-2.1rem', paddingTop: '2.1rem', paddingBottom: '2.1rem', marginBottom: '-2.1rem'}}>
+                                <a onClick={onClick} className="nav-item">{text}</a>
+                            </div>
                         </Ripple>
                     </Link>
                 </li>

@@ -69,3 +69,17 @@ export const addNeighbor = (): graphActionType.addNeighborAction => {
         type: graphActionType.ADD_NEIGHBOR
     }
 }
+
+export const setRoot = (index: number): graphActionType.setRootAction => {
+    return {
+        type: graphActionType.SET_ROOT,
+        payload: { index }
+    }
+}
+
+export const setDestination = (index: number): graphActionType.setDestinationAction => {
+    return {
+        type: graphActionType.SET_DESTINATION,
+        payload: { index }
+    }
+}
