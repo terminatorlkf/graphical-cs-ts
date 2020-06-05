@@ -2,11 +2,17 @@ import React, { useRef } from 'react'
 import { Elevation } from '@rmwc/elevation';
 import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
+import { Queue } from 'queue-typescript';
 import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
 import { bfsRootReducerInterface } from '../redux/BFS/store/rootReducer';
+
+export type parentTrack = {
+    parentNodeIndex: number,
+    searchedNeighbor: number[]
+}
 
 const SearchStatusStack: React.FunctionComponent = ({ children }) => {
 
@@ -36,11 +42,37 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
         dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.currentNodeIndex } });
     }
 
+    const clickSearchButtonHandler = () => {
+        console.log(bfsSearch());
+    }
+
     const bfsSearch = () => {
         setTimeout(() => {
             searchButtonRef.current?.blur();
         }, 335);
 
+        const nodeList = graph.nodeList;
+        const start = graph.rootNodeIndex;
+        const dest = graph.destinationNodeIndex;
+
+        let parentTrackList: parentTrack[] = [];
+
+        let queue = new Queue<number[]>();
+        let visited: number[] = [];
+        queue.enqueue([start]);
+
+        while (1) {
+            let currentNodePath = queue.dequeue();
+            let currentNodeIndex = currentNodePath[currentNodePath.length - 1];
+            let curretnNeighborList = nodeList[currentNodeIndex].neighborList;
+            if (currentNodeIndex === dest) return [parentTrackList, currentNodePath];
+            if (visited.includes(currentNodeIndex)) continue;
+            visited.push(currentNodeIndex);
+            parentTrackList.push({parentNodeIndex: currentNodeIndex, searchedNeighbor: [...curretnNeighborList]});
+            curretnNeighborList.forEach(nodeIndex => {
+                queue.enqueue([...currentNodePath, nodeIndex]);
+            });
+        }
 
     }
 
@@ -52,7 +84,7 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
                 <h2>Status Stack</h2>
                 <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
                 <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
-                <Button ref={searchButtonRef} onClick={bfsSearch} label='start search' style={{ width: '8.1rem' }} />
+                <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start search' style={{ width: '8.1rem' }} />
 
                 {graph.nodeStatusCardToggled &&
                     <div className='action'>
