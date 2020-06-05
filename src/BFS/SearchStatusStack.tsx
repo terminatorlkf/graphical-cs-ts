@@ -12,6 +12,8 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
 
     const rootButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
+    const searchButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
+
     const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
     const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
             rootButtonRef.current?.blur();
         }, 340);
 
-        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.currentNodeIndex }});
+        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.currentNodeIndex } });
     }
 
     const setDestinationHandler = () => {
@@ -34,6 +36,14 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
         dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.currentNodeIndex } });
     }
 
+    const bfsSearch = () => {
+        setTimeout(() => {
+            searchButtonRef.current?.blur();
+        }, 335);
+
+
+    }
+
     return (
         <div className="search-status-stack">
 
@@ -42,7 +52,7 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
                 <h2>Status Stack</h2>
                 <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
                 <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
-                <Button label='start search' style={{width: '8.1rem'}}/>
+                <Button ref={searchButtonRef} onClick={bfsSearch} label='start search' style={{ width: '8.1rem' }} />
 
                 {graph.nodeStatusCardToggled &&
                     <div className='action'>
@@ -81,7 +91,6 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
                     display: flex;
                     flex-direction: row;
                 }
-
                 .
                 `}
             </style>

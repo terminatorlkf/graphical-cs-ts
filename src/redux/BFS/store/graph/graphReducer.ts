@@ -59,7 +59,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                         xPosition: (action as graphAction.addNodeAction).payload.x,
                         yPosition: (action as graphAction.addNodeAction).payload.y,
                         fill: state.defaultFill,
-                        ref: null
+                        ref: null,
+                        neighborList: []
                     }
                 ]
             }
@@ -186,9 +187,16 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
 
             if (state.edgeList.length === 0) i = 0;
             else i = state.edgeList[state.edgeList.length - 2].key + 2;
+            newNodeList = [ ...state.nodeList ];
+            newNode = { ...newNodeList[currentNodeIndex] };
+
+            newNode.neighborList = [...newNode.neighborList, currentNeighborIndex];
+
+            newNodeList[currentNodeIndex] = newNode;
 
             return {
                 ...state,
+                nodeList: newNodeList,
                 edgeList: [
                     ...state.edgeList,
                     {
@@ -201,7 +209,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
         case graphAction.DELETE_NEIGHBOR:
             currentNeighborIndex = state.currentNeighborIndex;
             currentNodeIndex = state.currentNodeIndex;
-            let newEdgeList = [ ...state.edgeList ];
+            let newEdgeList = [...state.edgeList];
 
             if (currentNeighborIndex !== -1) {
                 newEdgeList = newEdgeList.filter(edge => {
@@ -210,8 +218,16 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                 });
             }
 
+            newNodeList = [...state.nodeList];
+            newNode = { ...newNodeList[currentNodeIndex] };
+
+            newNode.neighborList = newNode.neighborList.filter(neighborIndex => neighborIndex !== currentNeighborIndex);
+
+            newNodeList[currentNodeIndex] = newNode;
+
             return {
                 ...state,
+                nodeList: newNodeList,
                 edgeList: newEdgeList,
                 editNeighborMode: false,
                 currentNeighborIndex: -1
@@ -223,7 +239,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
                 addNeighborMode: !state.addNeighborMode
             }
 
-        case graphAction.SET_ROOT: 
+        case graphAction.SET_ROOT:
             index = (action as graphAction.setRootAction).payload.index;
             return {
                 ...state,
