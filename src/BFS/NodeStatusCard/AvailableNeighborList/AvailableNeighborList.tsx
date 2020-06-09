@@ -1,11 +1,11 @@
 import React from 'react';
 import AvailableNeighborNode from './AvailableNeighborNode';
-import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
-import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
+import { nodeListStateInterface } from '../../../redux/BFS/graph/Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../../../redux/BFS/graph/Interfaces/EdgeListInterface';
 import SmoothCollapse from 'react-smooth-collapse';
 import { useTransition, animated } from 'react-spring';
 import { useDispatch } from 'react-redux';
-import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../../../redux/BFS/graph/graphActionType';
 
 export type AvailableNeighborListProps = {
     expanded: boolean,

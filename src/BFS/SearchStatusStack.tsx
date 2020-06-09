@@ -3,7 +3,7 @@ import { Elevation } from '@rmwc/elevation';
 import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
 import { Queue } from 'queue-typescript';
-import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../redux/BFS/graph/graphActionType';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';

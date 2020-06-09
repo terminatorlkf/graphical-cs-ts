@@ -4,7 +4,7 @@ import NodeStatusTitle from './NodeStatusTitle/NodeStatusTitle';
 import NodeNeighborList from './NodeNeighborSection/NodeNeighborList';
 import AvailableNeighborList from './AvailableNeighborList/AvailableNeighborList';
 import { Button } from '@rmwc/button';
-import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { useSelector, useDispatch } from 'react-redux';
 import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 

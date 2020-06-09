@@ -1,10 +1,10 @@
 import React from 'react';
 import { Elevation } from '@rmwc/elevation';
-import { nodeListStateInterface } from '../../../redux/BFS/store/graph/Interfaces/nodeListStateInterface';
-import { EdgeListInterface } from '../../../redux/BFS/store/graph/Interfaces/EdgeListInterface';
+import { nodeListStateInterface } from '../../../redux/BFS/graph/Interfaces/nodeListStateInterface';
+import { EdgeListInterface } from '../../../redux/BFS/graph/Interfaces/EdgeListInterface';
 import { useTransition, animated } from 'react-spring';
 import { useSelector, useDispatch } from 'react-redux';
-import * as graphActionType from '../../../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../../../redux/BFS/graph/graphActionType';
 import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
 
 import '@rmwc/elevation/styles';

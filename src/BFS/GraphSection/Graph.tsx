@@ -4,7 +4,7 @@ import { Stage, Layer } from "react-konva";
 import { KonvaEventObject } from 'konva/types/Node';
 import EdgeList from './Edges/EdgeList';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
-import * as graphActionType from '../../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 
 interface GraphInterface {

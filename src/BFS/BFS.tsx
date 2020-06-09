@@ -5,7 +5,7 @@ import IntroSection from '../shared/IntroSection/IntroSection';
 import Graph from './GraphSection/Graph'
 import NodeStatusCard from './NodeStatusCard/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
-import * as graphActionType from '../redux/BFS/store/graph/graphActionType';
+import * as graphActionType from '../redux/BFS/graph/graphActionType';
 import { bfsRootReducerInterface } from "../redux/BFS/store/rootReducer";
 import { useTransition, animated } from 'react-spring';
 import SearchStatusStack from './SearchStatusStack';
