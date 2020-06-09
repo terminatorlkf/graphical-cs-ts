@@ -30,9 +30,7 @@ const EdgeList = () => {
                 nodeList[edge.edge[0]].yPosition,
                 nodeList[edge.edge[1]].xPosition,
                 nodeList[edge.edge[1]].yPosition],
-                tension: 300,
-                mass: 1,
-                friction: 0
+                config: { tension: 300, friction: 15, mass: 1 }
             }
         },
         leave: edge => {
