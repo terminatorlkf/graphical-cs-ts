@@ -2,26 +2,10 @@ import * as graphAction from "./graphActionType";
 import { graphActionType } from './graphActionType';
 import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { presetEdges } from './PresetValues/presetEdges';
-import { nodeListStateInterface } from "./Interfaces/nodeListStateInterface";
-import { EdgeListInterface } from "./Interfaces/EdgeListInterface";
+import { NodeList } from "../../../Interfaces/NodeList";
+import { GraphState } from '../../../Interfaces/GraphState';
 
-export interface graphStateInterface {
-    nodeList: nodeListStateInterface[],
-    edgeList: EdgeListInterface[],
-    currentNodeIndex: number,
-    currentNeighborIndex: number,
-    editNeighborMode: boolean,
-    addNeighborMode: boolean,
-    clickedFill: string,
-    defaultFill: string,
-    nodeStatusCardToggled: boolean
-    rootNodeIndex: number,
-    destinationNodeIndex: number
-    rootFill: string,
-    destinationFill: string
-}
-
-const initialGraphState: graphStateInterface = {
+const initialGraphState: GraphState = {
     nodeList: presetNodeState,
     edgeList: presetEdges,
     currentNodeIndex: -1,
@@ -37,12 +21,12 @@ const initialGraphState: graphStateInterface = {
     destinationFill: '#df9d0f'
 }
 
-const graphReducer = (state = initialGraphState, action: graphActionType): graphStateInterface => {
+const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {
     let index = -1;
-    let newNodeList: nodeListStateInterface[] = [];
+    let newNodeList: NodeList[] = [];
     let currentNeighborIndex = -1;
     let currentNodeIndex = -1;
-    let newNode: nodeListStateInterface = state.nodeList[0];
+    let newNode: NodeList = state.nodeList[0];
 
     switch (action.type) {
         // Reducer to fire after adding a node
@@ -69,8 +53,11 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
         case graphAction.DELETE_NODE:
             return {
                 ...state,
-                edgeList: state.edgeList.filter(edge => !(edge.edge[0] === (action as graphAction.deleteNodeAction).payload.index ||
-                    edge.edge[1] === (action as graphAction.deleteNodeAction).payload.index)),
+                edgeList: state.edgeList.filter(edge => !(edge.edge[0] === state.currentNodeIndex ||
+                    edge.edge[1] === state.currentNodeIndex)),
+                nodeList: state.nodeList.filter(node => node.index !== (action as graphAction.deleteNodeAction).payload.index),
+                currentNodeIndex: -1,
+                editNeighborMode: false
             };
 
         // Reducer to fire after clicking on a node
@@ -187,7 +174,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): graph
 
             if (state.edgeList.length === 0) i = 0;
             else i = state.edgeList[state.edgeList.length - 2].key + 2;
-            newNodeList = [ ...state.nodeList ];
+            newNodeList = [...state.nodeList];
             newNode = { ...newNodeList[currentNodeIndex] };
 
             newNode.neighborList = [...newNode.neighborList, currentNeighborIndex];

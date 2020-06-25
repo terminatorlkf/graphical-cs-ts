@@ -1,5 +1,6 @@
-import { EdgeListInterface } from '../Interfaces/EdgeListInterface';
-export const presetEdges: EdgeListInterface[] = [
+import { EdgeList } from '../../../../Interfaces/EdgeList';
+
+export const presetEdges: EdgeList[] = [
     {
         key: 0,
         edge:[6, 0]

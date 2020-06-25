@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import Home from './Home/Home'
-import BFS from './BFS/BFS'
-import DFS from "./DFS/DFS"
-import AStar from "./AStar/AStar"
-import BeamSearch from "./BeamSearch/BeamSearch"
-import IterativeDeepening from "./DFS/IterativeDeepening/IterativeDeepening"
+import { Home } from './pages/Home'
+import { BFS } from './pages/BFS'
+import { DFS } from "./pages/DFS"
+import { AStar } from "./pages/AStar"
+import { BeamSearch } from "./pages/BeamSearch"
+import { IterativeDeepening } from "./pages/IterativeDeepening"
 import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';
-import NavigationBar from "./NavigationBar/NavigationBar";
+import { NavigationBar } from "./components/NavigationBar";
 
 import './App.css';
 
@@ -42,39 +42,39 @@ function App() {
             currentPage,
             setCurrentPage: setPage
           }}>
-            <Router>
-              <NavigationBar />
-              <Switch>
+          <Router>
+            <NavigationBar />
+            <Switch>
 
-                <Route path="/" exact>
-                  <Redirect to="/home" />
-                </Route>
+              <Route path="/" exact>
+                <Redirect to="/home" />
+              </Route>
 
-                <Route path="/home">
-                  <Home />
-                </Route>
+              <Route path="/home">
+                <Home />
+              </Route>
 
-                <Route path="/bfs">
-                  <BFS />
-                </Route>
+              <Route path="/bfs">
+                <BFS />
+              </Route>
 
-                <Route path="/dfs">
-                  <DFS />
-                </Route>
+              <Route path="/dfs">
+                <DFS />
+              </Route>
 
-                <Route path="/a-star">
-                  <AStar />
-                </Route>
+              <Route path="/a-star">
+                <AStar />
+              </Route>
 
-                <Route path="/beam-search">
-                  <BeamSearch />
-                </Route>
+              <Route path="/beam-search">
+                <BeamSearch />
+              </Route>
 
-                <Route Path="/iterative-deepening">
-                  <IterativeDeepening />
-                </Route>
-              </Switch>
-            </Router>
+              <Route Path="/iterative-deepening">
+                <IterativeDeepening />
+              </Route>
+            </Switch>
+          </Router>
         </CurrentPageContext.Provider>
       </IntroExpandedContext.Provider>
     </React.Fragment >

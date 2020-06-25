@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import graphReducer, { graphStateInterface } from '../graph/graphReducer';
+import graphReducer from '../graph/graphReducer';
+import { GraphState } from '../../../Interfaces/GraphState';
 
 export interface bfsRootReducerInterface {
-    graph: graphStateInterface
+    graph: GraphState
 }
 
 export const reducer = combineReducers({
