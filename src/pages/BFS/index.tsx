@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useRef } from "react";
-import { AddNodeButton }  from "../../components/AddNodeButton"
+import { AddNodeButton }  from "../../Components/AddNodeButton"
 import Konva from 'konva';
-import { IntroSection }  from '../../components/IntroSection/';
-import { Graph } from '../../components/Graph'
-import { NodeStatusCard } from '../../components/NodeStatusCard';
+import { IntroSection } from '../../Components/IntroSection';
+import { Graph } from '../../Components/Graph'
+import { NodeStatusCard } from '../../Components/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
-import { bfsRootReducerInterface } from "../../redux/BFS/store/rootReducer";
+import { BfsRootReducer } from "../../Interfaces/BfsRootReducer";
 import { useTransition, animated } from 'react-spring';
 import SearchStatusStack from './SearchStatusStack';
 
@@ -18,7 +18,7 @@ const BFS: FunctionComponent = () => {
     const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const dispatch = useDispatch();
-    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
 
     const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },

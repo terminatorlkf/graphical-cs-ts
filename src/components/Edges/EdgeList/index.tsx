@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
+import { BfsRootReducer } from '../../../Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
 
 export const EdgeList = () => {
-    const edgeList = useSelector((state: bfsRootReducerInterface) => state.graph.edgeList);
-    const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
+    const edgeList = useSelector((state: BfsRootReducer) => state.graph.edgeList);
+    const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
 
     const transition = useTransition(edgeList, edgeList => edgeList.key, {
         from: edge => {

@@ -6,7 +6,7 @@ import { AvailableNeighborList } from './AvailableNeighborList';
 import { Button } from '@rmwc/button';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { useSelector, useDispatch } from 'react-redux';
-import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
+import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { INodeStatusCard } from './NodeStatusCard';
 
 import '@rmwc/elevation/styles';
@@ -14,7 +14,7 @@ import '@rmwc/button/styles';
 
 export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (props: INodeStatusCard.IProps) => {
     const dispatch = useDispatch();
-    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const addNeighborModeHandler = () => {

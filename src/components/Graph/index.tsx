@@ -3,7 +3,7 @@ import { Stage, Layer, Group, Circle, Text } from "react-konva";
 import { EdgeList } from '../Edges/EdgeList';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
-import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
+import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { useTransition, animated, interpolate } from '@react-spring/konva';
 import { IGraph } from './Graph';
 
@@ -14,7 +14,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({
 }) => {
 
     const dispatch = useDispatch();
-    const nodeList = useSelector((state: bfsRootReducerInterface) => state.graph.nodeList);
+    const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const store = useStore();
 
     const transition = useTransition(nodeList, node => node.index, {

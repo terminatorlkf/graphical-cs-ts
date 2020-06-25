@@ -3,7 +3,7 @@ import { Elevation } from '@rmwc/elevation';
 import { useTransition, animated } from 'react-spring';
 import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../../redux/BFS/graph/graphActionType';
-import { bfsRootReducerInterface } from '../../../redux/BFS/store/rootReducer';
+import { BfsRootReducer } from '../../../Interfaces/BfsRootReducer';
 import StackGrid from "react-stack-grid";
 import { INodeNeighborList } from './NodeNeighborList';
 
@@ -12,7 +12,7 @@ import '@rmwc/elevation/styles';
 export const NodeNeighborList: React.FunctionComponent<INodeNeighborList.IProps> = (props: INodeNeighborList.IProps) => {
     const { edgeList, nodeList, currentNodeIndex, onMouseEnter, onMouseLeave } = props;
 
-    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
     const dispatch = useDispatch();
 
     const transition = useTransition(edgeList, edge => edge.key, {

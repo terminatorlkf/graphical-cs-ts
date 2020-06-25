@@ -4,10 +4,10 @@ import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
 import { Queue } from 'queue-typescript';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
+import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
-import { bfsRootReducerInterface } from '../../redux/BFS/store/rootReducer';
 
 export type parentTrack = {
     parentNodeIndex: number,
@@ -20,7 +20,7 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
     const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const searchButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
-    const graph = useSelector((state: bfsRootReducerInterface) => state.graph);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
     const dispatch = useDispatch();
 
     const rootNodeIndex = graph.rootNodeIndex;

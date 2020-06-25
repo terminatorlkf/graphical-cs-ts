@@ -1,5 +1,5 @@
 import React from "react";
-import { IntroSection } from '../../components/IntroSection';
+import { IntroSection } from '../../Components/IntroSection';
 
 export const DFS = ()=> {
     return (
