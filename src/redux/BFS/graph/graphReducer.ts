@@ -18,7 +18,8 @@ const initialGraphState: GraphState = {
     rootNodeIndex: -1,
     destinationNodeIndex: -1,
     rootFill: '#51df0f',
-    destinationFill: '#df9d0f'
+    destinationFill: '#df9d0f',
+    searchMode: false
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {
@@ -238,6 +239,11 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
             return {
                 ...state,
                 destinationNodeIndex: index
+            }
+        case graphAction.TOGGLE_SEARCH:
+            return {
+                ...state,
+                searchMode: !state.searchMode
             }
 
         default:

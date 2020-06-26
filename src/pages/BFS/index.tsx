@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from "../../Interfaces/BfsRootReducer";
 import { useTransition, animated } from 'react-spring';
-import SearchStatusStack from './SearchStatusStack';
+import { Config } from '../../Components/Config';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -33,9 +33,6 @@ const BFS: FunctionComponent = () => {
 
     const mouseEnterHandler = (index: number) => {
         dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index, ref: nodeRef } });
-
-        console.log(nodeRef);
-
         setTimeout(() => {
             if (nodeRef.current) {
                 nodeRef.current.to({
@@ -62,7 +59,7 @@ const BFS: FunctionComponent = () => {
     }
 
     return (
-        <div style={{ backgroundColor: 'rgba(250, 250, 250, 1)' }}>
+        <div>
             <IntroSection title="Breadth-First Search" source='Wikipedia'>
                 "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
                 sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
@@ -77,8 +74,7 @@ const BFS: FunctionComponent = () => {
                 />
 
                 <div className="search-status-stack-section">
-
-                    <SearchStatusStack>
+                    <Config>
                         {nodeStatusCardTransition.map(({ item, key, props }) => {
                             return (
                                 item &&
@@ -92,8 +88,7 @@ const BFS: FunctionComponent = () => {
                                 </animated.div>
                             );
                         })}
-                    </SearchStatusStack>
-
+                    </Config>
                 </div>
 
                 <div className="add-node-button">

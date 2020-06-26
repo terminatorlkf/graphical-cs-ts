@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stage, Layer, Group, Circle, Text } from "react-konva";
-import { EdgeList } from '../Edges/EdgeList';
+import { Edges } from '../Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
@@ -23,12 +23,17 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({
         leave: { r: 0 }
     });
 
+    let canvasWidth: number = 0;
+    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1/2;
+    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2/3;
+    else canvasWidth = window.innerWidth * 1/3;
+
     return (
         <div className="operation-node-section">
-            <Stage width={window.innerWidth - 580} height={window.innerHeight}>
+            <Stage width={canvasWidth} height={window.innerHeight}>
                 <Provider store={store}>
                     <Layer>
-                        <EdgeList />
+                        <Edges />
                         {nodeList.map((node, index) => {
                             if (node.index !== -1) {
                                 return (

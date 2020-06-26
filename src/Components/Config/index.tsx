@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Queue } from 'queue-typescript';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
+import { Link } from 'react-router-dom';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
@@ -14,7 +15,7 @@ export type parentTrack = {
     searchedNeighbor: number[]
 }
 
-const SearchStatusStack: React.FunctionComponent = ({ children }) => {
+export const Config: React.FunctionComponent = ({ children }) => {
 
     const rootButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
@@ -78,14 +79,15 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
 
     return (
         <div className="search-status-stack">
-
             <div className='vertical-border' />
             <Elevation className='search-status-stack-card' z={0} >
-                <h2>Status Stack</h2>
+                <h2>Config</h2>
                 <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
                 <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
                 {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                    <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start search' style={{ width: '8.1rem' }} />
+                    <Link to='/search'>
+                        <Button ref={searchButtonRef} onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH }) }} label='start search' style={{ width: '8.1rem' }} />
+                    </Link>
                 }
 
                 {graph.nodeStatusCardToggled &&
@@ -100,6 +102,8 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
             <style jsx>
                 {`
                 .search-status-stack {
+                    height: 100vh;
+                    background-color: #F5F5F5;
                     display: flex;
                     flex-direction: row;
                 }
@@ -108,17 +112,11 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
                     display: flex;
                     flex-direction: column;
                     justify-content: flex-start;
-                    margin-right: 1.5rem;
                     height: 40rem;
                     width: 25rem; 
                     border-radius: 0.5rem;
                     margin-top: 1rem;
-                    padding: 1rem 2rem 1rem;
-                }
-
-                .vertical-border {
-                    border-left: 1px solid rgba(217, 217, 217, 1);
-                    height: 100vh;
+                    padding: 0.5rem 2rem 1rem 1.5rem;
                 }
 
                 .action {
@@ -131,5 +129,3 @@ const SearchStatusStack: React.FunctionComponent = ({ children }) => {
         </div>
     )
 }
-
-export default SearchStatusStack;

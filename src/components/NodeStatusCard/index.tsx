@@ -34,7 +34,6 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
     return (
         <div className="node-status-section">
             <Elevation className='node-status-card' z={3} height={10}>
-
                 <NodeStatusTitle
                     currentNodeIndex={graph.currentNodeIndex}
                     backgroundColor={graph.clickedFill}
@@ -66,7 +65,6 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
                             onMouseLeave={props.onMouseLeaveAvailableNeighbor}
                         />
                     </div>
-
                 </div>
 
                 <div className="node-status-card-manipulation">

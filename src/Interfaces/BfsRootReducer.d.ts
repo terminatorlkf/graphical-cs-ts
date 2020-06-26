@@ -1,4 +1,4 @@
-import { GraphState } from '../../../Interfaces/GraphState';
+import { GraphState } from './GraphState';
 
 export interface BfsRootReducer {
     graph: GraphState

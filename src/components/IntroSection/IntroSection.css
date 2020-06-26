@@ -2,14 +2,12 @@
     color: white;
     margin-top: -25px;
     margin-left: -10px;
-    margin-right: -10px;
     padding-top: 60px;
     padding-bottom: 30px;
     background-color: rgba(38, 38, 38, 1);
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.23);
     text-align: center;
     display:flex;
-    width: 101%;
     flex-direction: column;
     position: relative;
     z-index: 10;
@@ -35,7 +33,6 @@
 }
 
 .intro-section-collapsed {
-    width:99.8%;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 21px;

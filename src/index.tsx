@@ -5,10 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import bfsStore from './redux/BFS/store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 ReactDOM.render(
   <Provider store={bfsStore}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>
   , document.getElementById('root'));
 

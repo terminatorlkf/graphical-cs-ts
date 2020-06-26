@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BfsRootReducer } from '../../../Interfaces/BfsRootReducer';
+import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
 
-export const EdgeList = () => {
+export const Edges = () => {
     const edgeList = useSelector((state: BfsRootReducer) => state.graph.edgeList);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
 
@@ -43,6 +43,11 @@ export const EdgeList = () => {
                 nodeList[edge.edge[0]].yPosition],
                 c: 0
             }
+        }, 
+        config: { 
+            mass: 2,
+            tension: 170,
+            friction: 42
         }
     });
 
@@ -55,7 +60,7 @@ export const EdgeList = () => {
                             key={key}
                             {...props}
                             stroke={props.c
-                                .interpolate([0, 0.25, 0.5, 0.75, 1],[0, 255, 255, 255, 0])
+                                .interpolate([0, 0.5, 0.75, 1],[0, 255, 150, 0])
                                 .interpolate(c => `rgba(${c}, 0, 0, 1`)}
                             strokeWidth={4}
                         />

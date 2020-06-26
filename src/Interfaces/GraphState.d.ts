@@ -1,6 +1,9 @@
+import { EdgeList } from './EdgeList';
+import { NodeList } from './NodeList';
+
 export interface GraphState {
-    nodeList: nodeListStateInterface[],
-    edgeList: EdgeListInterface[],
+    nodeList: NodeList[],
+    edgeList: EdgeList[],
     currentNodeIndex: number,
     currentNeighborIndex: number,
     editNeighborMode: boolean,
@@ -11,5 +14,6 @@ export interface GraphState {
     rootNodeIndex: number,
     destinationNodeIndex: number
     rootFill: string,
-    destinationFill: string
+    destinationFill: string,
+    searchMode: boolean
 }

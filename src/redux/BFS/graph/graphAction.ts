@@ -83,3 +83,9 @@ export const setDestination = (index: number): graphActionType.setDestinationAct
         payload: { index }
     }
 }
+
+export const startSearch = (): graphActionType.toggleSearchAction => {
+    return {
+        type: graphActionType.TOGGLE_SEARCH
+    }
+}
