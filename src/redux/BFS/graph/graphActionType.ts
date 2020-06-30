@@ -18,7 +18,8 @@ export const ADD_NEIGHBOR = 'ADD_NEIGHBOR';
 export const SET_ROOT = 'SET_ROOT';
 export const SET_DESTINATION = 'SET_DESTINATION';
 
-export const TOGGLE_SEARCH = 'TOGGLE_SEARCH';
+export const TOGGLE_SEARCH_MODE = 'TOGGLE_SEARCH_MODE';
+export const START_BFS_SEARCH = 'START_BFS_SEARCH';
 
 export interface addNodeAction {
     type: typeof ADD_NODE,
@@ -78,11 +79,15 @@ export interface setDestinationAction {
     payload: { index: number }
 }
 
-export interface toggleSearchAction {
-    type: typeof TOGGLE_SEARCH
+export interface toggleSearchModeAction {
+    type: typeof TOGGLE_SEARCH_MODE
+}
+
+export interface startBfsSearchAction {
+    type: typeof START_BFS_SEARCH
 }
 
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
     | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction | setRootAction
-    | setDestinationAction | toggleSearchAction;
+    | setDestinationAction | toggleSearchModeAction | startBfsSearchAction;

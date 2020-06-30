@@ -1,17 +1,13 @@
 import React from 'react';
 import { Stage, Layer, Group, Circle, Text } from "react-konva";
-import { Edges } from '../Edges';
+import { Edges } from './Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { useTransition, animated, interpolate } from '@react-spring/konva';
 import { IGraph } from './Graph';
 
-export const Graph: React.FunctionComponent<IGraph.IProps> = ({
-    onMouseEnter,
-    onMouseLeave,
-    onDragMove
-}) => {
+export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
 
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
@@ -24,15 +20,17 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({
     });
 
     let canvasWidth: number = 0;
-    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1/2;
-    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2/3;
-    else canvasWidth = window.innerWidth * 1/3;
+    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 2;
+    else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
+    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
+    else canvasWidth = window.innerWidth * 1 / 3;
 
     return (
         <div className="operation-node-section">
-            <Stage width={canvasWidth} height={window.innerHeight}>
+            <Stage width={canvasWidth} height={window.innerHeight - 300}>
                 <Provider store={store}>
                     <Layer>
+                        {children}
                         <Edges />
                         {nodeList.map((node, index) => {
                             if (node.index !== -1) {
@@ -41,11 +39,11 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({
                                         key={index}
                                         x={node.xPosition}
                                         y={node.yPosition}
-                                        draggable
+                                        draggable={draggable ? true : false}
                                         onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index: index } })}
-                                        onMouseEnter={() => onMouseEnter(index)}
-                                        onMouseLeave={() => onMouseLeave(index)}
-                                        onDragMove={(e) => onDragMove(index, e)}
+                                        onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
+                                        onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
+                                        onDragMove={(e) => onDragMove && onDragMove(index, e)}
                                     >
                                         <Circle
                                             ref={node.ref}

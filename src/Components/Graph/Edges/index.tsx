@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
+import { BfsRootReducer } from '../../../Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
 
 export const Edges = () => {

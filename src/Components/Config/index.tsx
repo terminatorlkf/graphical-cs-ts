@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Queue } from 'queue-typescript';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
-import { Link } from 'react-router-dom';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
@@ -80,43 +79,58 @@ export const Config: React.FunctionComponent = ({ children }) => {
     return (
         <div className="search-status-stack">
             <div className='vertical-border' />
-            <Elevation className='search-status-stack-card' z={0} >
-                <h2>Config</h2>
-                <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
-                <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
-                {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                    <Link to='/search'>
-                        <Button ref={searchButtonRef} onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH }) }} label='start search' style={{ width: '8.1rem' }} />
-                    </Link>
-                }
+            <Elevation className='config-card' z={1} >
+                <div className='node-status-card-title' style={{ backgroundColor: 'red' }}>
+                    <h2>Config</h2>
+                </div>
 
-                {graph.nodeStatusCardToggled &&
-                    <div className='action'>
-                        <Button ref={rootButtonRef} onClick={setRootHandler} label='set as root' />
-                        <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set as destination' />
+                <div className='config-card-body'>
+                    <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
+                    <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+
+                    <div>
+                        {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
+                            <Button ref={searchButtonRef} onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }) }} label='start' style={{ width: '3rem' }} />
+                        }
+
+                        {graph.nodeStatusCardToggled &&
+                            <div className='action'>
+                                <Button ref={rootButtonRef} onClick={setRootHandler} label='set as root' />
+                                <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set as destination' />
+                            </div>
+                        }
                     </div>
-                }
-                {children}
+                </div>
+
+              
             </Elevation>
+            {children}
 
             <style jsx>
                 {`
                 .search-status-stack {
-                    height: 100vh;
+                    position: relative;
+                    height: calc(100vh - 10rem);
+                    width: 25vw; 
                     background-color: #F5F5F5;
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                 }
                 
-                .search-status-stack-card {
+                .config-card {
+                    overflow: hidden;
+                    width: 25.5rem;
+                    height: 25rem;
                     display: flex;
                     flex-direction: column;
                     justify-content: flex-start;
-                    height: 40rem;
-                    width: 25rem; 
                     border-radius: 0.5rem;
                     margin-top: 1rem;
-                    padding: 0.5rem 2rem 1rem 1.5rem;
+                    padding: 0.5rem 0rem 1rem 1.5rem;
+                }
+
+                .config-card-body {
+                    background-color: white;
                 }
 
                 .action {

@@ -4,6 +4,7 @@ import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { presetEdges } from './PresetValues/presetEdges';
 import { NodeList } from "../../../Interfaces/NodeList";
 import { GraphState } from '../../../Interfaces/GraphState';
+import { bfsSearch } from './methods';
 
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
@@ -15,11 +16,12 @@ const initialGraphState: GraphState = {
     defaultFill: defaultFill,
     clickedFill: '#cf0a4f',
     nodeStatusCardToggled: false,
-    rootNodeIndex: -1,
-    destinationNodeIndex: -1,
+    rootNodeIndex: 0,
+    destinationNodeIndex: 1,
     rootFill: '#51df0f',
     destinationFill: '#df9d0f',
-    searchMode: false
+    searchMode: true,
+    searchTrack: undefined
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {
@@ -240,11 +242,15 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 ...state,
                 destinationNodeIndex: index
             }
-        case graphAction.TOGGLE_SEARCH:
+
+        case graphAction.TOGGLE_SEARCH_MODE:
             return {
                 ...state,
                 searchMode: !state.searchMode
             }
+
+        case graphAction.START_BFS_SEARCH:
+            return bfsSearch(state)
 
         default:
             return state

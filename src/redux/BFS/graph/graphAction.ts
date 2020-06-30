@@ -84,8 +84,14 @@ export const setDestination = (index: number): graphActionType.setDestinationAct
     }
 }
 
-export const startSearch = (): graphActionType.toggleSearchAction => {
+export const toggleSearch = (): graphActionType.toggleSearchModeAction => {
     return {
-        type: graphActionType.TOGGLE_SEARCH
+        type: graphActionType.TOGGLE_SEARCH_MODE
+    }
+}
+
+export const startBfsSearct = (): graphActionType.startBfsSearchAction => {
+    return {
+        type: graphActionType.START_BFS_SEARCH
     }
 }

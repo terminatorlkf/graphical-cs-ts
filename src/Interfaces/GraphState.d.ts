@@ -1,5 +1,6 @@
 import { EdgeList } from './EdgeList';
 import { NodeList } from './NodeList';
+import { SearchTrack } from './SearchTrack';
 
 export interface GraphState {
     nodeList: NodeList[],
@@ -15,5 +16,6 @@ export interface GraphState {
     destinationNodeIndex: number
     rootFill: string,
     destinationFill: string,
-    searchMode: boolean
+    searchMode: boolean,
+    searchTrack: SearchTrack | undefined
 }

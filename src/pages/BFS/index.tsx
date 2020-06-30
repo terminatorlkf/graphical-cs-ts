@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useRef } from "react";
-import { AddNodeButton }  from "../../Components/AddNodeButton"
+import { AddNodeButton } from "../../Components/AddNodeButton"
+import { SearchView } from '../../Components/SearchView';
 import Konva from 'konva';
 import { IntroSection } from '../../Components/IntroSection';
 import { Graph } from '../../Components/Graph'
@@ -25,6 +26,12 @@ const BFS: FunctionComponent = () => {
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
         leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         config: { tension: 170 }
+    });
+
+    const searchViewTransition = useTransition(graph.searchMode, null, {
+        from: { transform: 'translate3d(0, 100%, 0)', position: 'absolute' },
+        enter: { transform: 'translate3d(0, 0, 0)', position: 'absolute' },
+        leave: { transform: 'translate3d(0, 110%, 0)', position: 'absolute' },
     });
 
     const addNodeHandler = (x: number, y: number) => {
@@ -59,45 +66,55 @@ const BFS: FunctionComponent = () => {
     }
 
     return (
-        <div>
-            <IntroSection title="Breadth-First Search" source='Wikipedia'>
-                "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
-                sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
-                It uses the opposite strategy as depth-first search, which instead explores the node branch as far as possible before being forced to backtrack and expand other nodes."
-            </IntroSection>
+        <React.Fragment>
+            {searchViewTransition.map(({ item, props, key }) => item &&
+                <animated.div style={{ ...props, position: 'absolute', zIndex: 10000 }} key={key}>
+                    <SearchView />
+                </animated.div>
+            )}
 
-            <div className="operation-section">
-                <Graph
-                    onMouseEnter={mouseEnterHandler}
-                    onMouseLeave={mouseLeaveHandler}
-                    onDragMove={(index, e) => dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
-                />
+            <div>
+                <IntroSection title="Breadth-First Search" source='Wikipedia'>
+                    "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
+                    sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
+                    It uses the opposite strategy as depth-first search, which instead explores the node branch as far as possible before being forced to backtrack and expand other nodes."
+                    </IntroSection>
 
-                <div className="search-status-stack-section">
-                    <Config>
-                        {nodeStatusCardTransition.map(({ item, key, props }) => {
-                            return (
-                                item &&
-                                <animated.div style={props} key={key}>
-                                    <NodeStatusCard
-                                        onMouseEnterNeighbor={mouseEnterHandler}
-                                        onMouseLeaveNeighbor={mouseLeaveHandler}
-                                        onMouseEnterAvailableNeighbor={mouseEnterHandler}
-                                        onMouseLeaveAvailableNeighbor={mouseLeaveHandler}
-                                    />
-                                </animated.div>
-                            );
-                        })}
-                    </Config>
-                </div>
+                <div className="operation-section">
+                    <Graph
+                        draggable
+                        onMouseEnter={mouseEnterHandler}
+                        onMouseLeave={mouseLeaveHandler}
+                        onDragMove={(index, e) => dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
+                    />
 
-                <div className="add-node-button">
-                    <AddNodeButton onClick={() => {
-                        addNodeHandler(Math.random() * (window.innerWidth - 700) + 100, Math.random() * 500)
-                    }} />
+                    <div className="search-status-stack-section">
+                        <Config>
+                            {nodeStatusCardTransition.map(({ item, key, props }) => {
+                                return (
+                                    item &&
+                                    <animated.div style={props} key={key}>
+                                        <NodeStatusCard
+                                            onMouseEnterNeighbor={mouseEnterHandler}
+                                            onMouseLeaveNeighbor={mouseLeaveHandler}
+                                            onMouseEnterAvailableNeighbor={mouseEnterHandler}
+                                            onMouseLeaveAvailableNeighbor={mouseLeaveHandler}
+                                        />
+                                    </animated.div>
+                                );
+                            })}
+                        </Config>
+                    </div>
+                    <div className="add-node-button">
+                        <AddNodeButton onClick={() => {
+                            addNodeHandler(Math.random() * (window.innerWidth - 700) + 100, Math.random() * 500)
+                        }} />
+                    </div>
                 </div>
             </div>
-        </div>
+
+
+        </React.Fragment>
     );
 }
 
