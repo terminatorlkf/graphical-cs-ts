@@ -11,6 +11,8 @@ import { INavigationBar } from './NavigationBar';
 import '@rmwc/ripple/styles';
 import "./NavigationBar.css";
 
+//hello
+
 export const NavigationBar: React.FC<INavigationBar.IProps> = ({ className }) => {
     const [redirect, setRedirect] = useState<boolean>(false);
 
