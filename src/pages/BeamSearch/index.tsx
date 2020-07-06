@@ -1,5 +1,5 @@
 import React from "react";
-import { IntroSection } from '../../Component/IntroSection';
+import { IntroSection } from '../../Components/IntroSection';
 
 export const BeamSearch = ()=> {
     return (

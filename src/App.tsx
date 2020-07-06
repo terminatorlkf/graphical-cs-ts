@@ -8,7 +8,7 @@ import { IterativeDeepening } from "./pages/IterativeDeepening"
 import { Route, Switch, Redirect } from "react-router-dom";
 import { IntroExpandedContext } from './Context/IntroExpandedContext'
 import { CurrentPageContext } from './Context/CurrentPageContext';
-import { NavigationBar } from "./Component/NavigationBar";
+import { NavigationBar } from "./Components/NavigationBar";
 
 function App() {
 
