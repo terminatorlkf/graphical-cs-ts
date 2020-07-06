@@ -5,7 +5,7 @@ import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { ParentTrack } from 'Interfaces/SearchTrack';
-import { Line } from 'react-konva';
+import { useTransition, animated } from '@react-spring/konva';
 
 import '@rmwc/button/styles';
 import './Search.css';
@@ -13,24 +13,24 @@ import './Search.css';
 export const SearchView = () => {
     const dispatch = useDispatch();
     const searchTrackGlobal = useSelector((state: BfsRootReducer) => state.graph.searchTrack);
-    const [track, setTrack] = useState<ParentTrack[] | null>(null);
+    const [track, setTrack] = useState<ParentTrack[]>([]);
+    const [index, setIndex] = useState<number>(0);
 
     const searchHandler = () => {
-        if (track === null) {
-            dispatch({ type: graphActionType.START_BFS_SEARCH });
-            if (searchTrackGlobal) {
-                setTrack([searchTrackGlobal.parentTrackList[0]]);
-            }
-        } 
-
+        if (index < searchTrackGlobal.parentTrackList.length) {
+            setTrack(prevState => [...prevState, searchTrackGlobal.parentTrackList[index]]);
+            setIndex(prevState => prevState + 1);
+        }
     }
+
+    // const transition = useTransition(track, track => track.key, {});
 
     return (
         <div className='search-page'>
             <Button label='quit' onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }) }} />
             <Button label={track ? 'next step' : 'start search'} onClick={searchHandler} />
             <Graph>
-
+                <animated.Line />
             </Graph>
         </div>
     )

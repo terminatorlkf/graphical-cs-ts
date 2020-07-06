@@ -17,5 +17,5 @@ export interface GraphState {
     rootFill: string,
     destinationFill: string,
     searchMode: boolean,
-    searchTrack: SearchTrack | undefined
+    searchTrack: SearchTrack
 }

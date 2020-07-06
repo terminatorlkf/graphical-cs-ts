@@ -43,37 +43,8 @@ export const Config: React.FunctionComponent = ({ children }) => {
     }
 
     const clickSearchButtonHandler = () => {
-        console.log(bfsSearch());
-    }
-
-    const bfsSearch = () => {
-        setTimeout(() => {
-            searchButtonRef.current?.blur();
-        }, 335);
-
-        const nodeList = graph.nodeList;
-        const start = graph.rootNodeIndex;
-        const dest = graph.destinationNodeIndex;
-
-        let parentTrackList: parentTrack[] = [];
-
-        let queue = new Queue<number[]>();
-        let visited: number[] = [];
-        queue.enqueue([start]);
-
-        while (1) {
-            let currentNodePath = queue.dequeue();
-            let currentNodeIndex = currentNodePath[currentNodePath.length - 1];
-            let curretnNeighborList = nodeList[currentNodeIndex].neighborList;
-            if (currentNodeIndex === dest) return [parentTrackList, currentNodePath];
-            if (visited.includes(currentNodeIndex)) continue;
-            visited.push(currentNodeIndex);
-            parentTrackList.push({ parentNodeIndex: currentNodeIndex, searchedNeighbor: [...curretnNeighborList] });
-            curretnNeighborList.forEach(nodeIndex => {
-                queue.enqueue([...currentNodePath, nodeIndex]);
-            });
-        }
-
+        dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }); 
+        dispatch({ type: graphActionType.START_BFS_SEARCH });
     }
 
     return (
@@ -90,7 +61,7 @@ export const Config: React.FunctionComponent = ({ children }) => {
 
                     <div>
                         {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                            <Button ref={searchButtonRef} onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }) }} label='start' style={{ width: '3rem' }} />
+                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
                         }
 
                         {graph.nodeStatusCardToggled &&
@@ -102,7 +73,7 @@ export const Config: React.FunctionComponent = ({ children }) => {
                     </div>
                 </div>
 
-              
+
             </Elevation>
             {children}
 

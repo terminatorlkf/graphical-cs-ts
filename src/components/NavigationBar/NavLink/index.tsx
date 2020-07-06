@@ -17,7 +17,7 @@ export const NavLink: FunctionComponent<INavLink.IProps> = ({ className, text, o
                     <Link to={to}>
                         <Ripple primary>
                             <div style={{ marginTop: '-2.1rem', paddingTop: '2.1rem', paddingBottom: '2.1rem', marginBottom: '-2.1rem' }}>
-                                <a onClick={onClick} className="nav-item">{text}</a>
+                                <span onClick={onClick} className="nav-item">{text}</span>
                             </div>
                         </Ripple>
                     </Link>

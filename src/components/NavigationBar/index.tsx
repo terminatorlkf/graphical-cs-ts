@@ -20,9 +20,7 @@ export const NavigationBar: React.FC<INavigationBar.IProps> = ({ className }) =>
 
     let titleClass = !IntroExpanded?.pagesExpanded[currentPageIndex - 1] ? "title-secondary" : "title";
 
-    if (currentPageIndex === 0) {
-        titleClass = "title";
-    }
+    if (currentPageIndex === 0) titleClass = "title";
 
     const handleClickTitle = () => {
         setRedirect(true);
@@ -39,8 +37,7 @@ export const NavigationBar: React.FC<INavigationBar.IProps> = ({ className }) =>
                     <h1 onClick={handleClickTitle} style={{ cursor: "pointer" }}>GRAPHICAL CS</h1>
                 </div>
 
-                {redirect &&
-                    <Redirect to='home' />}
+                {redirect && <Redirect to='home' />}
 
                 <div className="navigation-component">
                     <NavLinkList className="nav-items" />

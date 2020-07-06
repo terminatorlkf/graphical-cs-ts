@@ -21,7 +21,7 @@ const initialGraphState: GraphState = {
     rootFill: '#51df0f',
     destinationFill: '#df9d0f',
     searchMode: true,
-    searchTrack: undefined
+    searchTrack: { parentTrackList: [], path: [] }
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {

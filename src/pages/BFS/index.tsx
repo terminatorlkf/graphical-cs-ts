@@ -112,8 +112,6 @@ const BFS: FunctionComponent = () => {
                     </div>
                 </div>
             </div>
-
-
         </React.Fragment>
     );
 }
