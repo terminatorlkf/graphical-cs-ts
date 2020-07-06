@@ -1,15 +1,15 @@
 import React, { FunctionComponent, useRef } from "react";
-import { AddNodeButton } from "../../Components/AddNodeButton"
-import { SearchView } from '../../Components/SearchView';
+import { AddNodeButton } from "../../Component/AddNodeButton"
+import { SearchView } from '../../Component/SearchView';
 import Konva from 'konva';
-import { IntroSection } from '../../Components/IntroSection';
-import { Graph } from '../../Components/Graph'
-import { NodeStatusCard } from '../../Components/NodeStatusCard';
+import { IntroSection } from '../../Component/IntroSection';
+import { Graph } from '../../Component/Graph'
+import { NodeStatusCard } from '../../Component/NodeStatusCard';
 import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from "../../Interfaces/BfsRootReducer";
 import { useTransition, animated } from 'react-spring';
-import { ConfigCard } from '../../Components/ConfigCard';
+import { ConfigCard } from '../../Component/ConfigCard';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';

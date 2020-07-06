@@ -1,5 +1,5 @@
 import React from "react";
-import { IntroSection } from '../../Components/IntroSection';
+import { IntroSection } from '../../Component/IntroSection';
 
 export const AStar = ()=> {
     return (
