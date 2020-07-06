@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from "../../Interfaces/BfsRootReducer";
 import { useTransition, animated } from 'react-spring';
-import { Config } from '../../Components/Config';
+import { ConfigCard } from '../../Components/ConfigCard';
 
 import '@rmwc/fab/styles';
 import '@rmwc/tooltip/styles';
@@ -89,7 +89,7 @@ const BFS: FunctionComponent = () => {
                     />
 
                     <div className="search-status-stack-section">
-                        <Config>
+                        <ConfigCard>
                             {nodeStatusCardTransition.map(({ item, key, props }) => {
                                 return (
                                     item &&
@@ -103,7 +103,7 @@ const BFS: FunctionComponent = () => {
                                     </animated.div>
                                 );
                             })}
-                        </Config>
+                        </ConfigCard>
                     </div>
                     <div className="add-node-button">
                         <AddNodeButton onClick={() => {

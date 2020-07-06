@@ -14,7 +14,7 @@ export type parentTrack = {
     searchedNeighbor: number[]
 }
 
-export const Config: React.FunctionComponent = ({ children }) => {
+export const ConfigCard: React.FunctionComponent = ({ children }) => {
 
     const rootButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;

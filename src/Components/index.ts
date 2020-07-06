@@ -1,3 +1,3 @@
 export * from './AddNodeButton';
-export * from './Config';
+export * from './ConfigCard';
 export * from './Graph';
