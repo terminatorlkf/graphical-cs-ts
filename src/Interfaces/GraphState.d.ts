@@ -1,10 +1,10 @@
-import { EdgeList } from './EdgeList';
-import { NodeList } from './NodeList';
+import { Edge } from './Edge';
+import { Node } from './Node';
 import { SearchTrack } from './SearchTrack';
 
 export interface GraphState {
-    nodeList: NodeList[],
-    edgeList: EdgeList[],
+    nodeList: Node[],
+    edgeList: Edge[],
     currentNodeIndex: number,
     currentNeighborIndex: number,
     editNeighborMode: boolean,

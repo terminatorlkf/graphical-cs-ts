@@ -1,4 +1,4 @@
-export interface EdgeList {
+export interface Edge {
     key: number,
     edge: number[]
 }

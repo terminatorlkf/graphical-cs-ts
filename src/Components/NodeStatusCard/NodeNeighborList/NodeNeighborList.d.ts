@@ -1,10 +1,10 @@
-import { NodeList } from '../../../Interfaces/NodeList';
-import { EdgeListInterface } from '../../../Interfaces/EdgeList';
+import { Node } from '../../../Interfaces/Node';
+import { EdgeListInterface } from '../../../Interfaces/Edge';
 
 declare namespace INodeNeighborList {
     export interface IProps {
         edgeList: EdgeListInterface[],
-        nodeList: NodeList[],
+        nodeList: Node[],
         currentNodeIndex: number,
         onMouseEnter: (index: number) => void,
         onMouseLeave: (index: number) => void

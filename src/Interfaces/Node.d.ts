@@ -1,6 +1,6 @@
 import Konva from 'konva';
 
-export interface NodeList {
+export interface Node {
     index: number;
     value: number,
     elevation: number,

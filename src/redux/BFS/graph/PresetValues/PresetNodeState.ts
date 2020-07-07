@@ -1,8 +1,8 @@
-import { NodeList } from '../../../../Interfaces/NodeList';
+import { Node } from '../../../../Interfaces/Node';
 
 export const defaultFill = 'rgba(80, 80, 80, 1)'
 
-export const presetNodeState: NodeList[] = [
+export const presetNodeState: Node[] = [
     {
         index: 0,
         value: 0,
