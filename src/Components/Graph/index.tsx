@@ -4,7 +4,6 @@ import { Edges } from './Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
-import { useTransition, animated, interpolate } from '@react-spring/konva';
 import { IGraph } from './Graph';
 
 export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
@@ -13,11 +12,11 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const store = useStore();
 
-    const transition = useTransition(nodeList, node => node.index, {
-        from: { r: 0 },
-        enter: { r: 1 },
-        leave: { r: 0 }
-    });
+    // const transition = useTransition(nodeList, node => node.index, {
+    //     from: { r: 0 },
+    //     enter: { r: 1 },
+    //     leave: { r: 0 }
+    // });
 
     let canvasWidth: number = 0;
     if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 2;

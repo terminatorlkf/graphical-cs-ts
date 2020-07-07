@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@react-spring/konva": "^9.0.0-beta.33",
+    "@react-spring/konva": "^9.0.0-rc.3",
     "@rmwc/button": "^6.0.14",
     "@rmwc/dialog": "^6.1.0",
     "@rmwc/elevation": "^6.1.0",
