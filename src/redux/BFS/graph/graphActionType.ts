@@ -21,6 +21,8 @@ export const SET_DESTINATION = 'SET_DESTINATION';
 export const TOGGLE_SEARCH_MODE = 'TOGGLE_SEARCH_MODE';
 export const START_BFS_SEARCH = 'START_BFS_SEARCH';
 
+export const TOGGLE_UPDATE_NODE_POSITION_MODE = 'TOGGLE_UPDATE_NODE_POSITION_MODE';
+
 export interface addNodeAction {
     type: typeof ADD_NODE,
     payload: { x: number, y: number }
@@ -87,7 +89,12 @@ export interface startBfsSearchAction {
     type: typeof START_BFS_SEARCH
 }
 
+export interface toggleUpdateNodePositionModeAction {
+    type: typeof TOGGLE_UPDATE_NODE_POSITION_MODE,
+    payload: { isOn: boolean }
+}
+
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
     | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction | setRootAction
-    | setDestinationAction | toggleSearchModeAction | startBfsSearchAction;
+    | setDestinationAction | toggleSearchModeAction | startBfsSearchAction | toggleUpdateNodePositionModeAction;

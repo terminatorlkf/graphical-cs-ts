@@ -7,7 +7,6 @@ import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { IGraph } from './Graph';
 
 export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
-
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const store = useStore();

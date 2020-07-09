@@ -95,3 +95,10 @@ export const startBfsSearct = (): graphActionType.startBfsSearchAction => {
         type: graphActionType.START_BFS_SEARCH
     }
 }
+
+export const toggleUpdateNodePositionMode = (isOn: boolean): graphActionType.toggleUpdateNodePositionModeAction => {
+    return {
+        type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE,
+        payload: { isOn: isOn }
+    }
+}

@@ -21,7 +21,8 @@ const initialGraphState: GraphState = {
     rootFill: '#51df0f',
     destinationFill: '#df9d0f',
     searchMode: true,
-    searchTrack: { parentTrackList: [], path: [] }
+    searchTrack: { parentTrackList: [], path: [] },
+    updateNodePositionMode: false
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {
@@ -133,7 +134,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
             return {
                 ...state,
-                nodeList: newNodeList.slice()
+                nodeList: newNodeList.slice(),
             }
 
         case graphAction.MOUSE_LEAVE_NODE:
@@ -145,7 +146,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
             return {
                 ...state,
-                nodeList: newNodeList.slice()
+                nodeList: newNodeList.slice(),
             }
 
         case graphAction.CLICK_EXISTING_NEIGHBOR:
@@ -251,6 +252,13 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
         case graphAction.START_BFS_SEARCH:
             return bfsSearch(state)
+            
+        case graphAction.TOGGLE_UPDATE_NODE_POSITION_MODE:
+            const isOn = (action as graphAction.toggleUpdateNodePositionModeAction).payload.isOn;
+            return {
+                ...state,
+                updateNodePositionMode: isOn
+            }
 
         default:
             return state
