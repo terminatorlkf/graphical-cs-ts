@@ -19,6 +19,7 @@ export const AvailableNeighborList: React.FunctionComponent<IAvailableNeighborLi
     return (
         <React.Fragment>
             <SmoothCollapse allowOverflowWhenOpen expanded={expanded} className="neighbor-list-collapse-section">
+                <h4 style={{ marginTop: '0.4rem' }}>available neighbor</h4>
                 <div className="neighbor-list">
                     {transition.map(({ item, props, key }) => {
                         if (item.index !== -1 && currentNodeIndex !== -1) {

@@ -20,7 +20,7 @@ const initialGraphState: GraphState = {
     destinationNodeIndex: 1,
     rootFill: '#51df0f',
     destinationFill: '#df9d0f',
-    searchMode: true,
+    searchMode: false,
     searchTrack: { parentTrackList: [], path: [] },
     updateNodePositionMode: false
 }
