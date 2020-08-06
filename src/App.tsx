@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Home } from './pages/Home'
 import { BFS } from './pages/BFS'
 import { DFS } from "./pages/DFS"
 import { AStar } from "./pages/AStar"
@@ -42,11 +41,7 @@ function App() {
           <NavigationBar />
           <Switch>
             <Route path="/" exact>
-              <Redirect to="/home" />
-            </Route>
-
-            <Route path="/home">
-              <Home />
+              <Redirect to="/bfs" />
             </Route>
 
             <Route path="/bfs">

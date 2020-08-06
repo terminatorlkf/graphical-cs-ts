@@ -2,13 +2,12 @@ import React, { useRef } from 'react'
 import { Elevation } from '@rmwc/elevation';
 import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
-import { Queue } from 'queue-typescript';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
-import { Theme } from '@rmwc/theme';
+import { ThemeProvider } from '@rmwc/theme';
 
 export type parentTrack = {
     parentNodeIndex: number,
@@ -56,8 +55,14 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 </div>
 
                 <div className='config-card-body'>
-                    <p>root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
-                    <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+                    <div className='status'>
+                        <span className='circle' id='green' />
+                        <p>root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
+                    </div>
+                    <div className='status'>
+                        <span className='circle' id='red' />
+                        <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+                    </div>
 
                     {graph.nodeStatusCardToggled &&
                         <div className='action'>
@@ -67,7 +72,14 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     }
 
                     {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                        <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
+                        <ThemeProvider
+                            options={{
+                                primary: '#4CAF50',
+                                secondary: 'blue'
+                            }}
+                        >
+                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
+                        </ThemeProvider>
                     }
                 </div>
 
@@ -80,6 +92,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 p {
                     margin-top: 0;
                     margin-bottom: 0;
+                    padding-bottom: 0.1rem;
                 }
 
                 .search-status-stack {
@@ -92,9 +105,9 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 
                 .config-card {
                     overflow: hidden;
-                    background-color: rgba(50, 50, 50, 1);
+                    background-color: #424242;
                     color: white;
-                    min-width: 30rem;
+                    min-width: 33rem;
                     height: auto;
                     display: flex;
                     flex-direction: row;
@@ -109,13 +122,35 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    min-width: 25rem;
+                    min-width: 27rem;
                     justify-content: space-between;
+                }
+
+                .status {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
                 }
 
                 .action {
                     display: flex;
                     flex-direction: row;
+                }
+
+                .circle {
+                    width: 0.5rem;
+                    height: 0.5rem;
+                    border-radius: 50%;
+                    margin-right: 0.5rem;
+                    margin-top: 0.1rem;
+                }
+
+                #red {
+                    background-color: #D32F2F;
+                }
+
+                #green {
+                    background-color: #4CAF50;
                 }
                 
                 `}
