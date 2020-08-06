@@ -19,7 +19,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
 
     return (
         <div className="operation-node-section">
-            <Stage width={canvasWidth} height={window.innerHeight - 300}>
+            <Stage width={canvasWidth} height={window.innerHeight - 300} draggable>
                 <Provider store={store}>
                     <Layer>
                         <Edges />
