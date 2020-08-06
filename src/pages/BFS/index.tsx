@@ -78,8 +78,10 @@ const BFS: FunctionComponent = () => {
                     "Breadth-first search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or some arbitrary node of a graph,
                     sometimes referred to as a 'search key'), and explores all of the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.
                     It uses the opposite strategy as depth-first search, which instead explores the node branch as far as possible before being forced to backtrack and expand other nodes."
-                    </IntroSection>
+                </IntroSection>
 
+                <ConfigCard />
+                          
                 <div className="operation-section">
                     <Graph
                         draggable
@@ -95,21 +97,19 @@ const BFS: FunctionComponent = () => {
                     />
 
                     <div className="search-status-stack-section">
-                        <ConfigCard>
-                            {nodeStatusCardTransition.map(({ item, key, props }) => {
-                                return (
-                                    item &&
-                                    <animated.div style={props} key={key}>
-                                        <NodeStatusCard
-                                            onMouseEnterNeighbor={mouseEnterHandler}
-                                            onMouseLeaveNeighbor={mouseLeaveHandler}
-                                            onMouseEnterAvailableNeighbor={mouseEnterHandler}
-                                            onMouseLeaveAvailableNeighbor={mouseLeaveHandler}
-                                        />
-                                    </animated.div>
-                                );
-                            })}
-                        </ConfigCard>
+                        {nodeStatusCardTransition.map(({ item, key, props }) => {
+                            return (
+                                item &&
+                                <animated.div style={props} key={key}>
+                                    <NodeStatusCard
+                                        onMouseEnterNeighbor={mouseEnterHandler}
+                                        onMouseLeaveNeighbor={mouseLeaveHandler}
+                                        onMouseEnterAvailableNeighbor={mouseEnterHandler}
+                                        onMouseLeaveAvailableNeighbor={mouseLeaveHandler}
+                                    />
+                                </animated.div>
+                            );
+                        })}
                     </div>
                     <div className="add-node-button">
                         <AddNodeButton onClick={() => {

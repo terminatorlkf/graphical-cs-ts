@@ -50,6 +50,7 @@
 .node-status-card {
     background-color: white;
     overflow: hidden;
+    margin-right: 3rem;
     margin-top: 3.6rem;
     padding-top: 0.4rem;
     padding-left: 1rem;
@@ -108,10 +109,12 @@
 }
 
 .neighbor-node {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     width: 3.5rem;
     height: 3.5rem;
-    text-align: center;
     margin-right: 0.6rem;
     margin-bottom: 0.6rem;
     user-select: none;

@@ -8,6 +8,7 @@ import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
+import { Theme } from '@rmwc/theme';
 
 export type parentTrack = {
     parentNodeIndex: number,
@@ -43,34 +44,31 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
     }
 
     const clickSearchButtonHandler = () => {
-        dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }); 
+        dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE });
         dispatch({ type: graphActionType.START_BFS_SEARCH });
     }
 
     return (
         <div className="search-status-stack">
-            <div className='vertical-border' />
             <Elevation className='config-card' z={1} >
-                <div className='node-status-card-title' style={{ backgroundColor: 'red' }}>
-                    <h2>Config</h2>
+                <div>
+                    <p><strong>Config</strong></p>
                 </div>
 
                 <div className='config-card-body'>
-                    <p>current root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
-                    <p>current destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+                    <p>root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
+                    <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
 
-                    <div>
-                        {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
-                        }
+                    {graph.nodeStatusCardToggled &&
+                        <div className='action'>
+                            <Button ref={rootButtonRef} onClick={setRootHandler} label='set as root' />
+                            <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set as destination' />
+                        </div>
+                    }
 
-                        {graph.nodeStatusCardToggled &&
-                            <div className='action'>
-                                <Button ref={rootButtonRef} onClick={setRootHandler} label='set as root' />
-                                <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set as destination' />
-                            </div>
-                        }
-                    </div>
+                    {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
+                        <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
+                    }
                 </div>
 
 
@@ -79,36 +77,47 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
 
             <style jsx>
                 {`
+                p {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+
                 .search-status-stack {
                     position: relative;
-                    height: calc(100vh - 10rem);
-                    width: 25vw; 
-                    background-color: #F5F5F5;
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
                 }
                 
                 .config-card {
                     overflow: hidden;
-                    width: 25.5rem;
-                    height: 25rem;
+                    background-color: rgba(50, 50, 50, 1);
+                    color: white;
+                    min-width: 30rem;
+                    height: auto;
                     display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    border-radius: 0.5rem;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-radius: 0.2rem;
                     margin-top: 1rem;
-                    padding: 0.5rem 0rem 1rem 1.5rem;
+                    padding: 0.5rem 1rem 0.5rem 1rem;
                 }
 
                 .config-card-body {
-                    background-color: white;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    min-width: 25rem;
+                    justify-content: space-between;
                 }
 
                 .action {
                     display: flex;
                     flex-direction: row;
                 }
-                .
+                
                 `}
             </style>
         </div>
