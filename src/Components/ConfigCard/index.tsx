@@ -4,9 +4,11 @@ import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
+import Divider from '@material-ui/core/Divider';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
+import '@rmwc/snackbar/styles';
 import { ThemeProvider } from '@rmwc/theme';
 
 export type parentTrack = {
@@ -16,8 +18,6 @@ export type parentTrack = {
 
 export const ConfigCard: React.FunctionComponent = ({ children }) => {
 
-    const rootButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
-    const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const searchButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -25,22 +25,6 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
 
     const rootNodeIndex = graph.rootNodeIndex;
     const destinationNodeIndex = graph.destinationNodeIndex;
-
-    const setRootHandler = () => {
-        setTimeout(() => {
-            rootButtonRef.current?.blur();
-        }, 340);
-
-        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.currentNodeIndex } });
-    }
-
-    const setDestinationHandler = () => {
-        setTimeout(() => {
-            destinationButtonRef.current?.blur();
-        }, 340);
-
-        dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.currentNodeIndex } });
-    }
 
     const clickSearchButtonHandler = () => {
         dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE });
@@ -51,8 +35,19 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
         <div className="search-status-stack">
             <Elevation className='config-card' z={1} >
                 <div>
-                    <p><strong>Config</strong></p>
+                    <p><strong>CONFIG</strong></p>
                 </div>
+
+                <Divider
+                    orientation='vertical'
+                    flexItem
+                    style={{
+                        backgroundColor: 'rgba(135, 135, 135, 1)',
+                        marginTop: '0.2rem',
+                        marginBottom: '0.2rem'
+                    }}
+                    variant='middle'
+                />
 
                 <div className='config-card-body'>
                     <div className='status'>
@@ -64,13 +59,6 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                         <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
                     </div>
 
-                    {graph.nodeStatusCardToggled &&
-                        <div className='action'>
-                            <Button ref={rootButtonRef} onClick={setRootHandler} label='set as root' />
-                            <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set as destination' />
-                        </div>
-                    }
-
                     {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
                         <ThemeProvider
                             options={{
@@ -78,7 +66,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                                 secondary: 'blue'
                             }}
                         >
-                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem' }} />
+                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem', marginBottom: '0.1rem' }} />
                         </ThemeProvider>
                     }
                 </div>
@@ -107,14 +95,14 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     overflow: hidden;
                     background-color: #424242;
                     color: white;
-                    min-width: 33rem;
+                    min-width: 35.5rem;
                     height: auto;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
                     border-radius: 0.2rem;
-                    margin-top: 1rem;
+                    margin-top: 3rem;
                     padding: 0.5rem 1rem 0.5rem 1rem;
                 }
 
@@ -122,7 +110,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    min-width: 27rem;
+                    min-width: 28rem;
                     justify-content: space-between;
                 }
 

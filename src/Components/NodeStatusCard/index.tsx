@@ -16,6 +16,8 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
     const dispatch = useDispatch();
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
+    const rootButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
+    const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const addNeighborModeHandler = () => {
         dispatch({ type: graphActionType.ADD_NEIGHBOR });
@@ -30,6 +32,23 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
             buttonRef.current?.blur();
         }, 360);
     }
+
+    const setRootHandler = () => {
+        setTimeout(() => {
+            rootButtonRef.current?.blur();
+        }, 340);
+
+        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.currentNodeIndex } });
+    }
+
+    const setDestinationHandler = () => {
+        setTimeout(() => {
+            destinationButtonRef.current?.blur();
+        }, 340);
+
+        dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.currentNodeIndex } });
+    }
+
 
     return (
         <div className="node-status-section">
@@ -67,11 +86,26 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
                     </div>
                 </div>
 
-                <div className="node-status-card-manipulation">
+                <div className="action ">
+                    <Button ref={rootButtonRef} onClick={setRootHandler} label='set root' />
+                    <Button ref={destinationButtonRef} onClick={setDestinationHandler} label='set destination' />
                     <Button label='delete' danger onClick={() => dispatch({ type: graphActionType.DELETE_NODE, payload: { index: graph.currentNodeIndex } })} />
                 </div>
 
             </Elevation>
+
+            <style jsx>
+                {`
+                    .action {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        margin-right: 1.5rem;
+                        padding-top: 1rem;
+                        padding-bottom: 1rem;
+                    }
+                `}
+            </style>
         </div>
     );
 };
