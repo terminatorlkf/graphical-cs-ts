@@ -71,7 +71,6 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     }
                 </div>
 
-
             </Elevation>
             {children}
 

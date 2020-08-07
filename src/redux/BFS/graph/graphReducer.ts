@@ -154,7 +154,6 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                     currentNeighborIndex: neighborIndex
                 }
 
-
         case graphAction.CLICK_AVAILABLE_NEIGHBOR:
             let i = -1;
             currentNeighborIndex = (action as graphAction.clickAvailableNeighborAction).payload.index;
