@@ -18,5 +18,5 @@ export interface GraphState {
     destinationFill: string,
     searchMode: boolean,
     searchTrack: SearchTrack,
-    updateNodePositionMode: boolean
+    updateNodePositionMode: boolean,
 }

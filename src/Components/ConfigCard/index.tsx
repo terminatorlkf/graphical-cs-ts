@@ -35,7 +35,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
         <div className="search-status-stack">
             <Elevation className='config-card' z={1} >
                 <div>
-                    <p><strong>CONFIG</strong></p>
+                    <p><strong>CONFIG </strong></p>
                 </div>
 
                 <Divider

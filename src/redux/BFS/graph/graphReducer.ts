@@ -4,7 +4,7 @@ import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { presetEdges } from './PresetValues/presetEdges';
 import { Node } from "../../../Interfaces/Node";
 import { GraphState } from '../../../Interfaces/GraphState';
-import { bfsSearch } from './methods';
+import { bfsSearch, addNode } from './methods';
 
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
@@ -22,7 +22,7 @@ const initialGraphState: GraphState = {
     destinationFill: '#df9d0f',
     searchMode: false,
     searchTrack: { parentTrackList: [], path: [] },
-    updateNodePositionMode: false
+    updateNodePositionMode: false,
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {
@@ -34,24 +34,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
     switch (action.type) {
         // Reducer to fire after adding a node
-        case graphAction.ADD_NODE:
-            return {
-                ...state,
-                nodeList: [
-                    ...state.nodeList,
-                    {
-                        index: state.nodeList.length,
-                        value: state.nodeList.length,
-                        elevation: 5,
-                        className: "",
-                        xPosition: (action as graphAction.addNodeAction).payload.x,
-                        yPosition: (action as graphAction.addNodeAction).payload.y,
-                        fill: state.defaultFill,
-                        ref: null,
-                        neighborList: []
-                    }
-                ]
-            }
+        case graphAction.ADD_NODE: return addNode(state, action);
 
         // Reducer to fire after deleting a node
         case graphAction.DELETE_NODE:
@@ -61,7 +44,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                     edge.edge[1] === state.currentNodeIndex)),
                 nodeList: state.nodeList.filter(node => node.index !== (action as graphAction.deleteNodeAction).payload.index),
                 currentNodeIndex: -1,
-                editNeighborMode: false
+                editNeighborMode: false,
+                nodeStatusCardToggled: false
             };
 
         // Reducer to fire after clicking on a node
@@ -252,7 +236,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
         case graphAction.START_BFS_SEARCH:
             return bfsSearch(state)
-            
+
         case graphAction.TOGGLE_UPDATE_NODE_POSITION_MODE:
             const isOn = (action as graphAction.toggleUpdateNodePositionModeAction).payload.isOn;
             return {
