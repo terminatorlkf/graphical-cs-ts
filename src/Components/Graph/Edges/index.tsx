@@ -1,73 +1,65 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Edge } from 'Interfaces/Edge';
+import { Node } from 'Interfaces/Node';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
+import { Line } from 'react-konva';
 
 export const Edges = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const edgeList = useSelector((state: BfsRootReducer) => state.graph.edgeList);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
 
-    const edgeIndexList: Edge[] = edgeList.map((edge, index) => {
-        let firstIndex = 0;
-        let secondIndex = 0;
-        if (nodeList[edge.edge[0]] && edge.edge[0] === nodeList[edge.edge[0]].index) firstIndex = edge.edge[0];
-        else {
-            nodeList.map((node, index) => {
-                if (node.index === edge.edge[0]) firstIndex = index;
-            });
-        }
+    const findPoints = (edge: Edge, nodeList: Node[]) => {
+        const firstNodeIndex = edge.edge[0];
+        const secondNodeIndex = edge.edge[1];
 
-        if (nodeList[edge.edge[1]] && edge.edge[1] === nodeList[edge.edge[1]].index) secondIndex = edge.edge[1];
-        else {
-            nodeList.map((node, index) => {
-                if (node.index === edge.edge[1]) secondIndex = index;
-            });
-        }
+        let points = [0, 0, 0, 0];
 
-        return {
-            key: index,
-            edge: [firstIndex, secondIndex]
-        }
-    });
+        nodeList.map(node => {
+            if (node.index === firstNodeIndex) {
+                points[0] = node.xPosition;
+                points[1] = node.yPosition;
+            }
 
-    const transition = useTransition(edgeIndexList, {
-        key: edgeIndex => edgeIndex.key,
+            if (node.index === secondNodeIndex) {
+                points[2] = node.xPosition;
+                points[3] = node.yPosition;
+            }
+        });
+
+        return points;
+    }
+
+    const transition = useTransition(edgeList, {
+        key: edge => edge.key,
         from: edge => {
-            return nodeList[edge.edge[0]] && nodeList[edge.edge[1]] && {
-                points: [nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition,
-                nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition],
+            const points = findPoints(edge, nodeList);
+            return {
+                points: [points[0], points[1], points[0], points[1]],
                 cancel: false,
                 c: 0
             }
         },
         enter: edge => {
-            return nodeList[edge.edge[0]] && nodeList[edge.edge[1]] && {
-                points: [nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition,
-                nodeList[edge.edge[1]].xPosition,
-                nodeList[edge.edge[1]].yPosition],
+            const points = findPoints(edge, nodeList);
+            return {
+                points,
                 c: 1,
             }
         },
         update: edge => {
-            return nodeList[edge.edge[0]] && nodeList[edge.edge[1]] && graph.updateNodePositionMode && {
-                points: [nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition,
-                nodeList[edge.edge[1]].xPosition,
-                nodeList[edge.edge[1]].yPosition],
+            const points = findPoints(edge, nodeList);
+            return graph.updateNodePositionMode && {
+                points,
                 config: { duration: 1 }
             }
         },
         leave: edge => {
-            return nodeList[edge.edge[0]] && nodeList[edge.edge[1]] && {
-                points: [nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition,
-                nodeList[edge.edge[0]].xPosition,
-                nodeList[edge.edge[0]].yPosition],
+            const points = findPoints(edge, nodeList);
+            return {
+                points: [points[0], points[1], points[0], points[1]],
                 c: 0
             }
         },
@@ -89,6 +81,19 @@ export const Edges = () => {
                     strokeWidth={4}
                 />
             ))}
+            
+            {/* {edgeList.map((edge, index) => {
+
+                return (
+                    <Line
+                        stroke='black'
+                        strokeWidth={4}
+                        points={[]}
+                    />
+                )
+            }
+
+            )} */}
         </React.Fragment>
     );
 }
