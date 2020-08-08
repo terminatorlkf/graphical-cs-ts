@@ -24,6 +24,7 @@ const initialGraphState: GraphState = {
     searchMode: false,
     searchTrack: { parentTrackList: [], path: [] },
     updateNodePositionMode: false,
+    lastDeletedNode: undefined
 }
 
 const graphReducer = (state = initialGraphState, action: graphActionType): GraphState => {

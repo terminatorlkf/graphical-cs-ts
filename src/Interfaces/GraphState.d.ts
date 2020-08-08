@@ -19,4 +19,5 @@ export interface GraphState {
     searchMode: boolean,
     searchTrack: SearchTrack,
     updateNodePositionMode: boolean,
+    lastDeletedNode: Node | undefined
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Edge } from 'Interfaces/Edge';
 import { Node } from 'Interfaces/Node';
+import { GraphState } from 'Interfaces/GraphState';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
 import { Line } from 'react-konva';
@@ -32,6 +33,27 @@ export const Edges = () => {
         return points;
     }
 
+    const findLeavePoints = (edge: Edge, nodeList: Node[], graph: GraphState) => {
+        const lastDeletedNode = graph.lastDeletedNode;
+        const firstIndex = edge.edge[0];
+        const secondIndex = edge.edge[1];
+        let points = [0, 0];
+
+        if (lastDeletedNode?.neighborList.includes(firstIndex)) {
+            nodeList.map(node => {
+                if (node.index === firstIndex) points = [node.xPosition, node.yPosition];
+            });
+        }
+
+        if (lastDeletedNode?.neighborList.includes(secondIndex)) {
+            nodeList.map(node => {
+                if (node.index === secondIndex) points = [node.xPosition, node.yPosition];
+            });
+        }
+
+        return points;
+    }
+
     const transition = useTransition(edgeList, {
         key: edge => edge.key,
         from: edge => {
@@ -57,7 +79,7 @@ export const Edges = () => {
             }
         },
         leave: edge => {
-            const points = findPoints(edge, nodeList);
+            const points = findLeavePoints(edge, nodeList, graph);
             return {
                 points: [points[0], points[1], points[0], points[1]],
                 c: 0
@@ -76,8 +98,8 @@ export const Edges = () => {
                 <animated.Line
                     {...style}
                     stroke={style.c
-                        .interpolate([0, 0.5, 0.75, 1], [0, 255, 150, 0])
-                        .interpolate(c => `rgba(${c}, 0, 0, 1`)}
+                        .to([0, 0.5, 0.75, 1], [0, 255, 150, 0])
+                        .to(c => `rgba(${c}, 0, 0, 1`)}
                     strokeWidth={4}
                 />
             ))}

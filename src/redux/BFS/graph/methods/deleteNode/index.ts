@@ -9,14 +9,13 @@ export const deleteNode = (state: GraphState, action: graphActionType) => {
 
     const actualCurrentNodeIndex = nodeList[currentNodeIndex].index;
     const newNodeList = nodeList.filter(node => node.index !== actualCurrentNodeIndex);
-
-    console.log(actualCurrentNodeIndex);
     const newEdgeList = edgeList.filter(edge => edge.edge[0] !== actualCurrentNodeIndex && edge.edge[1] !== actualCurrentNodeIndex);
 
     return { 
         ...state,
         nodeList: newNodeList,
         edgeList: newEdgeList,
+        lastDeletedNode: nodeList[currentNodeIndex],
         currentNodeIndex: -1,
         nodeStatusCardToggled: false,
         editNeighborMode: false
