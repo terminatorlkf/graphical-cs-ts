@@ -81,19 +81,6 @@ export const Edges = () => {
                     strokeWidth={4}
                 />
             ))}
-            
-            {/* {edgeList.map((edge, index) => {
-
-                return (
-                    <Line
-                        stroke='black'
-                        strokeWidth={4}
-                        points={[]}
-                    />
-                )
-            }
-
-            )} */}
         </React.Fragment>
     );
 }
