@@ -1,8 +1,6 @@
 import { GraphState } from "Interfaces/GraphState";
-import { graphActionType } from '../../graphActionType';
-import * as graphAction from '../../graphActionType';
 
-export const deleteNode = (state: GraphState, action: graphActionType) => {
+export const deleteNode = (state: GraphState) => {
     const edgeList = state.edgeList;
     const nodeList = state.nodeList;
     const currentNodeIndex = state.currentNodeIndex;

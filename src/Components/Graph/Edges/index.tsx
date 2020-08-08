@@ -5,7 +5,6 @@ import { Node } from 'Interfaces/Node';
 import { GraphState } from 'Interfaces/GraphState';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
-import { Line } from 'react-konva';
 
 export const Edges = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -28,6 +27,7 @@ export const Edges = () => {
                 points[2] = node.xPosition;
                 points[3] = node.yPosition;
             }
+            return null;
         });
 
         return points;
@@ -42,12 +42,14 @@ export const Edges = () => {
         if (lastDeletedNode?.neighborList.includes(firstIndex)) {
             nodeList.map(node => {
                 if (node.index === firstIndex) points = [node.xPosition, node.yPosition];
+                return null;
             });
         }
 
         if (lastDeletedNode?.neighborList.includes(secondIndex)) {
             nodeList.map(node => {
                 if (node.index === secondIndex) points = [node.xPosition, node.yPosition];
+                return null;
             });
         }
 

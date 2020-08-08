@@ -41,7 +41,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
         case graphAction.ADD_NODE: return addNode(state, action);
 
         // Reducer to fire after deleting a node
-        case graphAction.DELETE_NODE: return deleteNode(state, action);
+        case graphAction.DELETE_NODE: return deleteNode(state);
 
         // Reducer to fire after clicking on a node
         case graphAction.CLICK_NODE:

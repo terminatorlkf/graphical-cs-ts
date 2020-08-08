@@ -5,7 +5,6 @@ import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { useTransition, animated } from '@react-spring/konva';
-import { Circle } from 'react-konva';
 
 import '@rmwc/button/styles';
 import './Search.css';

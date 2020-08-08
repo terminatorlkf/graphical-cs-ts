@@ -4,7 +4,6 @@ import { useTransition, animated } from 'react-spring';
 import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../../Interfaces/BfsRootReducer';
-import StackGrid from "react-stack-grid";
 import { INodeNeighborList } from './NodeNeighborList';
 
 import '@rmwc/elevation/styles';
