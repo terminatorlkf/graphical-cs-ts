@@ -10,10 +10,10 @@ export const MOUSE_ENTER_NODE = 'MOUSE_ENTER_NODE';
 export const MOUSE_LEAVE_NODE = 'MOUSE_LEAVE_NODE';
 
 export const CLICK_EXISTING_NEIGHBOR = 'CLICK_EXISTING_NEIGHBOR'
-export const CLICK_AVAILABLE_NEIGHBOR = 'CLICK_AVAILABLE_NEIGHBOR';
+export const ADD_NEIGHBOR = 'CLICK_AVAILABLE_NEIGHBOR';
 export const DELETE_NEIGHBOR = 'DELETE_NEIGHBOR';
 
-export const ADD_NEIGHBOR = 'ADD_NEIGHBOR';
+export const TOGGLE_ADD_NEIGHBOR = 'ADD_NEIGHBOR';
 
 export const SET_ROOT = 'SET_ROOT';
 export const SET_DESTINATION = 'SET_DESTINATION';
@@ -59,7 +59,7 @@ export interface clickExistingNeighborAction {
 }
 
 export interface clickAvailableNeighborAction {
-    type: typeof CLICK_AVAILABLE_NEIGHBOR,
+    type: typeof ADD_NEIGHBOR,
     payload: { index: number }
 }
 
@@ -68,7 +68,7 @@ export interface deleteNeighborAction {
 }
 
 export interface addNeighborAction {
-    type: typeof ADD_NEIGHBOR
+    type: typeof TOGGLE_ADD_NEIGHBOR
 }
 
 export interface setRootAction {

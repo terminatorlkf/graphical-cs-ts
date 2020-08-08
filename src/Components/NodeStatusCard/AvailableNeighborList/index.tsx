@@ -16,15 +16,19 @@ export const AvailableNeighborList: React.FunctionComponent<IAvailableNeighborLi
         leave: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' }
     });
 
+    let actualCurrentNodeIndex = -1;
+
+    if (currentNodeIndex !== -1) actualCurrentNodeIndex = nodeList[currentNodeIndex].index;
+
     return (
         <React.Fragment>
             <SmoothCollapse allowOverflowWhenOpen expanded={expanded} className="neighbor-list-collapse-section">
                 <h4 style={{ marginTop: '0.4rem' }}>available neighbor</h4>
                 <div className="neighbor-list">
                     {transition.map(({ item, props, key }) => {
-                        if (item.index !== -1 && currentNodeIndex !== -1) {
+                        if (item.index !== -1 && actualCurrentNodeIndex !== -1) {
                             let isNeighbor = true;
-                            if (item.value === currentNodeIndex)
+                            if (item.index === actualCurrentNodeIndex)
                                 isNeighbor = false;
 
                             edgeList.map(nodePair => {
@@ -36,9 +40,13 @@ export const AvailableNeighborList: React.FunctionComponent<IAvailableNeighborLi
                             })
 
                             let index = -1;
+                            let actualNeighborIndex = -1;
 
                             nodeList.map((node, i) => {
-                                if (node.value === item.value) index = i;
+                                if (node.value === item.value) {
+                                    index = i;
+                                    actualNeighborIndex = node.index;
+                                }
                                 return null;
                             });
 
@@ -51,7 +59,7 @@ export const AvailableNeighborList: React.FunctionComponent<IAvailableNeighborLi
                                             value={item.value}
                                             onMouseEnter={onMouseEnter}
                                             onMouseLeave={onMouseLeave}
-                                            onClick={index => dispatch({ type: graphActionType.CLICK_AVAILABLE_NEIGHBOR, payload: { index: index } })}
+                                            onClick={index => dispatch({ type: graphActionType.ADD_NEIGHBOR, payload: { index: actualNeighborIndex } })}
                                         />
                                     </animated.div>
                                 )

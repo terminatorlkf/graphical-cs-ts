@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Edge } from 'Interfaces/Edge';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
 
@@ -8,8 +9,31 @@ export const Edges = () => {
     const edgeList = useSelector((state: BfsRootReducer) => state.graph.edgeList);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
 
-    const transition = useTransition(edgeList, {
-        key: edge => edge.key,
+    const edgeIndexList: Edge[] = edgeList.map((edge, index) => {
+        let firstIndex = 0;
+        let secondIndex = 0;
+        if (nodeList[edge.edge[0]] && edge.edge[0] === nodeList[edge.edge[0]].index) firstIndex = edge.edge[0];
+        else {
+            nodeList.map((node, index) => {
+                if (node.index === edge.edge[0]) firstIndex = index;
+            });
+        }
+
+        if (nodeList[edge.edge[1]] && edge.edge[1] === nodeList[edge.edge[1]].index) secondIndex = edge.edge[1];
+        else {
+            nodeList.map((node, index) => {
+                if (node.index === edge.edge[1]) secondIndex = index;
+            });
+        }
+
+        return {
+            key: index,
+            edge: [firstIndex, secondIndex]
+        }
+    });
+
+    const transition = useTransition(edgeIndexList, {
+        key: edgeIndex => edgeIndex.key,
         from: edge => {
             return nodeList[edge.edge[0]] && nodeList[edge.edge[1]] && {
                 points: [nodeList[edge.edge[0]].xPosition,
@@ -57,7 +81,7 @@ export const Edges = () => {
     return (
         <React.Fragment>
             {edgeList.length !== 0 && transition(style => (
-                <animated.Line 
+                <animated.Line
                     {...style}
                     stroke={style.c
                         .interpolate([0, 0.5, 0.75, 1], [0, 255, 150, 0])

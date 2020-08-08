@@ -20,7 +20,7 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
     const destinationButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const addNeighborModeHandler = () => {
-        dispatch({ type: graphActionType.ADD_NEIGHBOR });
+        dispatch({ type: graphActionType.TOGGLE_ADD_NEIGHBOR });
         setTimeout(() => {
             buttonRef.current?.blur();
         }, 360);

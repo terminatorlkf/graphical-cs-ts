@@ -3,12 +3,13 @@ import { graphActionType } from './graphActionType';
 import { presetNodeState, defaultFill } from './PresetValues/PresetNodeState';
 import { presetEdges } from './PresetValues/presetEdges';
 import { Node } from "../../../Interfaces/Node";
+import { Edge } from '../../../Interfaces/Edge'; 
 import { GraphState } from '../../../Interfaces/GraphState';
 import { bfsSearch, addNode } from './methods';
 
 const initialGraphState: GraphState = {
-    nodeList: presetNodeState,
-    edgeList: presetEdges,
+    nodeList: [],
+    edgeList: [],
     currentNodeIndex: -1,
     currentNeighborIndex: -1,
     editNeighborMode: false,
@@ -16,8 +17,8 @@ const initialGraphState: GraphState = {
     defaultFill: defaultFill,
     clickedFill: '#cf0a4f',
     nodeStatusCardToggled: false,
-    rootNodeIndex: 0,
-    destinationNodeIndex: 1,
+    rootNodeIndex: -1,
+    destinationNodeIndex: -1,
     rootFill: '#51df0f',
     destinationFill: '#df9d0f',
     searchMode: false,
@@ -31,6 +32,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
     let currentNeighborIndex = -1;
     let currentNodeIndex = -1;
     let newNode: Node = state.nodeList[0];
+    let newEdgeList: Edge[] = [];
 
     switch (action.type) {
         // Reducer to fire after adding a node
@@ -38,11 +40,18 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
         // Reducer to fire after deleting a node
         case graphAction.DELETE_NODE:
+            newEdgeList = state.edgeList.filter(edge => {
+                let firstIndex = 0;
+                let secondIndex = 0;
+
+
+            });
+
             return {
                 ...state,
                 edgeList: state.edgeList.filter(edge => !(edge.edge[0] === state.currentNodeIndex ||
                     edge.edge[1] === state.currentNodeIndex)),
-                nodeList: state.nodeList.filter(node => node.index !== (action as graphAction.deleteNodeAction).payload.index),
+                nodeList: state.nodeList.filter((node, index) => index !== (action as graphAction.deleteNodeAction).payload.index),
                 currentNodeIndex: -1,
                 editNeighborMode: false,
                 nodeStatusCardToggled: false
@@ -154,12 +163,12 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                     currentNeighborIndex: neighborIndex
                 }
 
-        case graphAction.CLICK_AVAILABLE_NEIGHBOR:
+        case graphAction.ADD_NEIGHBOR:
             let i = -1;
             currentNeighborIndex = (action as graphAction.clickAvailableNeighborAction).payload.index;
             currentNodeIndex = state.currentNodeIndex;
 
-            if (state.edgeList.length === 0) i = 0;
+            if (state.edgeList.length === 0 || state.edgeList.length === 1) i = state.edgeList.length;
             else i = state.edgeList[state.edgeList.length - 2].key + 2;
             newNodeList = [...state.nodeList];
             newNode = { ...newNodeList[currentNodeIndex] };
@@ -167,6 +176,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
             newNode.neighborList = [...newNode.neighborList, currentNeighborIndex];
 
             newNodeList[currentNodeIndex] = newNode;
+            let actualCurrentNodeIndex = state.nodeList[currentNodeIndex].index;
 
             return {
                 ...state,
@@ -175,7 +185,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                     ...state.edgeList,
                     {
                         key: i,
-                        edge: [currentNodeIndex, currentNeighborIndex]
+                        edge: [actualCurrentNodeIndex, currentNeighborIndex]
                     }
                 ]
             }
@@ -183,7 +193,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
         case graphAction.DELETE_NEIGHBOR:
             currentNeighborIndex = state.currentNeighborIndex;
             currentNodeIndex = state.currentNodeIndex;
-            let newEdgeList = [...state.edgeList];
+            newEdgeList = [...state.edgeList];
 
             if (currentNeighborIndex !== -1) {
                 newEdgeList = newEdgeList.filter(edge => {
@@ -207,7 +217,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 currentNeighborIndex: -1
             }
 
-        case graphAction.ADD_NEIGHBOR:
+        case graphAction.TOGGLE_ADD_NEIGHBOR:
             return {
                 ...state,
                 addNeighborMode: !state.addNeighborMode

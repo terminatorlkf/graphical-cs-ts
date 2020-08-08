@@ -50,13 +50,15 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 />
 
                 <div className='config-card-body'>
-                    <div className='status'>
-                        <span className='circle' id='green' />
-                        <p>root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
-                    </div>
-                    <div className='status'>
-                        <span className='circle' id='red' />
-                        <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+                    <div className='status-section'>
+                        <div className='status'>
+                            <span className='circle' id='green' />
+                            <p>root: {rootNodeIndex === -1 ? 'null' : `node ${rootNodeIndex}`}</p>
+                        </div>
+                        <div className='status'>
+                            <span className='circle' id='red' />
+                            <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
+                        </div>
                     </div>
 
                     {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
@@ -95,7 +97,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     background-color: #424242;
                     color: white;
                     min-width: 35.5rem;
-                    height: auto;
+                    height: 2.5rem;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
@@ -111,6 +113,13 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     align-items: center;
                     min-width: 28rem;
                     justify-content: space-between;
+                }
+
+                .status-section {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    min-width: 23rem;
                 }
 
                 .status {

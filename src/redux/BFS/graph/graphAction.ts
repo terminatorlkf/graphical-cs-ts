@@ -53,7 +53,7 @@ export const clickExistingNeighbor = (nodeIndex: number, neighborIndex: number):
 
 export const clickAvailableNeighbor = (index: number): graphActionType.clickAvailableNeighborAction => {
     return {
-        type: graphActionType.CLICK_AVAILABLE_NEIGHBOR,
+        type: graphActionType.ADD_NEIGHBOR,
         payload: { index }
     }
 }
@@ -66,7 +66,7 @@ export const deleteNeighbor = (): graphActionType.deleteNeighborAction => {
 
 export const addNeighbor = (): graphActionType.addNeighborAction => {
     return {
-        type: graphActionType.ADD_NEIGHBOR
+        type: graphActionType.TOGGLE_ADD_NEIGHBOR
     }
 }
 

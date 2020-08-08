@@ -5,7 +5,7 @@ import * as graphAction from '../../graphActionType';
 export const addNode = (state: GraphState, action: graphActionType): GraphState => {
     const nodeList = state.nodeList;
 
-    if (nodeList[nodeList.length - 1].index > nodeList.length - 1) {
+    if (nodeList.length > 0 && nodeList[nodeList.length - 1].index > nodeList.length - 1) {
         console.log('has gap');
         let latestIndex = 0;
 
