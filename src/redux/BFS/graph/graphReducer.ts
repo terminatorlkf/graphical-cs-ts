@@ -200,7 +200,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 nodeList: newNodeList,
                 edgeList: newEdgeList,
                 editNeighborMode: false,
-                currentNeighborIndex: -1
+                currentNeighborIndex: -1,
+                lastDeletedNode: undefined
             }
 
         case graphAction.TOGGLE_ADD_NEIGHBOR:

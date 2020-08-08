@@ -39,20 +39,25 @@ export const Edges = () => {
         const secondIndex = edge.edge[1];
         let points = [0, 0];
 
-        if (lastDeletedNode?.neighborList.includes(firstIndex)) {
-            nodeList.map(node => {
-                if (node.index === firstIndex) points = [node.xPosition, node.yPosition];
-                return null;
-            });
-        }
+        if (lastDeletedNode) {
+            if (lastDeletedNode.neighborList.includes(firstIndex)) {
+                nodeList.map(node => {
+                    if (node.index === firstIndex) points = [node.xPosition, node.yPosition];
+                    return null;
+                });
+            }
 
-        if (lastDeletedNode?.neighborList.includes(secondIndex)) {
-            nodeList.map(node => {
-                if (node.index === secondIndex) points = [node.xPosition, node.yPosition];
-                return null;
-            });
-        }
+            if (lastDeletedNode.neighborList.includes(secondIndex)) {
+                nodeList.map(node => {
+                    if (node.index === secondIndex) points = [node.xPosition, node.yPosition];
+                    return null;
+                });
+            }
+        } else
+            points = [nodeList[graph.currentNodeIndex].xPosition, nodeList[graph.currentNodeIndex].yPosition];
 
+
+        console.log(points);
         return points;
     }
 
