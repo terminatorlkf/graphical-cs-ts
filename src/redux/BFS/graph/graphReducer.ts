@@ -5,7 +5,7 @@ import { presetEdges } from './PresetValues/presetEdges';
 import { Node } from "../../../Interfaces/Node";
 import { Edge } from '../../../Interfaces/Edge'; 
 import { GraphState } from '../../../Interfaces/GraphState';
-import { bfsSearch, addNode, deleteNode } from './methods';
+import { bfsSearch, addNode, deleteNode, addNeighbor } from './methods';
 
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
@@ -149,32 +149,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                     currentNeighborIndex: neighborIndex
                 }
 
-        case graphAction.ADD_NEIGHBOR:
-            let i = -1;
-            currentNeighborIndex = (action as graphAction.clickAvailableNeighborAction).payload.index;
-            currentNodeIndex = state.currentNodeIndex;
-
-            if (state.edgeList.length === 0 || state.edgeList.length === 1) i = state.edgeList.length;
-            else i = state.edgeList[state.edgeList.length - 2].key + 2;
-            newNodeList = [...state.nodeList];
-            newNode = { ...newNodeList[currentNodeIndex] };
-
-            newNode.neighborList = [...newNode.neighborList, currentNeighborIndex];
-
-            newNodeList[currentNodeIndex] = newNode;
-            actualCurrentNodeIndex = state.nodeList[currentNodeIndex].index;
-
-            return {
-                ...state,
-                nodeList: newNodeList,
-                edgeList: [
-                    ...state.edgeList,
-                    {
-                        key: i,
-                        edge: [actualCurrentNodeIndex, currentNeighborIndex]
-                    }
-                ]
-            }
+        case graphAction.ADD_NEIGHBOR: return addNeighbor(state, action);
 
         case graphAction.DELETE_NEIGHBOR:
             currentNeighborIndex = state.currentNeighborIndex;

@@ -44,5 +44,3 @@ export const Node = React.forwardRef<Konva.Circle, INodes.IProps>(
         )
     },
 );
-
-export default Node;

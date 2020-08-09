@@ -53,11 +53,10 @@ export const Edges = () => {
                     return null;
                 });
             }
+            
         } else
             points = [nodeList[graph.currentNodeIndex].xPosition, nodeList[graph.currentNodeIndex].yPosition];
 
-
-        console.log(points);
         return points;
     }
 

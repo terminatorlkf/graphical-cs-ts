@@ -4,7 +4,6 @@ import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
-import Divider from '@material-ui/core/Divider';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
@@ -34,20 +33,9 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
     return (
         <div className="search-status-stack">
             <Elevation className='config-card' z={1} >
-                <div>
-                    <p><strong>CONFIG </strong></p>
+                <div className='config-card-title'>
+                    <p><strong>CONFIG</strong></p>
                 </div>
-
-                <Divider
-                    orientation='vertical'
-                    flexItem
-                    style={{
-                        backgroundColor: 'rgba(135, 135, 135, 1)',
-                        marginTop: '0.2rem',
-                        marginBottom: '0.2rem'
-                    }}
-                    variant='middle'
-                />
 
                 <div className='config-card-body'>
                     <div className='status-section'>
@@ -60,7 +48,9 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                             <p>destination: {destinationNodeIndex === -1 ? 'null' : `node ${destinationNodeIndex}`}</p>
                         </div>
                     </div>
+                </div>
 
+                <div>
                     {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
                         <ThemeProvider
                             options={{
@@ -84,6 +74,11 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     padding-bottom: 0.1rem;
                 }
 
+                .config-card-title {
+                    padding-right: 0.3rem;
+                    padding-left: 0.3rem;
+                }
+
                 .search-status-stack {
                     position: relative;
                     display: flex;
@@ -96,7 +91,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     overflow: hidden;
                     background-color: #424242;
                     color: white;
-                    min-width: 35.5rem;
+                    min-width: 33.5rem;
                     height: 2.5rem;
                     display: flex;
                     flex-direction: row;
@@ -112,7 +107,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     flex-direction: row;
                     align-items: center;
                     min-width: 28rem;
-                    justify-content: space-between;
+                    justify-content: center;
                 }
 
                 .status-section {
@@ -120,6 +115,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     flex-direction: row;
                     justify-content: space-between;
                     min-width: 23rem;
+                    padding-bottom: 1px;
                 }
 
                 .status {
