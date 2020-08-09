@@ -11,7 +11,7 @@ import { NavigationBar } from "./Components/NavigationBar";
 
 function App() {
 
-  const [pagesExpanded, setPagesExpanded] = useState([false, true, true, true, true]);
+  const [pagesExpanded, setPagesExpanded] = useState([true, true, true, true, true]);
   const [currentPage, setCurrentPage] = useState(0);
 
   const setExpanded = (index: number) => {
