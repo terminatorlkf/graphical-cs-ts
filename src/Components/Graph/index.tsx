@@ -9,6 +9,7 @@ import { IGraph } from './Graph';
 export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
     const store = useStore();
 
     let canvasWidth: number = 0;
@@ -25,6 +26,10 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                         <Edges />
                         {children}
                         {nodeList.map((node, index) => {
+                            let nodeFill = node.fill;
+                            if (node.index === graph.rootNodeIndex) nodeFill = graph.rootFill;
+                            if (node.index === graph.destinationNodeIndex) nodeFill = graph.destinationFill;
+
                             if (node.index !== -1) {
                                 return (
                                     <Group
@@ -40,7 +45,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                                         <Circle
                                             ref={node.ref}
                                             radius={35}
-                                            fill={node.fill}
+                                            fill={nodeFill}
                                             shadowBlur={node.elevation}
                                             shadowColor='black'
                                             shadowOffset={{ x: 0, y: 3 }}
