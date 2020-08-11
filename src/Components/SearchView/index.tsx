@@ -16,10 +16,11 @@ export const SearchView = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
-    const parentNodeIndex = searchTrackGlobal.parentTrackList[index].parentNodeIndex;
+    console.log(searchTrackGlobal.parentTrackList);
+    const parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
-        if (index < searchTrackGlobal.parentTrackList.length) {
+        if (index < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
             searchTrackGlobal.parentTrackList[index].searchedNeighbor.map(neighborIndex => {
                 setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
                 return null;
