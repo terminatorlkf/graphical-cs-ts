@@ -16,7 +16,9 @@ export const bfsSearch = (state: GraphState): GraphState => {
     while (1) {
         let currentNodePath = queue.dequeue();
         let currentNodeIndex = currentNodePath[currentNodePath.length - 1];
-        let curretnNeighborList = nodeList[currentNodeIndex].neighborList;
+        let curretnNeighborList = nodeList[currentNodeIndex].neighborList.filter(neighborIndex =>
+            !visited.includes(neighborIndex)
+        );
         if (currentNodeIndex === dest)
             return {
                 ...state,

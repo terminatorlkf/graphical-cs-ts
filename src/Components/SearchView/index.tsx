@@ -16,16 +16,26 @@ export const SearchView = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
-    console.log(searchTrackGlobal.parentTrackList);
-    const parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
+    let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
         if (index < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
-            searchTrackGlobal.parentTrackList[index].searchedNeighbor.map(neighborIndex => {
-                setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
-                return null;
-            });
-            setIndex(prevState => prevState + 1);
+            let nodeIndex = index
+
+            while (nodeIndex < searchTrackGlobal.parentTrackList.length && searchTrackGlobal.parentTrackList[nodeIndex].searchedNeighbor.length === 0) {
+                nodeIndex++;
+                parentNodeIndex = nodeIndex < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[nodeIndex].parentNodeIndex : -1;
+            }
+
+            if (nodeIndex < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
+                searchTrackGlobal.parentTrackList[nodeIndex].searchedNeighbor.map(neighborIndex => {
+                    setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
+                    return null;
+                });
+                setIndex(nodeIndex + 1);
+            }
+
+
             console.log(track);
         }
     }
