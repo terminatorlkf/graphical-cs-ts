@@ -1,6 +1,7 @@
 import * as graphActionType from './graphActionType';
 import { KonvaEventObject } from 'konva/types/Node';
 import Konva from 'konva';
+import { SetVisitedNode } from 'Interfaces/SetVisitedNode';
 
 export const addNode = (x: number, y: number): graphActionType.addNodeAction => {
     return {
@@ -99,6 +100,13 @@ export const startBfsSearct = (): graphActionType.startBfsSearchAction => {
 export const toggleUpdateNodePositionMode = (isOn: boolean): graphActionType.toggleUpdateNodePositionModeAction => {
     return {
         type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE,
-        payload: { isOn: isOn }
+        payload: { isOn }
     }
 }
+
+export const setVisitedNodes = (nodeAndAction: SetVisitedNode): graphActionType.setVisitedNodeAction => {
+    return {
+        type: graphActionType.SET_VISITED_NODE,
+        payload: { nodeAndAction }
+    }
+};

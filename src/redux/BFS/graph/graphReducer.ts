@@ -5,7 +5,7 @@ import { presetEdges } from './PresetValues/presetEdges';
 import { Node } from "../../../Interfaces/Node";
 import { Edge } from '../../../Interfaces/Edge'; 
 import { GraphState } from '../../../Interfaces/GraphState';
-import { bfsSearch, addNode, deleteNode, addNeighbor } from './methods';
+import { bfsSearch, addNode, deleteNode, addNeighbor, setVisitedNode } from './methods';
 
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
@@ -34,7 +34,6 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
     let currentNodeIndex = -1;
     let newNode: Node = state.nodeList[0];
     let newEdgeList: Edge[] = [];
-    let actualCurrentNodeIndex = -1;
 
     switch (action.type) {
         // Reducer to fire after adding a node
@@ -214,6 +213,8 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 ...state,
                 updateNodePositionMode: isOn
             }
+
+        case graphAction.SET_VISITED_NODE: return setVisitedNode(state, action);
 
         default:
             return state

@@ -13,6 +13,7 @@ export const SearchView = () => {
     const dispatch = useDispatch();
     const searchTrackGlobal = useSelector((state: BfsRootReducer) => state.graph.searchTrack);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
+    const graph = useSelector((state: BfsRootReducer) => state.graph);
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
     const parentNodeIndex = searchTrackGlobal.parentTrackList[index].parentNodeIndex;
@@ -30,35 +31,52 @@ export const SearchView = () => {
 
     const transition = useTransition(track, {
         from: nodePair => {
+            let nodeIndex = -1;
+
+            nodeList.forEach((node, index) => {
+                if (node.index === nodePair[0]) nodeIndex = index;
+            });
+
             return {
-                points: [
-                    nodeList[nodePair[0]].xPosition,
-                    nodeList[nodePair[0]].yPosition,
-                    nodeList[nodePair[0]].xPosition,
-                    nodeList[nodePair[0]].yPosition,
+                points: nodeIndex !== -1 && [
+                    nodeList[nodeIndex].xPosition,
+                    nodeList[nodeIndex].yPosition,
+                    nodeList[nodeIndex].xPosition,
+                    nodeList[nodeIndex].yPosition,
                 ]
             }
         },
         enter: nodePair => {
-            console.log(nodeList[nodePair[0]]);
-            console.log(nodeList[nodePair[1]]);
+            let node1Index = -1;
+            let node2Index = -1;
+
+            nodeList.forEach((node, index) => {
+                if (node.index === nodePair[0]) node1Index = index;
+                if (node.index === nodePair[1]) node2Index = index;
+            });
+
             return {
-                points: [
-                    nodeList[nodePair[0]].xPosition,
-                    nodeList[nodePair[0]].yPosition,
-                    nodeList[nodePair[1]].xPosition,
-                    nodeList[nodePair[1]].yPosition,
+                points: node1Index !== -1 && node2Index !== -1 && [
+                    nodeList[node1Index].xPosition,
+                    nodeList[node1Index].yPosition,
+                    nodeList[node2Index].xPosition,
+                    nodeList[node2Index].yPosition,
                 ]
             }
         },
         leave: nodePair => {
-            console.log('leave');
+            let nodeIndex = -1;
+
+            nodeList.forEach((node, index) => {
+                if (node.index === nodePair[0]) nodeIndex = index;
+            });
+
             return {
                 points: [
-                    nodeList[nodePair[0]].xPosition,
-                    nodeList[nodePair[0]].yPosition,
-                    nodeList[nodePair[0]].xPosition,
-                    nodeList[nodePair[0]].yPosition,
+                    nodeList[nodeIndex].xPosition,
+                    nodeList[nodeIndex].yPosition,
+                    nodeList[nodeIndex].xPosition,
+                    nodeList[nodeIndex].yPosition,
                 ]
             }
         }
@@ -70,7 +88,7 @@ export const SearchView = () => {
             <Button label={track.length > 0 ? 'next step' : 'start search'} onClick={searchHandler} />
             <Graph>
                 {transition(style => (
-                    <animated.Line {...style} stroke='red' strokeWidth={4} />
+                    <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}
             </Graph>
         </div>

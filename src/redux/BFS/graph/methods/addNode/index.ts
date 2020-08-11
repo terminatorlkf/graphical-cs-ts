@@ -26,6 +26,7 @@ export const addNode = (state: GraphState, action: graphActionType): GraphState 
                 yPosition: (action as graphAction.addNodeAction).payload.y,
                 fill: state.defaultFill,
                 ref: null,
+                visited: false,
                 neighborList: []  
             }
         ];
@@ -55,6 +56,7 @@ export const addNode = (state: GraphState, action: graphActionType): GraphState 
                 yPosition: (action as graphAction.addNodeAction).payload.y,
                 fill: state.defaultFill,
                 ref: null,
+                visited: false,
                 neighborList: []
             }
         ],

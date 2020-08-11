@@ -1,5 +1,6 @@
 import { KonvaEventObject } from "konva/types/Node";
 import Konva from "konva";
+import { SetVisitedNode } from 'Interfaces/SetVisitedNode';
 
 export const ADD_NODE = 'ADD_NODE';
 export const DELETE_NODE = 'DELETE_NODE';
@@ -22,6 +23,8 @@ export const TOGGLE_SEARCH_MODE = 'TOGGLE_SEARCH_MODE';
 export const START_BFS_SEARCH = 'START_BFS_SEARCH';
 
 export const TOGGLE_UPDATE_NODE_POSITION_MODE = 'TOGGLE_UPDATE_NODE_POSITION_MODE';
+
+export const SET_VISITED_NODE = 'SET_VISITED_NODE';
 
 export interface addNodeAction {
     type: typeof ADD_NODE,
@@ -94,7 +97,13 @@ export interface toggleUpdateNodePositionModeAction {
     payload: { isOn: boolean }
 }
 
+export interface setVisitedNodeAction {
+    type: typeof SET_VISITED_NODE,
+    payload: { nodeAndAction: SetVisitedNode }
+}
+
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
     | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction | setRootAction
-    | setDestinationAction | toggleSearchModeAction | startBfsSearchAction | toggleUpdateNodePositionModeAction;
+    | setDestinationAction | toggleSearchModeAction | startBfsSearchAction | toggleUpdateNodePositionModeAction
+    | setVisitedNodeAction;

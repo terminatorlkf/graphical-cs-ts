@@ -12,6 +12,7 @@ export const presetNodeState: Node[] = [
         yPosition: 317.2,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [6, 12]
     },
     {
@@ -23,6 +24,7 @@ export const presetNodeState: Node[] = [
         yPosition: 226.0,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [3, 11]
     },
     {
@@ -34,6 +36,7 @@ export const presetNodeState: Node[] = [
         yPosition: 263.0,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [5, 6]
     },
     {
@@ -45,6 +48,7 @@ export const presetNodeState: Node[] = [
         yPosition: 99,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [1]
     },
     {
@@ -56,6 +60,7 @@ export const presetNodeState: Node[] = [
         yPosition: 494,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [10, 12]
     },
     {
@@ -67,6 +72,7 @@ export const presetNodeState: Node[] = [
         yPosition: 351.4,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [2, 10]
     },
     {
@@ -78,6 +84,7 @@ export const presetNodeState: Node[] = [
         yPosition: 119.0,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [0, 2]
     },
     {
@@ -89,6 +96,7 @@ export const presetNodeState: Node[] = [
         yPosition: 496.2,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [11]
     },
     {
@@ -100,6 +108,7 @@ export const presetNodeState: Node[] = [
         yPosition: 201.6,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [13]
     },
     {
@@ -111,6 +120,7 @@ export const presetNodeState: Node[] = [
         yPosition: 77.7,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [13]
     },
     {
@@ -122,6 +132,7 @@ export const presetNodeState: Node[] = [
         yPosition: 397,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [4, 5, 13]
     },
     {
@@ -133,6 +144,7 @@ export const presetNodeState: Node[] = [
         yPosition: 368.7,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [1, 7, 13]
     },
     {
@@ -144,6 +156,7 @@ export const presetNodeState: Node[] = [
         yPosition: 504.6,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [0, 4]
     },
     {
@@ -155,6 +168,7 @@ export const presetNodeState: Node[] = [
         yPosition: 253.3,
         fill: defaultFill,
         ref: null,
+        visited: false,
         neighborList: [8, 9, 10, 11]
     }
 ]

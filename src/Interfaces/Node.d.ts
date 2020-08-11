@@ -9,5 +9,6 @@ export interface Node {
     yPosition: number,
     fill: string,
     ref: React.MutableRefObject<Konva.Circle> | null,
+    visited: boolean,
     neighborList: number[]
 }

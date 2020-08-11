@@ -13,7 +13,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
     const store = useStore();
 
     let canvasWidth: number = 0;
-    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 2;
+    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 3;
     else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
     else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
     else canvasWidth = window.innerWidth * 1 / 3;
