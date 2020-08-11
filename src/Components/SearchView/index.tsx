@@ -29,14 +29,29 @@ export const SearchView = () => {
 
             if (nodeIndex < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
                 searchTrackGlobal.parentTrackList[nodeIndex].searchedNeighbor.map(neighborIndex => {
+                    dispatch({
+                        type: graphActionType.SET_VISITED_NODE, payload: {
+                            nodeAndAction: {
+                                actualNodeIndex: parentNodeIndex,
+                                visited: true
+                            }
+                        }
+                    });
+
+                    dispatch({
+                        type: graphActionType.SET_VISITED_NODE, payload: {
+                            nodeAndAction: {
+                                actualNodeIndex: neighborIndex,
+                                visited: true
+                            }
+                        }
+                    });
+
                     setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
                     return null;
                 });
                 setIndex(nodeIndex + 1);
             }
-
-
-            console.log(track);
         }
     }
 

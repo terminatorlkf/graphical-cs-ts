@@ -2,15 +2,43 @@ import React from 'react';
 import { Stage, Layer, Group, Circle, Text } from "react-konva";
 import { Edges } from './Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
+import { useTransition, animated } from '@react-spring/konva';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { IGraph } from './Graph';
+import { KonvaEventObject } from 'konva/types/Node';
 
 export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const store = useStore();
+
+    const transition = useTransition(nodeList, {
+        key: node => node.index,
+        from: { o: 0, r: 0 },
+        enter: node => {
+            let nodeFill = node.fill;
+            if (node.index === graph.rootNodeIndex) nodeFill = graph.rootFill;
+            if (node.index === graph.destinationNodeIndex) nodeFill = graph.destinationFill;
+            return { o: 1, r: 1, fill: nodeFill }
+        },
+        leave: { o: 0, r: 1 },
+        update: node => {
+            if (graph.searchMode) {
+                let nodeFill = node.fill;
+                if (node.index === graph.rootNodeIndex) {
+                    nodeFill = graph.rootFill;
+                    return { r: 1, fill: nodeFill }
+                }
+                else if (node.index === graph.destinationNodeIndex && !node.visited) {
+                    nodeFill = graph.destinationFill;
+                    return { r: 1, fill: nodeFill }
+                }
+                else return node.visited ? { r: 1, fill: graph.rootFill } : { r: 1, fill: graph.defaultFill }
+            }
+        }
+    })
 
     let canvasWidth: number = 0;
     if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 3;
@@ -25,14 +53,11 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                     <Layer>
                         <Edges />
                         {children}
-                        {nodeList.map((node, index) => {
-                            let nodeFill = node.fill;
-                            if (node.index === graph.rootNodeIndex) nodeFill = graph.rootFill;
-                            if (node.index === graph.destinationNodeIndex) nodeFill = graph.destinationFill;
 
+                        {transition((style, node, t, index) => {
                             if (node.index !== -1) {
                                 return (
-                                    <Group
+                                    <animated.Group
                                         key={index}
                                         x={node.xPosition}
                                         y={node.yPosition}
@@ -40,12 +65,16 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                                         onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index: index } })}
                                         onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
                                         onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
-                                        onDragMove={(e) => onDragMove && onDragMove(index, e)}
+                                        onDragMove={(e: KonvaEventObject<DragEvent>) => onDragMove && onDragMove(index, e)}
+                                        opacity={style.o.to(o => o)}
                                     >
-                                        <Circle
+                                        <animated.Circle
                                             ref={node.ref}
-                                            radius={35}
-                                            fill={nodeFill}
+                                            radius={style.r
+                                                .to([0, 0.7, 1], [0, 40, 35])
+                                                .to(r => r)
+                                            }
+                                            fill={style.fill}
                                             shadowBlur={node.elevation}
                                             shadowColor='black'
                                             shadowOffset={{ x: 0, y: 3 }}
@@ -60,10 +89,9 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                                             y={-7}
                                             fill={node.fill === 'white' ? 'black' : 'white'}
                                         />
-                                    </Group>
-                                );
+                                    </animated.Group>
+                                )
                             }
-                            return null;
                         })}
                     </Layer>
                 </Provider>

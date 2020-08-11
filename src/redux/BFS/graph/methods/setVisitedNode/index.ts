@@ -5,7 +5,7 @@ import * as graphAction from "../../graphActionType";
 export const setVisitedNode = (state: GraphState, action: graphActionType) => {
 
     const nodeAndAction = (action as graphAction.setVisitedNodeAction).payload.nodeAndAction;
-    const newNodeList = { ...state.nodeList };
+    const newNodeList = [ ...state.nodeList ];
 
     const actualNodeIndex = nodeAndAction.actualNodeIndex;
     const visited = nodeAndAction.visited;
