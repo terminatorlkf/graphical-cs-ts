@@ -27,15 +27,9 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
         update: node => {
             let nodeFill = node.fill;
             if (graph.searchMode) {
-                if (node.index === graph.rootNodeIndex) {
-                    nodeFill = graph.rootFill;
-                    return { r: 1, fill: nodeFill }
+                if (!((node.index === graph.rootNodeIndex && !node.visited) || (node.index === graph.destinationNodeIndex && !node.visited))) {
+                    return node.visited ? { r: 0.85, fill: graph.rootFill } : { r: 1, fill: graph.defaultFill }
                 }
-                else if (node.index === graph.destinationNodeIndex && !node.visited) {
-                    nodeFill = graph.destinationFill;
-                    return { r: 1, fill: nodeFill }
-                }
-                else return node.visited ? { r: 0.85, fill: graph.rootFill } : { r: 1, fill: graph.defaultFill }
             } else {
                 if (node.index === graph.rootNodeIndex) nodeFill = graph.rootFill;
                 if (node.index === graph.destinationNodeIndex) nodeFill = graph.destinationFill;
