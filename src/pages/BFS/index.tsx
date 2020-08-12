@@ -21,6 +21,12 @@ const BFS: FunctionComponent = () => {
     const dispatch = useDispatch();
     const graph = useSelector((state: BfsRootReducer) => state.graph);
 
+    let canvasWidth: number = 0;
+    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 3;
+    else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
+    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
+    else canvasWidth = window.innerWidth * 1 / 3;
+    
     const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
@@ -84,6 +90,8 @@ const BFS: FunctionComponent = () => {
                           
                 <div className="operation-section">
                     <Graph
+                        width={canvasWidth}
+                        height={window.innerHeight - 300}
                         draggable
                         onMouseEnter={index => {
                             mouseEnterHandler(index);
@@ -113,7 +121,7 @@ const BFS: FunctionComponent = () => {
                     </div>
                     <div className="add-node-button">
                         <AddNodeButton onClick={() => {
-                            addNodeHandler(Math.random() * (window.innerWidth - 700) + 100, Math.random() * 500)
+                            addNodeHandler(Math.random() * 100 + 50, Math.random() * 200)
                         }} />
                     </div>
                 </div>

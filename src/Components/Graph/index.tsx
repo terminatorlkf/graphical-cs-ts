@@ -8,7 +8,7 @@ import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { IGraph } from './Graph';
 import { KonvaEventObject } from 'konva/types/Node';
 
-export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMouseEnter, onMouseLeave, onDragMove, children }) => {
+export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, onMouseEnter, onMouseLeave, onDragMove, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -38,15 +38,9 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
         }
     })
 
-    let canvasWidth: number = 0;
-    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 3;
-    else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
-    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
-    else canvasWidth = window.innerWidth * 1 / 3;
-
     return (
         <div className="operation-node-section">
-            <Stage width={canvasWidth} height={window.innerHeight - 300} draggable>
+            <Stage width={width} height={height} draggable>
                 <Provider store={store}>
                     <Layer>
                         <Edges />

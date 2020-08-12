@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Graph } from '../Graph';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@rmwc/button';
@@ -6,14 +6,16 @@ import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { useTransition, animated } from '@react-spring/konva';
 import { Snackbar } from '@rmwc/snackbar';
-import { ThemeProvider, Theme } from '@rmwc/theme';
+import { Fab } from '@rmwc/fab';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import '@rmwc/button/styles';
-import '@rmwc/theme/styles';
-import './Search.css';
+import '@rmwc/fab/styles';
+import { setTimeout } from 'timers';
 
 export const SearchView = () => {
     const dispatch = useDispatch();
+    const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
     const searchTrackGlobal = useSelector((state: BfsRootReducer) => state.graph.searchTrack);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -23,6 +25,7 @@ export const SearchView = () => {
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
+
         if (index < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
             let nodeIndex = index
 
@@ -52,11 +55,21 @@ export const SearchView = () => {
                     });
 
                     setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
-                    if (neighborIndex === graph.destinationNodeIndex) setPathFound(true);
+
+                    if (neighborIndex === graph.destinationNodeIndex) {
+                        setTimeout(() => {
+                            setPathFound(true);
+
+                        }, 300)
+                    }
                 });
                 setIndex(nodeIndex + 1);
             }
         }
+
+        setTimeout(() => {
+            buttonRef?.current?.blur();
+        }, 320)
     }
 
     useEffect(() => {
@@ -139,26 +152,58 @@ export const SearchView = () => {
     });
 
     return (
-        <div className='search-page'>
-            <Button label='quit' onClick={quieSearchViewHandler} />
-            <Button label={track.length > 0 ? 'next step' : 'start search'} onClick={searchHandler} />
-            <ThemeProvider
-                options={{
-                    primaryBg: graph.rootFill
-                }}
-            >
-                <Theme use={['primaryBg']}>
-                    <Snackbar
-                        open={pathFound}
-                        message='Path Found'
+        <div className='search-view'>
+            <Fab className='quit-button' style={{ backgroundColor: graph.destinationFill }} onClick={quieSearchViewHandler}><ClearIcon /></Fab>
+
+            <div className='action-area'>
+                {!pathFound && 
+                    <Button
+                        style={{ backgroundColor: graph.defaultFill }}
+                        raised
+                        ref={buttonRef}
+                        label={track.length > 0 ? 'next step' : 'start search'}
+                        onClick={searchHandler}
                     />
-                </Theme>
-            </ThemeProvider>
-            <Graph>
+                }
+            </div>
+
+            <Snackbar
+                open={pathFound}
+                message='Path Found'
+            />
+
+            <Graph width={window.innerWidth -100} height={window.innerHeight - 100}>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}
             </Graph>
+
+            <style>
+                {`
+                    .search-view {
+                        margin-top: -4.7rem;
+                        background-color: white;
+                        height: 100vh;
+                        width: 100vw;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+
+                    .quit-button {
+                        position: absolute;
+                        top: -2rem;
+                        left: 2rem;
+                    }
+
+                    .action-area {
+                        padding-top: 3.5rem;
+                        position: relative;
+                        padding-bottom: 4.5rem;
+                    }
+                
+                `}
+            </style>
         </div>
     )
 }
