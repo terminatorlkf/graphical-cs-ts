@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Group, Circle, Text } from "react-konva";
+import { Stage, Layer, Text } from "react-konva";
 import { Edges } from './Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
 import { useTransition, animated } from '@react-spring/konva';
@@ -60,7 +60,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, onMou
                                         x={node.xPosition}
                                         y={node.yPosition}
                                         draggable={draggable ? true : false}
-                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index: index } })}
+                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
                                         onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
                                         onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
                                         onDragMove={(e: KonvaEventObject<DragEvent>) => onDragMove && onDragMove(index, e)}

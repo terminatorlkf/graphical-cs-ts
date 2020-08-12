@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Graph } from '../Graph';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { useTransition, animated } from '@react-spring/konva';
+import { Snackbar } from '@rmwc/snackbar';
+import { ThemeProvider, Theme } from '@rmwc/theme';
 
 import '@rmwc/button/styles';
+import '@rmwc/theme/styles';
 import './Search.css';
 
 export const SearchView = () => {
@@ -16,6 +19,7 @@ export const SearchView = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
+    const [pathFound, setPathFound] = useState<boolean>(false);
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
@@ -28,7 +32,7 @@ export const SearchView = () => {
             }
 
             if (nodeIndex < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
-                searchTrackGlobal.parentTrackList[nodeIndex].searchedNeighbor.map(neighborIndex => {
+                searchTrackGlobal.parentTrackList[nodeIndex].searchedNeighbor.forEach(neighborIndex => {
                     dispatch({
                         type: graphActionType.SET_VISITED_NODE, payload: {
                             nodeAndAction: {
@@ -48,11 +52,37 @@ export const SearchView = () => {
                     });
 
                     setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
-                    return null;
+                    if (neighborIndex === graph.destinationNodeIndex) setPathFound(true);
                 });
                 setIndex(nodeIndex + 1);
             }
         }
+    }
+
+    useEffect(() => {
+        if (pathFound) {
+            nodeList.forEach(node => {
+                dispatch({
+                    type: graphActionType.SET_VISITED_NODE, payload: {
+                        nodeAndAction: {
+                            actualNodeIndex: node.index,
+                            visited: searchTrackGlobal.path.includes(node.index)
+                        }
+                    }
+                })
+            })
+
+            setTrack(prevState => prevState.filter(nodePair =>
+                searchTrackGlobal.path.includes(nodePair[0]) && searchTrackGlobal.path.includes(nodePair[1])
+            ));
+        }
+    }, [pathFound]);
+
+    const quieSearchViewHandler = () => {
+        dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE });
+        nodeList.forEach(node => {
+            dispatch({ type: graphActionType.SET_VISITED_NODE, payload: { nodeAndAction: { actualNodeIndex: node.index, visited: false } } })
+        });
     }
 
     const transition = useTransition(track, {
@@ -110,8 +140,20 @@ export const SearchView = () => {
 
     return (
         <div className='search-page'>
-            <Button label='quit' onClick={() => { dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE }) }} />
+            <Button label='quit' onClick={quieSearchViewHandler} />
             <Button label={track.length > 0 ? 'next step' : 'start search'} onClick={searchHandler} />
+            <ThemeProvider
+                options={{
+                    primaryBg: graph.rootFill
+                }}
+            >
+                <Theme use={['primaryBg']}>
+                    <Snackbar
+                        open={pathFound}
+                        message='Path Found'
+                    />
+                </Theme>
+            </ThemeProvider>
             <Graph>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
