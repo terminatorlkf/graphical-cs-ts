@@ -36,7 +36,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
                     if (node.index === graph.destinationNodeIndex) nodeFill = graph.destinationFill;
                     return { r: 1, fill: nodeFill }
                 } else {
-                    return { r: 0.7, fill: graph.clickedFill, tension: 300, mass: 1, friction: 1 }
+                    return { r: 0.69, fill: graph.clickedFill }
                 }
 
             }
