@@ -16,7 +16,6 @@ export type parentTrack = {
 }
 
 export const ConfigCard: React.FunctionComponent = ({ children }) => {
-
     const searchButtonRef = useRef() as React.RefObject<HTMLButtonElement>;
 
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -57,7 +56,11 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                             secondary: 'blue'
                         }}
                     >
-                        <Button disabled={graph.rootNodeIndex === -1 || graph.destinationNodeIndex === -1} ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem', marginBottom: '0.1rem' }} />
+                        <Button
+                            disabled={graph.rootNodeIndex === -1 || graph.destinationNodeIndex === -1}
+                            ref={searchButtonRef}
+                            onClick={clickSearchButtonHandler}
+                            label='start' style={{ width: '3rem', marginBottom: '0.1rem' }} />
                     </ThemeProvider>
                 </div>
 

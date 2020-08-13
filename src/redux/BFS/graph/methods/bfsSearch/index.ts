@@ -15,28 +15,37 @@ export const bfsSearch = (state: GraphState): GraphState => {
 
     while (1) {
         let currentNodePath = queue.dequeue();
-        let actualCurrentNodeIndex = currentNodePath[currentNodePath.length - 1];
-        let currentNodeIndex = -1;
-        
-        nodeList.forEach((node, index) => {
-            if (node.index === actualCurrentNodeIndex) currentNodeIndex = index;
-        });
 
-        let curretnNeighborList = currentNodeIndex !== -1 ? nodeList[currentNodeIndex].neighborList.filter(neighborIndex =>
-            !visited.includes(neighborIndex)
-        ) : [];
-        
-        if (actualCurrentNodeIndex === dest)
+        if (!currentNodePath) {
             return {
                 ...state,
-                searchTrack: { parentTrackList: parentTrackList, path: currentNodePath }
+                searchTrack: { parentTrackList: parentTrackList, path: [] }
             };
-        if (visited.includes(actualCurrentNodeIndex)) continue;
-        visited.push(actualCurrentNodeIndex);
-        parentTrackList.push({ parentNodeIndex: actualCurrentNodeIndex, searchedNeighbor: [...curretnNeighborList] });
-        curretnNeighborList.forEach(nodeIndex => {
-            queue.enqueue([...currentNodePath, nodeIndex]);
-        });
+        } else {
+            let actualCurrentNodeIndex = currentNodePath[currentNodePath.length - 1];
+            let currentNodeIndex = -1;
+
+            nodeList.forEach((node, index) => {
+                if (node.index === actualCurrentNodeIndex) currentNodeIndex = index;
+            });
+
+            let curretnNeighborList = currentNodeIndex !== -1 ? nodeList[currentNodeIndex].neighborList.filter(neighborIndex =>
+                !visited.includes(neighborIndex)
+            ) : [];
+
+            if (actualCurrentNodeIndex === dest)
+                return {
+                    ...state,
+                    searchTrack: { parentTrackList: parentTrackList, path: currentNodePath }
+                };
+            if (visited.includes(actualCurrentNodeIndex)) continue;
+            visited.push(actualCurrentNodeIndex);
+            parentTrackList.push({ parentNodeIndex: actualCurrentNodeIndex, searchedNeighbor: [...curretnNeighborList] });
+            curretnNeighborList.forEach(nodeIndex => {
+                queue.enqueue([...currentNodePath, nodeIndex]);
+            });
+        }
+      
     }
 
     return state;
