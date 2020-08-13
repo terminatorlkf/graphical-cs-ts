@@ -26,7 +26,7 @@ const BFS: FunctionComponent = () => {
     else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
     else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
     else canvasWidth = window.innerWidth * 1 / 3;
-    
+
     const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
         enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
@@ -46,28 +46,9 @@ const BFS: FunctionComponent = () => {
 
     const mouseEnterHandler = (index: number) => {
         dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index, ref: nodeRef } });
-        setTimeout(() => {
-            if (nodeRef.current) {
-                nodeRef.current.to({
-                    fontSize: 25,
-                    radius: 40,
-                    shadowBlur: 50,
-                    duration: 0.1
-                });
-            }
-        }, 0);
     }
 
     const mouseLeaveHandler = (index: number) => {
-        if (nodeRef.current) {
-            nodeRef.current.to({
-                fontSize: 20,
-                radius: 35,
-                shadowBlur: 5,
-                duration: 0.15
-            });
-        }
-
         dispatch({ type: graphActionType.MOUSE_LEAVE_NODE, payload: { index } })
     }
 
@@ -87,7 +68,7 @@ const BFS: FunctionComponent = () => {
                 </IntroSection>
 
                 <ConfigCard />
-                          
+
                 <div className="operation-section">
                     <Graph
                         width={canvasWidth}
@@ -95,7 +76,7 @@ const BFS: FunctionComponent = () => {
                         draggable
                         onMouseEnter={index => {
                             mouseEnterHandler(index);
-                            dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: {isOn: true}});
+                            dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: true } });
                         }}
                         onMouseLeave={index => {
                             mouseLeaveHandler(index);
