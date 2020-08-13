@@ -5,7 +5,7 @@ import { presetEdges } from './PresetValues/presetEdges';
 import { Node } from "../../../Interfaces/Node";
 import { Edge } from '../../../Interfaces/Edge'; 
 import { GraphState } from '../../../Interfaces/GraphState';
-import { bfsSearch, addNode, deleteNode, addNeighbor, setVisitedNode } from './methods';
+import { bfsSearch, addNode, deleteNode, addNeighbor, setVisitedNode, deleteNeighbor } from './methods';
 
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
@@ -150,33 +150,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
 
         case graphAction.ADD_NEIGHBOR: return addNeighbor(state, action);
 
-        case graphAction.DELETE_NEIGHBOR:
-            currentNeighborIndex = state.currentNeighborIndex;
-            currentNodeIndex = state.currentNodeIndex;
-            newEdgeList = [...state.edgeList];
-
-            if (currentNeighborIndex !== -1) {
-                newEdgeList = newEdgeList.filter(edge => {
-                    return !((edge.edge[0] === currentNeighborIndex && edge.edge[1] === currentNodeIndex) ||
-                        (edge.edge[0] === currentNodeIndex && edge.edge[1] === currentNeighborIndex));
-                });
-            }
-
-            newNodeList = [...state.nodeList];
-            newNode = { ...newNodeList[currentNodeIndex] };
-
-            newNode.neighborList = newNode.neighborList.filter(neighborIndex => neighborIndex !== currentNeighborIndex);
-
-            newNodeList[currentNodeIndex] = newNode;
-
-            return {
-                ...state,
-                nodeList: newNodeList,
-                edgeList: newEdgeList,
-                editNeighborMode: false,
-                currentNeighborIndex: -1,
-                lastDeletedNode: undefined
-            }
+        case graphAction.DELETE_NEIGHBOR: return deleteNeighbor(state);
 
         case graphAction.TOGGLE_ADD_NEIGHBOR:
             return {

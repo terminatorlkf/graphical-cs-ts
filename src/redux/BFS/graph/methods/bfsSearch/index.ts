@@ -15,18 +15,25 @@ export const bfsSearch = (state: GraphState): GraphState => {
 
     while (1) {
         let currentNodePath = queue.dequeue();
-        let currentNodeIndex = currentNodePath[currentNodePath.length - 1];
-        let curretnNeighborList = nodeList[currentNodeIndex].neighborList.filter(neighborIndex =>
+        let actualCurrentNodeIndex = currentNodePath[currentNodePath.length - 1];
+        let currentNodeIndex = -1;
+        
+        nodeList.forEach((node, index) => {
+            if (node.index === actualCurrentNodeIndex) currentNodeIndex = index;
+        });
+
+        let curretnNeighborList = currentNodeIndex !== -1 ? nodeList[currentNodeIndex].neighborList.filter(neighborIndex =>
             !visited.includes(neighborIndex)
-        );
-        if (currentNodeIndex === dest)
+        ) : [];
+        
+        if (actualCurrentNodeIndex === dest)
             return {
                 ...state,
                 searchTrack: { parentTrackList: parentTrackList, path: currentNodePath }
             };
-        if (visited.includes(currentNodeIndex)) continue;
-        visited.push(currentNodeIndex);
-        parentTrackList.push({ parentNodeIndex: currentNodeIndex, searchedNeighbor: [...curretnNeighborList] });
+        if (visited.includes(actualCurrentNodeIndex)) continue;
+        visited.push(actualCurrentNodeIndex);
+        parentTrackList.push({ parentNodeIndex: actualCurrentNodeIndex, searchedNeighbor: [...curretnNeighborList] });
         curretnNeighborList.forEach(nodeIndex => {
             queue.enqueue([...currentNodePath, nodeIndex]);
         });

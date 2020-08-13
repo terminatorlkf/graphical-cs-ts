@@ -4,11 +4,11 @@ import { Button } from '@rmwc/button';
 import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
+import { ThemeProvider } from '@rmwc/theme';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
 import '@rmwc/snackbar/styles';
-import { ThemeProvider } from '@rmwc/theme';
 
 export type parentTrack = {
     parentNodeIndex: number,
@@ -51,16 +51,14 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 </div>
 
                 <div>
-                    {graph.rootNodeIndex !== -1 && graph.destinationNodeIndex !== -1 &&
-                        <ThemeProvider
-                            options={{
-                                primary: '#4CAF50',
-                                secondary: 'blue'
-                            }}
-                        >
-                            <Button ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem', marginBottom: '0.1rem' }} />
-                        </ThemeProvider>
-                    }
+                    <ThemeProvider
+                        options={{
+                            primary: '#4CAF50',
+                            secondary: 'blue'
+                        }}
+                    >
+                        <Button disabled={graph.rootNodeIndex === -1 || graph.destinationNodeIndex === -1} ref={searchButtonRef} onClick={clickSearchButtonHandler} label='start' style={{ width: '3rem', marginBottom: '0.1rem' }} />
+                    </ThemeProvider>
                 </div>
 
             </Elevation>

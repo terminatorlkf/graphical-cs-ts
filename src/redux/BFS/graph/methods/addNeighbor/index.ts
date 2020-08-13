@@ -18,7 +18,7 @@ export const addNeighbor = (state: GraphState, action: graphActionType) => {
 
     let node2Index = -1;
 
-    state.nodeList.map((node, index) => {
+    state.nodeList.forEach((node, index) => {
         if (node.index === actualCurrentNeighborIndex) node2Index = index;
     });
 

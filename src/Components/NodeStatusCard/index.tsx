@@ -38,7 +38,7 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
             rootButtonRef.current?.blur();
         }, 340);
 
-        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.currentNodeIndex } });
+        dispatch({ type: graphActionType.SET_ROOT, payload: { index: graph.nodeList[graph.currentNodeIndex].index } });
     }
 
     const setDestinationHandler = () => {
@@ -46,7 +46,7 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
             destinationButtonRef.current?.blur();
         }, 340);
 
-        dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.currentNodeIndex } });
+        dispatch({ type: graphActionType.SET_DESTINATION, payload: { index: graph.nodeList[graph.currentNodeIndex].index } });
     }
 
 

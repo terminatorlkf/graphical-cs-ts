@@ -38,7 +38,6 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
                 } else {
                     return { r: 0.69, fill: graph.clickedFill }
                 }
-
             }
         }
     })

@@ -25,7 +25,6 @@ export const SearchView = () => {
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
-
         if (index < searchTrackGlobal.parentTrackList.length && parentNodeIndex !== -1) {
             let nodeIndex = index
 
@@ -156,15 +155,14 @@ export const SearchView = () => {
             <Fab className='quit-button' style={{ backgroundColor: graph.destinationFill }} onClick={quieSearchViewHandler}><ClearIcon /></Fab>
 
             <div className='action-area'>
-                {!pathFound && 
-                    <Button
-                        style={{ backgroundColor: graph.defaultFill }}
-                        raised
-                        ref={buttonRef}
-                        label={track.length > 0 ? 'next step' : 'start search'}
-                        onClick={searchHandler}
-                    />
-                }
+                <Button
+                    style={{ backgroundColor: graph.defaultFill }}
+                    raised={!pathFound}
+                    disabled={pathFound}
+                    ref={buttonRef}
+                    label={track.length > 0 ? 'next step' : 'start search'}
+                    onClick={searchHandler}
+                />
             </div>
 
             <Snackbar
@@ -172,7 +170,7 @@ export const SearchView = () => {
                 message='Path Found'
             />
 
-            <Graph width={window.innerWidth -100} height={window.innerHeight - 100}>
+            <Graph width={window.innerWidth - 100} height={window.innerHeight - 100}>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}
@@ -200,6 +198,7 @@ export const SearchView = () => {
                         padding-top: 3.5rem;
                         position: relative;
                         padding-bottom: 4.5rem;
+                        height: 164px;
                     }
                 
                 `}

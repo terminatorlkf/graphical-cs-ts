@@ -8,6 +8,8 @@
 .operation-section {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
 }
 
 .search-status-stack-section {
