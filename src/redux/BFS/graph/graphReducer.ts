@@ -7,8 +7,8 @@ import { GraphState } from '../../../Interfaces/GraphState';
 import { bfsSearch, addNode, deleteNode, addNeighbor, setVisitedNode, deleteNeighbor } from './methods';
 
 const initialGraphState: GraphState = {
-    nodeList: [],
-    edgeList: [],
+    nodeList: presetNodeState,
+    edgeList: presetEdges,
     currentNodeIndex: -1,
     currentNeighborIndex: -1,
     editNeighborMode: false,
