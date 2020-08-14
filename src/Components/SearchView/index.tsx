@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Graph } from '../Graph';
+import { SearchTree } from '../SearchTree';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
@@ -8,6 +9,8 @@ import { useTransition, animated } from '@react-spring/konva';
 import { Snackbar } from '@rmwc/snackbar';
 import { Fab } from '@rmwc/fab';
 import ClearIcon from '@material-ui/icons/Clear';
+import { Node } from 'Interfaces/Node';
+import { Edge } from 'Interfaces/Edge';
 
 import '@rmwc/button/styles';
 import '@rmwc/fab/styles';
@@ -22,11 +25,13 @@ export const SearchView = () => {
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
 
-    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: window.innerWidth - 100, canvasHeight: window.innerHeight - 100 });
+    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: window.innerWidth * 0.5 - 100, canvasHeight: window.innerHeight - 100 });
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
     const [pathFound, setPathFound] = useState<boolean>(false);
     const [noPathFound, setNoPathFound] = useState<boolean>(false);
+    const [treeNodeList, setTreeNodeList] = useState<Node[]>([]);
+    const [treeEdgeList, setTreeEdgeList] = useState<Edge[]>([]);
 
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
@@ -60,6 +65,7 @@ export const SearchView = () => {
                     });
 
                     setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
+                    setSearchTree();
 
                     if (neighborIndex === graph.destinationNodeIndex) {
                         setTimeout(() => {
@@ -76,10 +82,14 @@ export const SearchView = () => {
         }, 320)
     }
 
+    const setSearchTree = () => {
+
+    }
+
     useEffect(() => {
         window.addEventListener('resize', () => {
             setCanvasWidthAndHeight({
-                canvasWidth: window.innerWidth - 100,
+                canvasWidth: window.innerWidth * 0.5 - 100,
                 canvasHeight: window.innerHeight - 100
             });
         });
@@ -197,18 +207,22 @@ export const SearchView = () => {
                 message='No Path Found'
             />
 
-            <Graph width={canvasWidth} height={canvasHeight}>
-                {transition(style => (
-                    <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
-                ))}
-            </Graph>
+            <div className='graph-area'>
+                <Graph width={canvasWidth} height={canvasHeight}>
+                    {transition(style => (
+                        <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
+                    ))}
+                </Graph>
+
+                <SearchTree width={canvasWidth} height={canvasHeight} nodeList={treeNodeList} edgeList={treeEdgeList} />
+            </div>
 
             <style>
                 {`
                     .search-view {
                         margin-top: -4.7rem;
                         background-color: white;
-                        height: 100vh;
+                        min-height: 100vh;
                         width: 100vw;
                         display: flex;
                         flex-direction: column;
@@ -226,6 +240,13 @@ export const SearchView = () => {
                         position: relative;
                         padding-bottom: 4.5rem;
                         height: 164px;
+                    }
+
+                    .graph-area {
+                        display: flex;
+                        justify-content: space-around;
+                        width: 100vw;
+                        flex-direction: row;
                     }
                 
                 `}

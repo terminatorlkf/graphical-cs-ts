@@ -43,56 +43,53 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
     })
 
     return (
-        <div className="operation-node-section">
-            <Stage width={width} height={height} draggable>
-                <Provider store={store}>
-                    <Layer>
-                        <Edges />
-                        {children}
+        <Stage width={width} height={height} draggable>
+            <Provider store={store}>
+                <Layer>
+                    <Edges nodeList={nodeList} edgeList={graph.edgeList} graph={graph} />
+                    {children}
 
-                        {transition((style, node, t, index) => {
-                            if (node.index !== -1) {
-                                return (
-                                    <animated.Group
-                                        key={index}
-                                        x={node.xPosition}
-                                        y={node.yPosition}
-                                        draggable={draggable ? true : false}
-                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
-                                        onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
-                                        onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
-                                        onDragMove={(e: KonvaEventObject<DragEvent>) => onDragMove && onDragMove(index, e)}
-                                        opacity={style.o.to(o => o)}
-                                    >
-                                        <animated.Circle
-                                            ref={node.ref}
-                                            radius={style.r
-                                                .to([0, 0.7, 1], [0, 40, 35])
-                                                .to(r => r)
-                                            }
-                                            fill={style.fill}
-                                            shadowBlur={node.elevation}
-                                            shadowColor='black'
-                                            shadowOffset={{ x: 0, y: 3 }}
-                                            shadowOpacity={0.3}
-                                        />
-                                        <Text
-                                            text={`${node.value}`}
-                                            fontSize={20}
-                                            fontFamily="'Roboto Mono'"
-                                            fontStyle='bold'
-                                            x={node.value < 10 ? -6 : -12}
-                                            y={-7}
-                                            fill={node.fill === 'white' ? 'black' : 'white'}
-                                        />
-                                    </animated.Group>
-                                )
-                            }
-                        })}
-                    </Layer>
-                </Provider>
-            </Stage>
-
-        </div>
+                    {transition((style, node, t, index) => {
+                        if (node.index !== -1) {
+                            return (
+                                <animated.Group
+                                    key={index}
+                                    x={node.xPosition}
+                                    y={node.yPosition}
+                                    draggable={draggable ? true : false}
+                                    onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
+                                    onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
+                                    onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
+                                    onDragMove={(e: KonvaEventObject<DragEvent>) => onDragMove && onDragMove(index, e)}
+                                    opacity={style.o.to(o => o)}
+                                >
+                                    <animated.Circle
+                                        ref={node.ref}
+                                        radius={style.r
+                                            .to([0, 0.7, 1], [0, 40, 35])
+                                            .to(r => r)
+                                        }
+                                        fill={style.fill}
+                                        shadowBlur={node.elevation}
+                                        shadowColor='black'
+                                        shadowOffset={{ x: 0, y: 3 }}
+                                        shadowOpacity={0.3}
+                                    />
+                                    <Text
+                                        text={`${node.value}`}
+                                        fontSize={20}
+                                        fontFamily="'Roboto Mono'"
+                                        fontStyle='bold'
+                                        x={node.value < 10 ? -6 : -12}
+                                        y={-7}
+                                        fill={node.fill === 'white' ? 'black' : 'white'}
+                                    />
+                                </animated.Group>
+                            )
+                        }
+                    })}
+                </Layer>
+            </Provider>
+        </Stage>
     )
 }

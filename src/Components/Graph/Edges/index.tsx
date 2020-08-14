@@ -1,15 +1,12 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Edge } from 'Interfaces/Edge';
 import { Node } from 'Interfaces/Node';
 import { GraphState } from 'Interfaces/GraphState';
-import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { animated, useTransition } from '@react-spring/konva';
+import { IEdges } from './Edges';
 
-export const Edges = () => {
-    const graph = useSelector((state: BfsRootReducer) => state.graph);
-    const edgeList = useSelector((state: BfsRootReducer) => state.graph.edgeList);
-    const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
+export const Edges: React.FunctionComponent<IEdges.IProps>= ({nodeList, edgeList, graph}) => {
+
 
     const findPoints = (edge: Edge, nodeList: Node[]) => {
         const firstNodeIndex = edge.edge[0];
@@ -78,17 +75,28 @@ export const Edges = () => {
             }
         },
         update: edge => {
-            const points = findPoints(edge, nodeList);
-            return graph.updateNodePositionMode && {
-                points,
-                config: { duration: 1 }
+            if (graph) {
+                const points = findPoints(edge, nodeList);
+                return graph.updateNodePositionMode && {
+                    points,
+                    config: { duration: 1 }
+                }
             }
         },
         leave: edge => {
-            const points = findLeavePoints(edge, nodeList, graph);
-            return {
-                points: [points[0], points[1], points[0], points[1]],
-                c: 0
+            if (graph) {
+                const points = findLeavePoints(edge, nodeList, graph);
+                return {
+                    points: [points[0], points[1], points[0], points[1]],
+                    c: 0
+                }
+            } else {
+                const points = findPoints(edge, nodeList);
+                return {
+                    points: [points[0], points[1], points[0], points[1]],
+                    cancel: false,
+                    c: 0
+                }
             }
         },
         config: {

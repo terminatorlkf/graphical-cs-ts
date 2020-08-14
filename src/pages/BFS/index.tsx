@@ -76,20 +76,22 @@ const BFS: FunctionComponent = () => {
                 <ConfigCard />
 
                 <div className="operation-section">
-                    <Graph
-                        width={canvasWidth}
-                        height={canvasHeight}
-                        draggable
-                        onMouseEnter={index => {
-                            mouseEnterHandler(index);
-                            dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: true } });
-                        }}
-                        onMouseLeave={index => {
-                            mouseLeaveHandler(index);
-                            dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: false } });
-                        }}
-                        onDragMove={(index, e) => dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
-                    />
+                    <div className="operation-node-section">
+                        <Graph
+                            width={canvasWidth}
+                            height={canvasHeight}
+                            draggable
+                            onMouseEnter={index => {
+                                mouseEnterHandler(index);
+                                dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: true } });
+                            }}
+                            onMouseLeave={index => {
+                                mouseLeaveHandler(index);
+                                dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: false } });
+                            }}
+                            onDragMove={(index, e) => dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
+                        />
+                    </div>
 
                     <div className="search-status-stack-section">
                         {nodeStatusCardTransition.map(({ item, key, props }) => {
