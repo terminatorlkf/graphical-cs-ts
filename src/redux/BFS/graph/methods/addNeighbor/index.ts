@@ -24,6 +24,7 @@ export const addNeighbor = (state: GraphState, action: graphActionType) => {
 
     let newNode2 = { ...newNodeList[node2Index] };
     newNode2.neighborList = [...newNode2.neighborList, actualCurrentNodeIndex];
+    newNode2.ref = null;
 
     newNodeList[currentNodeIndex] = newNode;
     newNodeList[node2Index] = newNode2;
