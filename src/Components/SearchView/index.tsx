@@ -83,6 +83,15 @@ export const SearchView = () => {
                 canvasHeight: window.innerHeight - 100
             });
         });
+
+        return () => {
+            window.removeEventListener('resize', () => {
+                setCanvasWidthAndHeight({
+                    canvasWidth: window.innerWidth - 100,
+                    canvasHeight: window.innerHeight - 100
+                });
+            })
+        };
     }, []);
 
     useEffect(() => {

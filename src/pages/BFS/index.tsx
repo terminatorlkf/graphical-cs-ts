@@ -55,7 +55,16 @@ const BFS: FunctionComponent = () => {
                 canvasHeight: window.innerHeight - 300,
                 canvasWidth: getCanvasWidth()
             });
-        })
+        });
+
+        return () => {
+            window.removeEventListener('resize', () => {
+                setCanvasWidthAndHeight({
+                    canvasHeight: window.innerHeight - 300,
+                    canvasWidth: getCanvasWidth()
+                });
+            })
+        }
     }, [])
 
     return (
