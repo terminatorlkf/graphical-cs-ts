@@ -15,14 +15,19 @@ import { setTimeout } from 'timers';
 
 export const SearchView = () => {
     const dispatch = useDispatch();
+
     const buttonRef = useRef() as React.RefObject<HTMLButtonElement>;
+
     const searchTrackGlobal = useSelector((state: BfsRootReducer) => state.graph.searchTrack);
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
+
+    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: window.innerWidth - 100, canvasHeight: window.innerHeight - 100 });
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
     const [pathFound, setPathFound] = useState<boolean>(false);
     const [noPathFound, setNoPathFound] = useState<boolean>(false);
+
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
@@ -70,6 +75,15 @@ export const SearchView = () => {
             buttonRef?.current?.blur();
         }, 320)
     }
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setCanvasWidthAndHeight({
+                canvasWidth: window.innerWidth - 100,
+                canvasHeight: window.innerHeight - 100
+            });
+        });
+    }, []);
 
     useEffect(() => {
         if (track.length === searchTrackGlobal.parentTrackList.length && searchTrackGlobal.path.length === 0) {
@@ -183,7 +197,7 @@ export const SearchView = () => {
                 message='No Path Found'
             />
 
-            <Graph width={window.innerWidth - 100} height={window.innerHeight - 100}>
+            <Graph width={canvasWidth} height={canvasHeight}>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}

@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useRef } from "react";
+import React, { FunctionComponent, useRef, useEffect, useState } from "react";
+import { getCanvasWidth } from 'shared/util/getCanvasWidth';
 import { AddNodeButton } from "../../Components/AddNodeButton"
 import { SearchView } from '../../Components/SearchView';
 import Konva from 'konva';
@@ -21,11 +22,7 @@ const BFS: FunctionComponent = () => {
     const dispatch = useDispatch();
     const graph = useSelector((state: BfsRootReducer) => state.graph);
 
-    let canvasWidth: number = 0;
-    if (window.innerWidth < 1500) canvasWidth = window.innerWidth * 1 / 3;
-    else if (window.innerWidth < 2000) canvasWidth = window.innerWidth * 1.75 / 3;
-    else if (window.innerWidth < 2500) canvasWidth = window.innerWidth * 2 / 3;
-    else canvasWidth = window.innerWidth * 1 / 3;
+    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: getCanvasWidth(), canvasHeight: window.innerHeight - 300 });
 
     const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
@@ -52,6 +49,15 @@ const BFS: FunctionComponent = () => {
         dispatch({ type: graphActionType.MOUSE_LEAVE_NODE, payload: { index } })
     }
 
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setCanvasWidthAndHeight({
+                canvasHeight: window.innerHeight - 300,
+                canvasWidth: getCanvasWidth()
+            });
+        })
+    }, [])
+
     return (
         <React.Fragment>
             {searchViewTransition.map(({ item, props, key }) => item &&
@@ -72,7 +78,7 @@ const BFS: FunctionComponent = () => {
                 <div className="operation-section">
                     <Graph
                         width={canvasWidth}
-                        height={window.innerHeight - 300}
+                        height={canvasHeight}
                         draggable
                         onMouseEnter={index => {
                             mouseEnterHandler(index);
