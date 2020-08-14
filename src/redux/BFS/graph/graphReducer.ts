@@ -63,7 +63,6 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 return {
                     ...state,
                     currentNodeIndex: index,
-                    addNeighborMode: false,
                     nodeList: newNodeList,
                     currentNeighborIndex: -1,
                     nodeStatusCardToggled: true
@@ -73,6 +72,7 @@ const graphReducer = (state = initialGraphState, action: graphActionType): Graph
                 return {
                     ...state,
                     nodeStatusCardToggled: false,
+                    addNeighborMode: false,
                     // currentNodeIndex: -1,
                     nodeList: newNodeList.slice(),
                     currentNeighborIndex: -1

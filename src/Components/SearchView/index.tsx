@@ -22,6 +22,7 @@ export const SearchView = () => {
     const [track, setTrack] = useState<number[][]>([]);
     const [index, setIndex] = useState<number>(0);
     const [pathFound, setPathFound] = useState<boolean>(false);
+    const [noPathFound, setNoPathFound] = useState<boolean>(false);
     let parentNodeIndex = index < searchTrackGlobal.parentTrackList.length ? searchTrackGlobal.parentTrackList[index].parentNodeIndex : -1;
 
     const searchHandler = () => {
@@ -58,7 +59,6 @@ export const SearchView = () => {
                     if (neighborIndex === graph.destinationNodeIndex) {
                         setTimeout(() => {
                             setPathFound(true);
-
                         }, 300)
                     }
                 });
@@ -70,6 +70,14 @@ export const SearchView = () => {
             buttonRef?.current?.blur();
         }, 320)
     }
+
+    useEffect(() => {
+        if (track.length === searchTrackGlobal.parentTrackList.length && searchTrackGlobal.path.length === 0) {
+            setTimeout(() => {
+                setNoPathFound(true);
+            }, 300)
+        }
+    }, [track.length, searchTrackGlobal.parentTrackList.length, searchTrackGlobal.path.length])
 
     useEffect(() => {
         if (pathFound) {
@@ -157,8 +165,8 @@ export const SearchView = () => {
             <div className='action-area'>
                 <Button
                     style={{ backgroundColor: graph.defaultFill }}
-                    raised={!pathFound}
-                    disabled={pathFound}
+                    raised={!(pathFound || noPathFound)}
+                    disabled={pathFound || noPathFound}
                     ref={buttonRef}
                     label={track.length > 0 ? 'next step' : 'start search'}
                     onClick={searchHandler}
@@ -168,6 +176,11 @@ export const SearchView = () => {
             <Snackbar
                 open={pathFound}
                 message='Path Found'
+            />
+
+            <Snackbar
+                open={noPathFound}
+                message='No Path Found'
             />
 
             <Graph width={window.innerWidth - 100} height={window.innerHeight - 100}>
