@@ -9,7 +9,7 @@ import { IGraph } from './Graph';
 import { KonvaEventObject } from 'konva/types/Node';
 import Konva from 'konva';
 
-export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, nodeDraggable, nodeClickable, onDragMove, children }) => {
+export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, clickable, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -70,10 +70,10 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
                                         x={node.xPosition}
                                         y={node.yPosition}
                                         draggable={draggable ? true : false}
-                                        onClick={() => nodeClickable && dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
-                                        onMouseEnter={() => nodeDraggable && mouseEnterHandler(index)}
-                                        onMouseLeave={() => nodeDraggable && mouseLeaveHandler(index)}
-                                        onDragMove={(e: KonvaEventObject<DragEvent>) => nodeDraggable && dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
+                                        onClick={() => clickable && dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
+                                        onMouseEnter={() => draggable && mouseEnterHandler(index)}
+                                        onMouseLeave={() => draggable && mouseLeaveHandler(index)}
+                                        onDragMove={(e: KonvaEventObject<DragEvent>) => draggable && dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
                                         opacity={style.o.to(o => o)}
                                     >
                                         <animated.Circle

@@ -89,8 +89,7 @@ const BFS: FunctionComponent = () => {
                         width={canvasWidth}
                         height={canvasHeight}
                         draggable
-                        nodeDraggable
-                        nodeClickable
+                        clickable
                     />
 
                     <div className="search-status-stack-section">

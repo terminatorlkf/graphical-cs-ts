@@ -8,9 +8,12 @@ import { useTransition, animated } from '@react-spring/konva';
 import { Snackbar } from '@rmwc/snackbar';
 import { Fab } from '@rmwc/fab';
 import ClearIcon from '@material-ui/icons/Clear';
+import { Edge } from 'Interfaces/Edge';
+import { Node } from 'Interfaces/Node';
 
 import '@rmwc/button/styles';
 import '@rmwc/fab/styles';
+
 
 export const SearchView = () => {
     const dispatch = useDispatch();
@@ -127,6 +130,28 @@ export const SearchView = () => {
         });
     }
 
+    const findPoints = (nodePair: number[], nodeList: Node[]) => {
+        const firstNodeIndex = nodePair[0];
+        const secondNodeIndex = nodePair[1];
+
+        let points = [0, 0, 0, 0];
+
+        nodeList.map(node => {
+            if (node.index === firstNodeIndex) {
+                points[0] = node.xPosition;
+                points[1] = node.yPosition;
+            }
+
+            if (node.index === secondNodeIndex) {
+                points[2] = node.xPosition;
+                points[3] = node.yPosition;
+            }
+            return null;
+        });
+
+        return points;
+    }
+
     const transition = useTransition(track, {
         from: nodePair => {
             let nodeIndex = -1;
@@ -160,6 +185,13 @@ export const SearchView = () => {
                     nodeList[node2Index].xPosition,
                     nodeList[node2Index].yPosition,
                 ]
+            }
+        },
+        update: nodePair => {
+            const points = findPoints(nodePair, nodeList);
+            return graph.updateNodePositionMode && {
+                points,
+                config: { duration: 1 }
             }
         },
         leave: nodePair => {
@@ -205,7 +237,7 @@ export const SearchView = () => {
                 message='No Path Found'
             />
 
-            <Graph width={canvasWidth} height={canvasHeight} nodeDraggable nodeClickable>
+            <Graph width={canvasWidth} height={canvasHeight} draggable>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}
