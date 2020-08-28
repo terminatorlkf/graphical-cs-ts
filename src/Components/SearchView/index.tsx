@@ -11,7 +11,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 import '@rmwc/button/styles';
 import '@rmwc/fab/styles';
-import { setTimeout } from 'timers';
 
 export const SearchView = () => {
     const dispatch = useDispatch();
@@ -222,6 +221,7 @@ export const SearchView = () => {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        overflow: hidden;
                     }
 
                     .quit-button {
@@ -235,6 +235,7 @@ export const SearchView = () => {
                         position: relative;
                         padding-bottom: 4.5rem;
                         height: 164px;
+                        display: flex;
                     }
                 
                 `}

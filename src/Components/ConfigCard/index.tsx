@@ -49,7 +49,7 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                     </div>
                 </div>
 
-                <div>
+                <div className="config-card-action">
                     <ThemeProvider
                         options={{
                             primary: '#4CAF50',
