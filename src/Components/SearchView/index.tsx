@@ -205,7 +205,7 @@ export const SearchView = () => {
                 message='No Path Found'
             />
 
-            <Graph width={canvasWidth} height={canvasHeight}>
+            <Graph width={canvasWidth} height={canvasHeight} nodeDraggable nodeClickable>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}

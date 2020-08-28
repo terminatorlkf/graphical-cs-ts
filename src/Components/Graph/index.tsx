@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Stage, Layer, Text } from "react-konva";
 import { Edges } from './Edges';
 import { useSelector, useDispatch, useStore, Provider } from 'react-redux';
@@ -7,12 +7,14 @@ import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 import { IGraph } from './Graph';
 import { KonvaEventObject } from 'konva/types/Node';
+import Konva from 'konva';
 
-export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, onMouseEnter, onMouseLeave, onDragMove, children }) => {
+export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, nodeDraggable, nodeClickable, onDragMove, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
     const store = useStore();
+    const nodeRef = useRef() as React.MutableRefObject<Konva.Circle>;
 
     const transition = useTransition(nodeList, {
         key: node => node.index,
@@ -42,6 +44,16 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
         }
     })
 
+    const mouseEnterHandler = (index: number) => {
+        dispatch({ type: graphActionType.MOUSE_ENTER_NODE, payload: { index, ref: nodeRef } });
+        dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: true } });
+    }
+
+    const mouseLeaveHandler = (index: number) => {
+        dispatch({ type: graphActionType.MOUSE_LEAVE_NODE, payload: { index } });
+        dispatch({ type: graphActionType.TOGGLE_UPDATE_NODE_POSITION_MODE, payload: { isOn: false } });
+    }
+
     return (
         <div className="operation-node-section">
             <Stage width={width} height={height} draggable>
@@ -58,10 +70,10 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
                                         x={node.xPosition}
                                         y={node.yPosition}
                                         draggable={draggable ? true : false}
-                                        onClick={() => dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
-                                        onMouseEnter={() => onMouseEnter && onMouseEnter(index)}
-                                        onMouseLeave={() => onMouseLeave && onMouseLeave(index)}
-                                        onDragMove={(e: KonvaEventObject<DragEvent>) => onDragMove && onDragMove(index, e)}
+                                        onClick={() => nodeClickable && dispatch({ type: graphActionType.CLICK_NODE, payload: { index } })}
+                                        onMouseEnter={() => nodeDraggable && mouseEnterHandler(index)}
+                                        onMouseLeave={() => nodeDraggable && mouseLeaveHandler(index)}
+                                        onDragMove={(e: KonvaEventObject<DragEvent>) => nodeDraggable && dispatch({ type: graphActionType.DRAG_NODE, payload: { index, e } })}
                                         opacity={style.o.to(o => o)}
                                     >
                                         <animated.Circle
