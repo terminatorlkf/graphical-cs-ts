@@ -32,16 +32,16 @@ function App() {
   useEffect(() => {
     let body = document.querySelector('body');
     if (body) {
-      if (graph.searchTrack.parentTrackList.length > 0) {
+      if (graph.searchMode) {
         body.className = 'search-view-body';
       } else {
         body.className = '';
       }
     }
-  }, [graph.searchTrack]);
+  }, [graph.searchMode]);
 
   return (
-    <div>
+    <React.Fragment>
       <IntroExpandedContext.Provider
         value={{
           pagesExpanded,
@@ -87,7 +87,7 @@ function App() {
           }
         `}
       </style>
-    </div >
+    </React.Fragment >
   );
 }
 
