@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
+import { useSpring, animated as a, config } from 'react-spring';
 import { useTransition, animated } from '@react-spring/konva';
 import { Snackbar } from '@rmwc/snackbar';
 import { Fab } from '@rmwc/fab';
 import ClearIcon from '@material-ui/icons/Clear';
-import { Edge } from 'Interfaces/Edge';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Node } from 'Interfaces/Node';
+import { Track } from 'Interfaces/Track';
 
 import '@rmwc/button/styles';
 import '@rmwc/fab/styles';
@@ -25,7 +28,8 @@ export const SearchView = () => {
     const graph = useSelector((state: BfsRootReducer) => state.graph);
 
     const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: window.innerWidth - 100, canvasHeight: window.innerHeight - 100 });
-    const [track, setTrack] = useState<number[][]>([]);
+    const [trackList, setTrackList] = useState<Track[]>([]);
+    const [backupTrackList, setBackupTrackList] = useState<Track[]>([]);
     const [index, setIndex] = useState<number>(0);
     const [pathFound, setPathFound] = useState<boolean>(false);
     const [noPathFound, setNoPathFound] = useState<boolean>(false);
@@ -61,7 +65,7 @@ export const SearchView = () => {
                         }
                     });
 
-                    setTrack(prevState => [...prevState, [parentNodeIndex, neighborIndex]]);
+                    setTrackList(prevState => [...prevState, { track: [parentNodeIndex, neighborIndex], index: index }]);
 
                     if (neighborIndex === graph.destinationNodeIndex) {
                         setTimeout(() => {
@@ -76,6 +80,76 @@ export const SearchView = () => {
         setTimeout(() => {
             buttonRef?.current?.blur();
         }, 320)
+    }
+
+    const previousStepHandler = () => {
+        if (index - 1 >= 0) {
+            if (pathFound) {
+                dispatch({
+                    type: graphActionType.SET_VISITED_NODE,
+                    payload: {
+                        nodeAndAction: {
+                            actualNodeIndex: trackList[trackList.length - 1].track[1],
+                            visited: false
+                        }
+                    }
+                });
+
+                setTrackList(backupTrackList);
+                setIndex(trackList[trackList.length - 1].index);
+
+                backupTrackList.forEach(track => {
+                    console.log("hello");
+                    dispatch({
+                        type: graphActionType.SET_VISITED_NODE,
+                        payload: {
+                            nodeAndAction: {
+                                actualNodeIndex: track.track[0],
+                                visited: true
+                            }
+                        }
+                    });
+                    dispatch({
+                        type: graphActionType.SET_VISITED_NODE,
+                        payload: {
+                            nodeAndAction: {
+                                actualNodeIndex: track.track[1],
+                                visited: true
+                            }
+                        }
+                    });
+                })
+
+                setPathFound(false);
+            } else {
+                trackList.forEach(track => {
+                    let actualNodeIndex = -1;
+                    let numNode = 0;
+
+                    if (track.index === index - 1) {
+                        actualNodeIndex = track.track[1];
+                    }
+
+                    trackList.forEach(track => {
+                        if (track.track[1] === actualNodeIndex) numNode++;
+                    });
+
+                    if (numNode === 1) {
+                        dispatch({
+                            type: graphActionType.SET_VISITED_NODE, payload: {
+                                nodeAndAction: {
+                                    actualNodeIndex: actualNodeIndex,
+                                    visited: false
+                                }
+                            }
+                        });
+                    }
+                })
+
+                setTrackList(prevState => prevState.filter(track => track.index !== index - 1));
+                setIndex(prevState => prevState - 1);
+            }
+        }
     }
 
     useEffect(() => {
@@ -97,12 +171,12 @@ export const SearchView = () => {
     }, []);
 
     useEffect(() => {
-        if (track.length === searchTrackGlobal.parentTrackList.length && searchTrackGlobal.path.length === 0) {
+        if (trackList.length === searchTrackGlobal.parentTrackList.length && searchTrackGlobal.path.length === 0) {
             setTimeout(() => {
                 setNoPathFound(true);
             }, 300)
         }
-    }, [track.length, searchTrackGlobal.parentTrackList.length, searchTrackGlobal.path.length])
+    }, [trackList.length, searchTrackGlobal.parentTrackList.length, searchTrackGlobal.path.length])
 
     useEffect(() => {
         if (pathFound) {
@@ -117,13 +191,14 @@ export const SearchView = () => {
                 })
             })
 
-            setTrack(prevState => prevState.filter(nodePair =>
-                searchTrackGlobal.path.includes(nodePair[0]) && searchTrackGlobal.path.includes(nodePair[1])
+            setBackupTrackList(trackList.slice(0, trackList.length - 2));
+            setTrackList(prevState => prevState.filter(track =>
+                searchTrackGlobal.path.includes(track.track[0]) && searchTrackGlobal.path.includes(track.track[1])
             ));
         }
     }, [pathFound]);
 
-    const quieSearchViewHandler = () => {
+    const quitSearchViewHandler = () => {
         dispatch({ type: graphActionType.TOGGLE_SEARCH_MODE });
         nodeList.forEach(node => {
             dispatch({ type: graphActionType.SET_VISITED_NODE, payload: { nodeAndAction: { actualNodeIndex: node.index, visited: false } } })
@@ -152,8 +227,9 @@ export const SearchView = () => {
         return points;
     }
 
-    const transition = useTransition(track, {
-        from: nodePair => {
+    const transition = useTransition(trackList, {
+        from: track => {
+            const nodePair = track.track;
             let nodeIndex = -1;
 
             nodeList.forEach((node, index) => {
@@ -169,7 +245,9 @@ export const SearchView = () => {
                 ]
             }
         },
-        enter: nodePair => {
+        enter: track => {
+            const nodePair = track.track;
+
             let node1Index = -1;
             let node2Index = -1;
 
@@ -187,14 +265,16 @@ export const SearchView = () => {
                 ]
             }
         },
-        update: nodePair => {
+        update: track => {
+            const nodePair = track.track;
             const points = findPoints(nodePair, nodeList);
             return graph.updateNodePositionMode && {
                 points,
                 config: { duration: 1 }
             }
         },
-        leave: nodePair => {
+        leave: track => {
+            const nodePair = track.track;
             let nodeIndex = -1;
 
             nodeList.forEach((node, index) => {
@@ -212,20 +292,46 @@ export const SearchView = () => {
         }
     });
 
+    const springProps = useSpring({
+        width: trackList.length === 0 ? '10rem' : '24rem',
+        justifyContent: trackList.length === 0 ? 'center' : 'space-around',
+        config: config.stiff
+    });
+
     return (
         <div className='search-view'>
-            <Fab className='quit-button' style={{ backgroundColor: graph.destinationFill }} onClick={quieSearchViewHandler}><ClearIcon /></Fab>
+            <Fab className='quit-button' style={{ backgroundColor: graph.destinationFill }} onClick={quitSearchViewHandler}>
+                <ClearIcon />
+            </Fab>
 
-            <div className='action-area'>
+            <a.div style={springProps} className='action-area'>
+                {trackList.length > 0 &&
+                    <Button
+                        style={{ backgroundColor: graph.defaultFill }}
+                        raised
+                        // ref={buttonRef}
+                        onClick={previousStepHandler}
+                    >
+                        <div className='action-view-button previous-button'>
+                            <ArrowBackIcon style={{ marginTop: '-2px' }} />
+                            <span>previous step</span>
+                        </div>
+                    </Button>
+                }
+
                 <Button
                     style={{ backgroundColor: graph.defaultFill }}
                     raised={!(pathFound || noPathFound)}
                     disabled={pathFound || noPathFound}
                     ref={buttonRef}
-                    label={track.length > 0 ? 'next step' : 'start search'}
                     onClick={searchHandler}
-                />
-            </div>
+                >
+                    <div className='action-view-button next-button'>
+                        <span>{trackList.length > 0 ? 'next step' : 'start search'}</span>
+                        {trackList.length > 0 && <ArrowForwardIcon style={{ marginTop: '-2px' }} />}
+                    </div>
+                </Button>
+            </a.div>
 
             <Snackbar
                 open={pathFound}
@@ -262,12 +368,29 @@ export const SearchView = () => {
                         left: 2rem;
                     }
 
+                    .action-view-button {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+
+                    .next-button {
+                        width: 7.3rem;
+                    }
+
+                    .previous-button {
+                        width: 9.5rem;
+                    }
+
                     .action-area {
                         padding-top: 3.5rem;
                         position: relative;
                         padding-bottom: 4.5rem;
                         height: 164px;
                         display: flex;
+                        width: 24rem;
+                        flex-direction: row;
                     }
                 
                 `}

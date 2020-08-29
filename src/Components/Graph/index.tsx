@@ -32,6 +32,14 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
                 if (!((node.index === graph.rootNodeIndex && !node.visited) || (node.index === graph.destinationNodeIndex && !node.visited))) {
                     return node.visited ? { r: 0.85, fill: graph.rootFill } : { r: 1, fill: graph.defaultFill }
                 }
+
+                if (node.index === graph.destinationNodeIndex && !node.visited) {
+                    return { r: 1, fill: graph.destinationFill }
+                }
+
+                if (node.index === graph.rootNodeIndex && !node.visited) {
+                    return { r: 1, fill: graph.rootFill }
+                }
             } else {
                 if (!node.ref) {
                     if (node.index === graph.rootNodeIndex) nodeFill = graph.rootFill;
