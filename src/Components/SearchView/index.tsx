@@ -99,25 +99,26 @@ export const SearchView = () => {
                 setIndex(trackList[trackList.length - 1].index);
 
                 backupTrackList.forEach(track => {
-                    console.log("hello");
-                    dispatch({
-                        type: graphActionType.SET_VISITED_NODE,
-                        payload: {
-                            nodeAndAction: {
-                                actualNodeIndex: track.track[0],
-                                visited: true
+                    if (track.index !== index) {
+                        dispatch({
+                            type: graphActionType.SET_VISITED_NODE,
+                            payload: {
+                                nodeAndAction: {
+                                    actualNodeIndex: track.track[0],
+                                    visited: true
+                                }
                             }
-                        }
-                    });
-                    dispatch({
-                        type: graphActionType.SET_VISITED_NODE,
-                        payload: {
-                            nodeAndAction: {
-                                actualNodeIndex: track.track[1],
-                                visited: true
+                        });
+                        dispatch({
+                            type: graphActionType.SET_VISITED_NODE,
+                            payload: {
+                                nodeAndAction: {
+                                    actualNodeIndex: track.track[1],
+                                    visited: true
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 })
 
                 setPathFound(false);
@@ -193,7 +194,7 @@ export const SearchView = () => {
                 })
             })
 
-            setBackupTrackList(trackList.slice(0, trackList.length - 2));
+            setBackupTrackList(() => trackList.filter(track => track.index !== trackList[trackList.length - 1].index))
             setTrackList(prevState => prevState.filter(track =>
                 searchTrackGlobal.path.includes(track.track[0]) && searchTrackGlobal.path.includes(track.track[1])
             ));
