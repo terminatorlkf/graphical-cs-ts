@@ -22,7 +22,7 @@ const BFS: FunctionComponent = () => {
     const dispatch = useDispatch();
     const graph = useSelector((state: BfsRootReducer) => state.graph);
 
-    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: getCanvasWidth(), canvasHeight: window.innerHeight - 300 });
+    const [{ canvasWidth, canvasHeight }, setCanvasWidthAndHeight] = useState({ canvasWidth: window.innerWidth - 200, canvasHeight: window.innerHeight});
 
     const nodeStatusCardTransition = useTransition(graph.nodeStatusCardToggled, null, {
         from: { opacity: 0, transform: 'translate3d(0, -1rem, 0)' },
@@ -52,16 +52,16 @@ const BFS: FunctionComponent = () => {
     useEffect(() => {
         window.addEventListener('resize', () => {
             setCanvasWidthAndHeight({
-                canvasHeight: window.innerHeight - 300,
-                canvasWidth: getCanvasWidth()
+                canvasHeight: window.innerHeight,
+                canvasWidth: window.innerWidth - 200
             });
         });
 
         return () => {
             window.removeEventListener('resize', () => {
                 setCanvasWidthAndHeight({
-                    canvasHeight: window.innerHeight - 300,
-                    canvasWidth: getCanvasWidth()
+                    canvasHeight: window.innerHeight,
+                    canvasWidth: window.innerWidth - 200
                 });
             })
         }
