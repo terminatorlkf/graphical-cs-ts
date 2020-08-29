@@ -345,7 +345,7 @@ export const SearchView = () => {
                 message='No Path Found'
             />
 
-            <Graph width={canvasWidth} height={canvasHeight} draggable>
+            <Graph width={canvasWidth} height={canvasHeight} draggable className='search-graph'>
                 {transition(style => (
                     <animated.Line {...style} stroke={graph.rootFill} strokeWidth={5.5} />
                 ))}
@@ -383,6 +383,11 @@ export const SearchView = () => {
 
                     .previous-button {
                         width: 9.5rem;
+                    }
+
+                    .search-graph {
+                        position: relative;
+                        margin-top: 3vh;
                     }
 
                     .action-area {

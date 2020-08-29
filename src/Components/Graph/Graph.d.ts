@@ -6,6 +6,7 @@ declare namespace IGraph {
         clickable?: boolean,
         width: number,
         height: number,
+        className?: string,
         onMouseEnter?: (index: number) => void,
         onMouseLeave?: (index: number) => void,
         onDragMove?: (index: number, e: KonvaEventObject<DragEvent>) => void

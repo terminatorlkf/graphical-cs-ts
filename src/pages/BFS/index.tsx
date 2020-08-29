@@ -88,6 +88,7 @@ const BFS: FunctionComponent = () => {
                     <Graph
                         width={canvasWidth}
                         height={canvasHeight}
+                        className='operation-node-section'
                         draggable
                         clickable
                     />

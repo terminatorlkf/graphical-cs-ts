@@ -51,13 +51,12 @@ export const IntroSection: React.FunctionComponent<IIntroSection.IProps> = ({ ti
                     <h1>{title}</h1>
                 </div>
 
-
                 <SmoothCollapse expanded={isOpened}>
                     <div className="description">
                         <p>
                             {children}
                         </p>
-
+                        <hr style={{ opacity: 0 }} />
                         <p>--{source}</p>
                     </div>
 

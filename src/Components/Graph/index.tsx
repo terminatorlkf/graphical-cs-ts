@@ -9,7 +9,7 @@ import { IGraph } from './Graph';
 import { KonvaEventObject } from 'konva/types/Node';
 import Konva from 'konva';
 
-export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width, height, clickable, children }) => {
+export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, className, width, height, clickable, children }) => {
     const dispatch = useDispatch();
     const nodeList = useSelector((state: BfsRootReducer) => state.graph.nodeList);
     const graph = useSelector((state: BfsRootReducer) => state.graph);
@@ -64,7 +64,7 @@ export const Graph: React.FunctionComponent<IGraph.IProps> = ({ draggable, width
     }
 
     return (
-        <div className="operation-node-section">
+        <div className={className}>
             <Stage width={width} height={height} draggable>
                 <Provider store={store}>
                     <Layer>
