@@ -55,7 +55,7 @@ export const NodeStatusCard: React.FunctionComponent<INodeStatusCard.IProps> = (
             <Elevation className='node-status-card' z={3} height={10}>
                 <NodeStatusTitle
                     currentNodeIndex={graph.currentNodeIndex}
-                    backgroundColor='rgb(50, 50, 50)'
+                    backgroundColor='rgb(70, 70, 70)'
                     editNeighborMode={graph.editNeighborMode}
                     addNeighborMode={graph.addNeighborMode}
                     onAddNeighbor={addNeighborModeHandler}

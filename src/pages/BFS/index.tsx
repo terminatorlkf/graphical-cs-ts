@@ -109,7 +109,7 @@ const BFS: FunctionComponent = () => {
                     </div>
                     <div className="add-node-button">
                         <AddNodeButton onClick={() => {
-                            addNodeHandler(Math.random() * 100 + 50, Math.random() * 200)
+                            addNodeHandler(Math.random() * 100 + canvasWidth / 2, Math.random() * 100 + canvasHeight / 2)
                         }} />
                     </div>
                 </div>
