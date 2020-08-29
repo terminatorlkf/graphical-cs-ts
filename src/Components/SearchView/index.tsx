@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@rmwc/button';
 import * as graphActionType from 'redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
-import { useSpring, animated as a, config } from 'react-spring';
+import { useSpring, useTransition as useT, animated as a, config } from 'react-spring';
 import { useTransition, animated } from '@react-spring/konva';
 import { Snackbar } from '@rmwc/snackbar';
 import { Fab } from '@rmwc/fab';
@@ -149,6 +149,8 @@ export const SearchView = () => {
                 setTrackList(prevState => prevState.filter(track => track.index !== index - 1));
                 setIndex(prevState => prevState - 1);
             }
+
+            if (noPathFound) setNoPathFound(false);
         }
     }
 
@@ -309,7 +311,6 @@ export const SearchView = () => {
                     <Button
                         style={{ backgroundColor: graph.defaultFill }}
                         raised
-                        // ref={buttonRef}
                         onClick={previousStepHandler}
                     >
                         <div className='action-view-button previous-button'>
