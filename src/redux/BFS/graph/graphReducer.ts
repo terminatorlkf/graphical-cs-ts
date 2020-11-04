@@ -9,6 +9,8 @@ import { bfsSearch, addNode, deleteNode, addNeighbor, setVisitedNode, deleteNeig
 const initialGraphState: GraphState = {
     nodeList: presetNodeState,
     edgeList: presetEdges,
+    searchAlgorithms: ['Breadth-First Search', 'Depth-First Search', 'Iterative Deepening', 'A* Search'],
+    currentSearchAlgorithm: 0,
     currentNodeIndex: -1,
     currentNeighborIndex: -1,
     editNeighborMode: false,

@@ -26,6 +26,8 @@ export const TOGGLE_UPDATE_NODE_POSITION_MODE = 'TOGGLE_UPDATE_NODE_POSITION_MOD
 
 export const SET_VISITED_NODE = 'SET_VISITED_NODE';
 
+export const SET_ALGORITHM = 'SET_ALGORITHM';
+
 export interface addNodeAction {
     type: typeof ADD_NODE,
     payload: { x: number, y: number }
@@ -102,8 +104,13 @@ export interface setVisitedNodeAction {
     payload: { nodeAndAction: SetVisitedNode }
 }
 
+export interface setAlgorithm {
+    type: typeof SET_ALGORITHM,
+    payload: { algorithmIndex: number }
+}
+
 export type graphActionType = addNodeAction | deleteNodeAction | clickNodeAction |
     dragNodeAction | mouseEnterNodeAction | mouseLeaveNodeAction | clickExistingNeighborAction
     | clickAvailableNeighborAction | deleteNodeAction | deleteNeighborAction | addNeighborAction | setRootAction
     | setDestinationAction | toggleSearchModeAction | startBfsSearchAction | toggleUpdateNodePositionModeAction
-    | setVisitedNodeAction;
+    | setVisitedNodeAction | setAlgorithm;

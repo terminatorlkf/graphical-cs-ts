@@ -5,10 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as graphActionType from '../../redux/BFS/graph/graphActionType';
 import { BfsRootReducer } from '../../Interfaces/BfsRootReducer';
 import { ThemeProvider } from '@rmwc/theme';
+import { SimpleMenu, MenuItem } from '@rmwc/menu';
 
 import '@rmwc/elevation/styles';
 import '@rmwc/button/styles';
 import '@rmwc/snackbar/styles';
+import '@rmwc/menu/styles';
 
 export type parentTrack = {
     parentNodeIndex: number,
@@ -50,6 +52,21 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 </div>
 
                 <div className="config-card-action">
+
+                    <ThemeProvider
+                        options={{
+                            primary: '#42A5F5',
+                            secondary: 'blue'
+                        }}
+                    >
+                        <SimpleMenu handle={<Button>Breadth-First Search</Button>}>
+                            <MenuItem>Breadth-First Search</MenuItem>
+                            <MenuItem>Depth-First Search</MenuItem>
+                            <MenuItem>Iterative Deepening</MenuItem>
+                            <MenuItem>A* Search</MenuItem>
+                        </SimpleMenu>
+                    </ThemeProvider>
+                    
                     <ThemeProvider
                         options={{
                             primary: '#4CAF50',
@@ -89,7 +106,6 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 }
                 
                 .config-card {
-                    overflow: hidden;
                     background-color: #424242;
                     color: white;
                     min-width: 33.5rem;
@@ -128,6 +144,13 @@ export const ConfigCard: React.FunctionComponent = ({ children }) => {
                 .action {
                     display: flex;
                     flex-direction: row;
+                }
+
+                .config-card-action {
+                    min-width: 17rem;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
                 }
 
                 .circle {

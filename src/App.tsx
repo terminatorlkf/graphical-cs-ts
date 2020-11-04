@@ -12,7 +12,6 @@ import { useSelector } from 'react-redux';
 import { BfsRootReducer } from 'Interfaces/BfsRootReducer';
 
 function App() {
-
   const [pagesExpanded, setPagesExpanded] = useState([true, true, true, true, true]);
   const [currentPage, setCurrentPage] = useState(0);
   const graph = useSelector((state: BfsRootReducer) => state.graph);

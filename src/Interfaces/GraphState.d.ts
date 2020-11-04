@@ -5,6 +5,8 @@ import { SearchTrack } from './SearchTrack';
 export interface GraphState {
     nodeList: Node[],
     edgeList: Edge[],
+    searchAlgorithms: string[],
+    currentSearchAlgorithm: number,
     currentNodeIndex: number,
     currentNeighborIndex: number,
     editNeighborMode: boolean,
